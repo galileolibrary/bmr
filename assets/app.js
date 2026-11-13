@@ -25,6 +25,18 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '
 const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 const money = (n) => (n === null || n === undefined || isNaN(n) ? '—' : usd.format(Math.round(n)));
 const kmoney = (n) => (n >= 1e6 ? `$${(n / 1e6).toFixed(2)}M` : `$${Math.round(n / 1000)}k`);
+// Down payment can be typed as dollars ("20,000") or a percent of the price ("10%").
+const isPercent = (s) => /%/.test(String(s ?? ''));
+function resolveDown(raw, price) {
+  const str = String(raw ?? '').trim();
+  if (!str) return null;
+  if (isPercent(str)) {
+    const pct = Number(str.replace(/[^\d.]/g, ''));
+    if (isNaN(pct) || !price) return null;
+    return (price * Math.min(Math.max(pct, 0), 100)) / 100;
+  }
+  return parseMoney(str);
+}
 const parseMoney = (s) => { const n = Number(String(s ?? '').replace(/[^\d.]/g, '')); return String(s ?? '').trim() === '' || isNaN(n) ? null : n; };
 const TZ = 'America/Los_Angeles';
 const toDate = (s) => {
@@ -74,7 +86,7 @@ function assetAdd(assets, down, price) {
 function hh() {
   const size = Number(state.hh.size) || null;
   const income = parseMoney(state.hh.income);
-  return { size, income, assets: parseMoney(state.hh.assets), down: parseMoney(state.hh.downPayment), owned: state.hh.owned, ready: !!(size && income) };
+  return { size, income, assets: parseMoney(state.hh.assets), downRaw: state.hh.downPayment, down: (price) => resolveDown(state.hh.downPayment, price), owned: state.hh.owned, ready: !!(size && income) };
 }
 
 function isAvailable(u) { return !u.status || u.status === 'Available'; }
@@ -92,7 +104,7 @@ function unitFit(l, u, h) {
   if (u.maxOccupancy && h.size > u.maxOccupancy) { ok = false; reasons.push(`Allows at most ${u.maxOccupancy} people.`); }
   if (u.maxAmi) {
     const lim = limitFor(u.maxAmi, h.size);
-    const add = l.waivers && l.waivers.assetsExcluded ? 0 : assetAdd(h.assets, h.down, u.price);
+    const add = l.waivers && l.waivers.assetsExcluded ? 0 : assetAdd(h.assets, h.down(u.price), u.price);
     const counted = h.income + add;
     if (counted > lim.value) { ok = false; reasons.push(`Counted income ${money(counted)} is over the ${lim.approx ? 'approx. ' : ''}${money(lim.value)} limit for ${h.size} at ${u.maxAmi}% AMI.`); }
     else reasons.push(`Under the ${lim.approx ? 'approx. ' : ''}${money(lim.value)} limit for ${h.size} at ${u.maxAmi}% AMI.`);
@@ -265,8 +277,8 @@ function viewCheck() {
         </div>
         <div class="field">
           <label for="hh-down">Planned down payment (optional)</label>
-          <span class="hint">Used for the monthly cost estimate. The BMR minimum is 1% of the price, and it can be a gift.</span>
-          <div class="money"><input id="hh-down" data-hh="downPayment" inputmode="decimal" type="text" value="${esc(s.downPayment)}" placeholder="20,000"></div>
+          <span class="hint">A dollar amount or a percent of the price, like 20,000 or 10%. Used for monthly costs. The BMR minimum is 1% of the price, and it can be a gift.</span>
+          <input id="hh-down" data-hh="downPayment" type="text" value="${esc(s.downPayment)}" placeholder="20,000 or 10%">
         </div>
         <p class="small muted">Nothing you type here is saved or sent anywhere.</p>
       </form>
@@ -338,17 +350,38 @@ function amiTable() {
   </div>`;
 }
 
-function costEstimator() {
+function costInputs() {
   const h = hh();
-  const open = openListings();
-  const avail = open.flatMap((l) => l.units.filter(isAvailable));
+  const avail = openListings().flatMap((l) => l.units.filter(isAvailable));
   const defPrice = Math.round((median(avail.map((u) => u.price)) || 400000) / 1000) * 1000;
   const defHoa = Math.round(median(avail.map((u) => u.hoa)) || 600);
   const c = state.cost;
   const price = parseMoney(c.price) ?? defPrice;
   const hoa = parseMoney(c.hoa) ?? defHoa;
-  const down = parseMoney(c.down) ?? (h.down ?? Math.round(price * 0.05));
-  const rate = Number(c.rate) || DEFAULT_RATE;
+  const down = resolveDown(c.down, price) ?? h.down(price) ?? Math.round(price * 0.05);
+  const rate = Number(String(c.rate).replace(/[^\d.]/g, '')) || DEFAULT_RATE;
+  return { h, c, defPrice, defHoa, price, hoa, down, rate };
+}
+
+// The form is rendered once; only the result panel updates while typing,
+// so keystrokes are never lost to a re-render.
+function costEstimator() {
+  const { c, defPrice, defHoa } = costInputs();
+  return `<h2>What would it cost each month?</h2>
+  <p class="muted prose">A rough estimate for a 30-year fixed loan, which is what BMR purchases require. Defaults use the middle price and HOA of the homes open now.</p>
+  <div class="split">
+    <form class="form" id="cost-form" autocomplete="off" onsubmit="return false">
+      <div class="field"><label for="c-price">Home price</label><div class="money"><input id="c-price" data-cost="price" inputmode="decimal" type="text" value="${esc(c.price)}" placeholder="${defPrice.toLocaleString()}"></div></div>
+      <div class="field"><label for="c-hoa">Monthly HOA dues</label><div class="money"><input id="c-hoa" data-cost="hoa" inputmode="decimal" type="text" value="${esc(c.hoa)}" placeholder="${defHoa}"></div></div>
+      <div class="field"><label for="c-down">Down payment</label><span class="hint">Dollars or a percent of the price, like 20,000 or 10%. Leave blank to use your planned down payment above, or 5%.</span><input id="c-down" data-cost="down" type="text" value="${esc(c.down)}" placeholder="20,000 or 10%"></div>
+      <div class="field"><label for="c-rate">Interest rate (%)</label><span class="hint">Default is the ${esc(RATE_SOURCE)}. Your lender’s rate will differ.</span><input id="c-rate" data-cost="rate" inputmode="decimal" type="text" value="${esc(c.rate)}" style="max-width:8rem"></div>
+    </form>
+    <div class="panel" id="cost-result" aria-live="polite">${costResult()}</div>
+  </div>`;
+}
+
+function costResult() {
+  const { h, c, price, hoa, down, rate } = costInputs();
   const m = monthlyCost(price, hoa, down, rate);
   let ratioLine = '<p class="muted">Enter your income above to compare this to what lenders and MOHCD allow.</p>';
   let maxLine = '';
@@ -366,17 +399,8 @@ function costEstimator() {
     const maxP = (0.43 * mi - INSURANCE_MONTHLY - hoa) / (f * (1 - dFrac) + PROPERTY_TAX_RATE / 100 / 12);
     if (maxP > 0) maxLine = `<p>At this rate, with ${money(hoa)} HOA dues and the same down payment share, the most you could likely spend is about <strong class="num">${money(Math.floor(maxP / 1000) * 1000)}</strong>.</p>`;
   }
-  return `<h2>What would it cost each month?</h2>
-  <p class="muted prose">A rough estimate for a 30-year fixed loan, which is what BMR purchases require. Defaults use the middle price and HOA of the homes open now.</p>
-  <div class="split">
-    <form class="form" id="cost-form" autocomplete="off" onsubmit="return false">
-      <div class="field"><label for="c-price">Home price</label><div class="money"><input id="c-price" data-cost="price" inputmode="decimal" type="text" value="${esc(c.price)}" placeholder="${defPrice.toLocaleString()}"></div></div>
-      <div class="field"><label for="c-hoa">Monthly HOA dues</label><div class="money"><input id="c-hoa" data-cost="hoa" inputmode="decimal" type="text" value="${esc(c.hoa)}" placeholder="${defHoa}"></div></div>
-      <div class="field"><label for="c-down">Down payment</label><div class="money"><input id="c-down" data-cost="down" inputmode="decimal" type="text" value="${esc(c.down)}" placeholder="${down.toLocaleString()}"></div></div>
-      <div class="field"><label for="c-rate">Interest rate (%)</label><span class="hint">Default is the ${esc(RATE_SOURCE)}. Your lender’s rate will differ.</span><input id="c-rate" data-cost="rate" inputmode="decimal" type="text" value="${esc(c.rate)}" style="max-width:8rem"></div>
-    </form>
-    <div class="panel" aria-live="polite">
-      <p class="small muted" style="margin:0 0 .3rem">Estimated monthly cost</p>
+  const pctTxt = price ? ((down / price) * 100).toFixed(1).replace(/\.0$/, '') : '0';
+  return `<p class="small muted" style="margin:0 0 .3rem">Estimated monthly cost</p>
       <p class="result-figure num">${money(m.total)}</p>
       <table class="small"><tbody>
         <tr><td>Mortgage (principal and interest)</td><td class="r num">${money(m.pi)}</td></tr>
@@ -384,9 +408,8 @@ function costEstimator() {
         <tr><td>Homeowner’s insurance (estimate)</td><td class="r num">${money(m.ins)}</td></tr>
         <tr><td>HOA dues</td><td class="r num">${money(m.hoa)}</td></tr>
       </tbody></table>
-      <div style="margin-top:1rem">${ratioLine}${maxLine}</div>
-    </div>
-  </div>`;
+      <p class="small muted" style="margin:.6rem 0 0">Down payment: ${money(down)} (${pctTxt}% of the price)${!c.down && !h.downRaw ? ', the 5% default' : ''}. Loan amount: ${money(Math.max(0, price - down))}.</p>
+      <div style="margin-top:1rem">${ratioLine}${maxLine}</div>`;
 }
 
 /* ---------- Homes ---------- */
@@ -490,8 +513,7 @@ function listingRow({ l, open, fit }) {
     how = open ? `<span class="badge open">Lottery: apply by ${fmtDate(l.dueDate, true)}</span>${d !== null && d < 7 ? ' <span class="badge open">Closes soon</span>' : ''}`
       : `<span class="badge closed">Lottery closed ${fmtDate(l.dueDate)}</span>`;
   } else how = open ? '<span class="badge open">First come, first served</span>' : '<span class="badge closed">No units available</span>';
-  const down = h.down;
-  const mc = prices.length ? monthlyCost(minP, hoas.length ? Math.min(...hoas) : 0, down ?? minP * 0.05, Number(state.cost.rate) || DEFAULT_RATE) : null;
+  const mc = prices.length ? monthlyCost(minP, hoas.length ? Math.min(...hoas) : 0, h.down(minP) ?? minP * 0.05, Number(state.cost.rate) || DEFAULT_RATE) : null;
   const img = l.image ? `<img class="thumb" src="${esc(l.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'thumb empty',innerHTML:window.__houseIcon}))">` : `<div class="thumb empty">${houseIcon}</div>`;
   const waiver = l.waivers && (l.waivers.raisedAmi || l.waivers.assetsExcluded);
   return `<li class="listing"><details data-listing="${esc(l.id)}">
@@ -784,19 +806,10 @@ function route() {
 function refreshPartial() {
   const path = location.hash.replace(/^#\/?/, '').split('?')[0];
   const swap = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
-  if (path === 'check') { swap('check-result', checkResult()); swap('check-chart', checkChart()); swap('ami-table', amiTable()); swap('cost', costEstimatorPreservingFocus()); }
+  if (path === 'check') { swap('check-result', checkResult()); swap('check-chart', checkChart()); swap('ami-table', amiTable()); swap('cost-result', costResult()); }
   if (path === 'homes') { swap('homes-list', homesList()); swap('city-second', citySecondBlock()); }
   if (path === 'programs') swap('prog-result', programsResult());
 }
-// The cost form is re-rendered as a whole; keep the cursor where it was.
-function costEstimatorPreservingFocus() {
-  const active = document.activeElement;
-  const id = active && active.id; const pos = active && active.selectionStart;
-  const html = costEstimator();
-  if (id && id.startsWith('c-')) setTimeout(() => { const el = document.getElementById(id); if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch { /* not a text field */ } } });
-  return html;
-}
-
 document.addEventListener('input', (e) => {
   const t = e.target;
   if (t.dataset.hh) {
@@ -809,7 +822,7 @@ document.addEventListener('input', (e) => {
     const el = document.getElementById('homes-list'); if (el) el.innerHTML = homesList();
   } else if (t.dataset.cost) {
     state.cost[t.dataset.cost] = t.value;
-    const el = document.getElementById('cost'); if (el) el.innerHTML = costEstimatorPreservingFocus();
+    const el = document.getElementById('cost-result'); if (el) el.innerHTML = costResult();
   } else if (t.dataset.prog) {
     state.prog[t.dataset.prog] = t.value;
     if (t.dataset.prog === 'sfusd') {
