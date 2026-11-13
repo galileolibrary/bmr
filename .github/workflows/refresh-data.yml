@@ -17,11 +17,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  refresh-and-deploy:
+  # Job 1: get fresh listing data, save it to the repo, and package the site.
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -32,7 +30,6 @@ jobs:
       # If DAHLIA is down or changes shape, this step fails but the site still
       # publishes with the last good data.
       - name: Fetch latest listings
-        id: fetch
         continue-on-error: true
         run: node scripts/fetch-listings.mjs
 
@@ -46,6 +43,8 @@ jobs:
             echo "No data changes."
           else
             git commit -m "Update listing data"
+            # Pick up any site changes pushed while this job was running.
+            git pull --rebase origin main
             git push
           fi
 
@@ -55,5 +54,25 @@ jobs:
         with:
           path: .
 
+  # Job 2: publish. Kept separate (GitHub's recommended layout) so the upload
+  # is fully registered before publishing starts.
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.retry.outputs.page_url || steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      # GitHub's publish step occasionally fails for reasons on GitHub's side.
+      # Wait a minute and try once more before reporting a failure.
+      - name: Wait before retrying
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+
+      - id: retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
