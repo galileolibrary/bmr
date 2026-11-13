@@ -4,7 +4,7 @@
 // code here (the part before .goatcounter.com). Leave empty to turn analytics off.
 // GoatCounter only receives page names and anonymous event names like
 // "used-calculator". It never receives anything typed into the page.
-export const GOATCOUNTER_CODE = '';
+export const GOATCOUNTER_CODE = 'pobody';
 
 // Mortgage defaults for the monthly cost estimate.
 export const DEFAULT_RATE = 7.18;          // Freddie Mac 30-year average, Nov 5, 2026
