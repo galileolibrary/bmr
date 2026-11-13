@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BMR Homes for SFUSD Staff</title>
+  <meta name="description" content="An unofficial guide to San Francisco's Below Market Rate homeownership program for SFUSD teachers, paraeducators and staff: check eligibility, browse homes for sale, and find down payment programs.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="sky" id="top">
+    <svg class="sky-art" viewBox="0 0 420 220" aria-hidden="true" focusable="false">
+      <g class="field">
+        <circle cx="18" cy="30" r="1"/><circle cx="64" cy="12" r=".8"/><circle cx="96" cy="48" r="1.1"/><circle cx="150" cy="18" r=".7"/>
+        <circle cx="180" cy="60" r=".9"/><circle cx="330" cy="14" r="1"/><circle cx="372" cy="56" r=".8"/><circle cx="404" cy="24" r="1.2"/>
+        <circle cx="352" cy="110" r=".7"/><circle cx="398" cy="130" r=".9"/><circle cx="40" cy="96" r=".8"/><circle cx="140" cy="120" r=".6"/>
+      </g>
+      <g class="leo" transform="translate(70 18)">
+        <polyline points="247,160 250,112 224,82 230,46 278,20 293,42"/>
+        <polyline points="224,82 115,75 46,134 115,126 247,160"/>
+        <line x1="115" y1="75" x2="115" y2="126"/>
+        <circle class="bright" cx="247" cy="160" r="4.2"/>
+        <circle cx="250" cy="112" r="2.4"/><circle cx="224" cy="82" r="3.4"/><circle cx="230" cy="46" r="2.2"/>
+        <circle cx="278" cy="20" r="2.2"/><circle cx="293" cy="42" r="2.6"/><circle cx="115" cy="75" r="3"/>
+        <circle cx="115" cy="126" r="2.4"/><circle cx="46" cy="134" r="3.4"/>
+      </g>
+      <g class="dome">
+        <path d="M300 220 V196 H404 V220"/>
+        <path d="M314 196 A38 38 0 0 1 390 196"/>
+        <path d="M346 196 V161 M358 196 V161" />
+        <path d="M296 196 H408"/>
+      </g>
+    </svg>
+    <div class="sky-inner">
+      <a class="brand" href="#/">BMR homes for SFUSD staff</a>
+      <p class="brand-sub">An unofficial guide from the Galileo library</p>
+      <nav aria-label="Main">
+        <ul>
+          <li><a href="#/" data-nav="home">Overview</a></li>
+          <li><a href="#/check" data-nav="check">Check eligibility</a></li>
+          <li><a href="#/homes" data-nav="homes">Homes for sale</a></li>
+          <li><a href="#/programs" data-nav="programs">Find programs</a></li>
+          <li><a href="#/recent" data-nav="recent">Recent &amp; upcoming</a></li>
+          <li><a href="#/verify" data-nav="verify">Get it confirmed</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- Views are rendered by assets/app.js -->
+    <div id="view" aria-live="polite"></div>
+    <noscript><p class="wrap">This guide needs JavaScript to run its calculators. Everything runs on your own device; nothing you type is sent anywhere.</p></noscript>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <p><strong>Not affiliated with SFUSD or the City and County of San Francisco.</strong> This is a personal project. Results are estimates only; the Mayor's Office of Housing and Community Development (MOHCD) makes every eligibility decision.</p>
+        <p>Nothing you enter is stored or sent anywhere. It stays on your device and disappears when you close the page. <a href="#/privacy">Privacy details</a></p>
+      </div>
+      <div>
+        <p id="data-stamp">Loading listing data…</p>
+        <p>Listings come from <a href="https://housing.sfgov.org/listings/for-sale">DAHLIA, San Francisco's housing portal</a>. Income limits come from MOHCD's 2026 chart.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>
