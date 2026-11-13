@@ -11,6 +11,7 @@ const state = {
   prog: { sfusd: '', role: '', owned: '', firstGen: '' },
   filters: { q: '', show: 'open', method: 'any', beds: 'any', maxPrice: '', hood: 'any', sort: 'deadline', fitOnly: false },
   cost: { price: '', hoa: '', down: '', rate: String(DEFAULT_RATE) },
+  dalp: { price: '', cash: '', hoa: '', debts: '', rate: String(DEFAULT_RATE), years: '7', growth: '3' },
   counted: {},
 };
 
@@ -18,6 +19,7 @@ let AMI = null;
 let DATA = null;
 let HISTORY = null;
 let CHECKED = null;
+let BALANCES = null;
 const view = document.getElementById('view');
 
 /* ---------------- small helpers ---------------- */
@@ -236,7 +238,7 @@ function viewHome() {
         <li><h3>Send your full application</h3><p>If you’re picked or reach the front of the line, you submit documents and MOHCD reviews your eligibility.</p></li>
         <li><h3>Close</h3><p>Your lender, your counselor and MOHCD give final approval, and you get the keys.</p></li>
       </ol>
-      <p>SFUSD staff can also get down payment help, like Teacher Next Door’s $20,000 forgivable loan for BMR homes. <a href="#/programs">See which programs fit you</a>.</p>
+      <p>SFUSD staff can also get down payment help, like Teacher Next Door’s $20,000 forgivable loan for BMR homes. <a href="#/programs">See which programs fit you</a>, or read about the City’s <a href="#/dalp">down payment loans for market-rate homes</a>.</p>
     </section>
   </div>`;
 }
@@ -644,7 +646,7 @@ function programsResult() {
   const caps = openListings().flatMap((l) => l.units.filter(isAvailable).map((u) => u.maxAmi)).filter(Boolean);
   const res = matchPrograms({
     sfusd: p.sfusd, role: p.role, size: h.size, income: h.income, amiPct: amiPctOf(h.income, h.size),
-    owned: p.owned, firstGen: p.firstGen || 'unsure', savings: h.assets, bmrMaxCap: caps.length ? Math.max(...caps) : 120,
+    owned: p.owned, firstGen: p.firstGen || 'unsure', savings: h.assets, bmrMaxCap: caps.length ? Math.max(...caps) : 120, balances: BALANCES,
   });
   const order = { likely: 0, maybe: 1, unlikely: 2 };
   res.sort((a, b) => order[a.verdict] - order[b.verdict]);
@@ -658,7 +660,7 @@ function programsResult() {
         <p class="who">${esc(r.who)}. <span class="badge ${r.status.tone}">${esc(r.status.label)}</span></p>
         <p>${esc(r.what)}</p>
         <ul class="reasons">${r.reasons.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
-        <p style="margin:.6rem 0 0"><a href="${esc(r.link)}">${esc(r.linkText)}</a></p>
+        <p style="margin:.6rem 0 0"><a href="${esc(r.link)}">${esc(r.linkText)}</a>${['edalp', 'dalp', 'tnd', 'dkdalp'].includes(r.id) ? '. <a href="#/dalp">More on how DALP works</a>' : ''}</p>
       </div></li>`).join('')}</ul>
   ${DISCLAIMER}`;
 }
@@ -785,10 +787,283 @@ function viewPrivacy() {
   </div>`;
 }
 
+/* ---------- Down payment loans (DALP) ---------- */
+// Figures and rules from MOHCD's DALP Manual (September 2025) and sf.gov.
+const DALP_LINKS = {
+  manual: 'https://www.sf.gov/documents/36972/DALP_Manual_September_2025.pdf',
+  apply: 'https://sf.gov/apply-downpayment-loan-buy-market-rate-home',
+  educators: 'https://www.sf.gov/educators-downpayment-assistance-loan-program',
+  terms: 'https://www.sf.gov/reports--december-2024--downpayment-assistance-loan-program-dalp',
+  balances: 'https://www.sf.gov/data--mohcd-loan-program-balances',
+  results: 'https://sf.gov/dalp-lottery-results',
+  tnd: 'https://www.sf.gov/reports--august-2024--about-teacher-next-door-program',
+  bmrDalp: 'https://www.sf.gov/reports--august-2024--about-below-market-rate-downpayment-assistance-loan-program-bmr-dalp',
+  dk: 'https://www.sf.gov/reports/may-2023/dream-keeper-downpayment-assistance-loan-program-dk-dalp',
+  subordination: 'https://www.sf.gov/refinancing-and-subordination',
+};
+const DALP_MAX = 500000;
+const CLOSING_COST_SHARE = 0.02;   // manual's example: closing costs ~2% of price
+const INSURANCE_SHARE = 0.002;     // manual's example: $250/mo on $1.5M, about 0.2% a year
+
+function dalpInputs() {
+  const h = hh();
+  const d = state.dalp;
+  const price = parseMoney(d.price) ?? 1000000;
+  const cash = resolveDown(d.cash, price) ?? price * 0.01;
+  return {
+    h, price, cash,
+    cashIsPct: !d.cash || isPercent(d.cash),
+    hoa: parseMoney(d.hoa) ?? 0,
+    debts: parseMoney(d.debts) ?? 0,
+    rate: Number(String(d.rate).replace(/[^\d.]/g, '')) || DEFAULT_RATE,
+    years: Math.min(Math.max(Number(d.years) || 7, 1), 30),
+    growth: Number(String(d.growth).replace(/[^\d.-]/g, '')) || 0,
+  };
+}
+
+// Size the loans the way the manual describes: the first mortgage is the
+// largest the household qualifies for (housing costs up to 43% of income,
+// total debts up to 45%), and DALP covers only the remaining gap.
+function dalpCalc(price, cash, inp) {
+  const { h, hoa, debts, rate } = inp;
+  const mi = h.income / 12;
+  const r = rate / 100 / 12; const f = r / (1 - Math.pow(1 + r, -360));
+  const nonLoan = (price * PROPERTY_TAX_RATE) / 100 / 12 + (price * INSURANCE_SHARE) / 12 + hoa;
+  const cap = Math.min(0.43 * mi - nonLoan, 0.45 * mi - debts - nonLoan);
+  const maxFirst = cap > 0 ? cap / f : 0;
+  const needed = price * (1 + CLOSING_COST_SHARE) - cash;
+  const first = Math.max(0, Math.min(maxFirst, needed));
+  const dalp = Math.max(0, needed - first);
+  const monthly = first * f + nonLoan;
+  return { mi, f, nonLoan, maxFirst, needed, first, dalp, monthly, ratio: (monthly / mi) * 100, closing: price * CLOSING_COST_SHARE };
+}
+
+function dalpMaxPrice(inp) {
+  const d = state.dalp;
+  const cashFor = (p) => resolveDown(d.cash, p) ?? p * 0.01;
+  const ok = (p) => { const c = dalpCalc(p, cashFor(p), inp); return c.dalp <= DALP_MAX && c.first >= 0.5 * p; };
+  let lo = 100000, hi = 5000000;
+  if (!ok(lo)) return null;
+  for (let i = 0; i < 40; i++) { const mid = (lo + hi) / 2; if (ok(mid)) lo = mid; else hi = mid; }
+  return Math.floor(lo / 5000) * 5000;
+}
+
+function balanceRows() {
+  if (!BALANCES) return '';
+  const p = BALANCES.programs;
+  const row = (k, note) => {
+    const x = p[k]; if (!x) return '';
+    const empty = x.balance === 0;
+    return `<tr><td>${esc(x.label)}</td><td class="r num">${money(x.balance)}</td><td>${x.households != null ? (empty ? '<span class="badge closed">No funds</span>' : `About ${x.households} ${x.households === 1 ? 'household' : 'households'}`) : ''}</td><td class="small muted">${note || ''}</td></tr>`;
+  };
+  return `<div class="table-scroll"><table>
+    <thead><tr><th>Program</th><th class="r">Funds left</th><th>Enough for</th><th></th></tr></thead>
+    <tbody>
+      ${row('educators', 'Educators are also considered in the General pools.')}
+      ${row('tnd', 'One more $20,000 BMR loan, or half of a $40,000 one.')}
+      ${row('general120')}
+      ${row('general200')}
+      ${row('bmrDalp', 'Need-based; requested through your lender.')}
+      ${row('citySecond', 'Only for specific City Second homes.')}
+    </tbody></table></div>
+    <p class="small muted">From MOHCD’s <a href="${BALANCES.source}">loan program balances</a> as of ${fmtDate(BALANCES.asOf)}. MOHCD updates that page every weekday; this site copies it by hand, so check there for today’s numbers.</p>`;
+}
+
+function viewDalp() {
+  const d = state.dalp; const s = state.hh;
+  const lim = (pct, n) => money(limitFor(pct, n).value);
+  const limRows = [1, 2, 3, 4, 5, 6].map((n) => `<tr><td>${n} ${n === 1 ? 'person' : 'people'}</td><td class="r num">${lim(120, n)}</td><td class="r num">${lim(200, n)}</td></tr>`).join('');
+  return `
+  <div class="wrap">
+    <section class="view-head prose">
+      <h1>Down payment loans (DALP)</h1>
+      <p class="lede">The City lends first-time buyers up to $500,000 toward a market-rate home anywhere in San Francisco. There’s no interest and no monthly payment. When you sell, you repay the loan plus the City’s share of any rise in value.</p>
+    </section>
+
+    <section class="split">
+      <div class="prose">
+        <h2>Where the money stands</h2>
+        <p>DALP loans are handed out in yearly rounds by lottery. The last round took applications March 4 to June 2, 2025, and drew its lottery June 25, 2025. No 2026 round has been announced.</p>
+        <p><strong>Funds left from that round are small</strong>, and the educator pool is empty. Under the program rules, money left after a lottery can be offered first come, first served until it runs out, so it’s worth asking MOHCD whether any is open: <a href="mailto:sfhousinginfo@sfgov.org">sfhousinginfo@sfgov.org</a>.</p>
+      </div>
+      <div>${balanceRows()}</div>
+    </section>
+
+    <section class="section">
+      <h2>The DALP family</h2>
+      <p class="prose muted">MOHCD runs several loan programs under the DALP name. They share most rules but differ in who can use them and for what kind of home.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Program</th><th>For</th><th>Amount</th><th>Paid back</th><th>Who</th></tr></thead>
+        <tbody>
+          <tr><td><a href="${DALP_LINKS.apply}">General DALP</a></td><td>Market-rate homes</td><td>Up to $500,000</td><td>Loan plus share of appreciation, when you sell</td><td>First-time buyers up to 200% AMI</td></tr>
+          <tr><td><a href="${DALP_LINKS.educators}">Educators-DALP</a></td><td>Market-rate homes</td><td>Up to $500,000</td><td>Same as General DALP</td><td>SFUSD employees up to 200% AMI</td></tr>
+          <tr><td><a href="${DALP_LINKS.tnd}">Teacher Next Door</a></td><td>BMR or market-rate homes</td><td>$20,000 (BMR) or $40,000 (market rate)</td><td>Forgiven over 10 years if you stay at SFUSD</td><td>SFUSD educators up to 200% AMI</td></tr>
+          <tr><td><a href="${DALP_LINKS.bmrDalp}">BMR-DALP</a></td><td>BMR homes</td><td>What you need, up to 20% of the price</td><td>When you sell</td><td>BMR buyers</td></tr>
+          <tr><td><a href="${LINKS.citySecond}">City Second</a></td><td>Specific listed homes</td><td>Up to $500,000</td><td>When you sell</td><td>Up to 148% AMI</td></tr>
+          <tr><td><a href="${DALP_LINKS.dk}">Dream Keeper DALP</a></td><td>Market-rate homes</td><td>Up to $500,000</td><td>Loan plus share of appreciation</td><td>Up to 200% AMI, with priority groups</td></tr>
+        </tbody></table></div>
+      <p class="small muted">Teacher Next Door can be added on top of Educators-DALP, General DALP or a BMR purchase. You need to qualify for each program you combine, and the stricter rule wins.</p>
+    </section>
+
+    <section class="section" id="estimator">
+      <h2>Estimate a DALP loan</h2>
+      <p class="prose muted">This sizes the loans the way MOHCD does: your first mortgage is the biggest you qualify for, and DALP fills only the gap. Then it shows what you’d owe the City when you sell.</p>
+      <div class="split">
+        <form class="form" id="dalp-form" autocomplete="off" onsubmit="return false">
+          <div class="field"><label for="d-size">People in household</label><select id="d-size" data-hh="size">${sizeOptions(s.size)}</select></div>
+          <div class="field"><label for="d-income">Yearly household income, before taxes</label><div class="money"><input id="d-income" data-hh="income" inputmode="decimal" type="text" value="${esc(s.income)}" placeholder="160,000"></div></div>
+          <div class="field"><label for="d-price">Home price</label><span class="hint">A market-rate home. DALP can’t be used for BMR units.</span><div class="money"><input id="d-price" data-dalp="price" inputmode="decimal" type="text" value="${esc(d.price)}" placeholder="1,000,000"></div></div>
+          <div class="field"><label for="d-cash">Your own cash toward the purchase</label><span class="hint">Dollars or a percent of the price. The minimum is 1%, and it can all be gifts.</span><input id="d-cash" data-dalp="cash" type="text" value="${esc(d.cash)}" placeholder="1%"></div>
+          <div class="field"><label for="d-hoa">Monthly HOA dues</label><span class="hint">Leave blank for a house with no HOA.</span><div class="money"><input id="d-hoa" data-dalp="hoa" inputmode="decimal" type="text" value="${esc(d.hoa)}" placeholder="0"></div></div>
+          <div class="field"><label for="d-debts">Other monthly debt payments</label><span class="hint">Car, student loan and credit card minimums. Total debts can’t top 45% of income.</span><div class="money"><input id="d-debts" data-dalp="debts" inputmode="decimal" type="text" value="${esc(d.debts)}" placeholder="0"></div></div>
+          <div class="field"><label for="d-rate">Mortgage rate (%)</label><input id="d-rate" data-dalp="rate" inputmode="decimal" type="text" value="${esc(d.rate)}" style="max-width:8rem"></div>
+          <fieldset class="field"><legend>When you sell</legend>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap">
+              <div><label for="d-years" style="font-weight:400">Years from now</label><input id="d-years" data-dalp="years" inputmode="numeric" type="text" value="${esc(d.years)}" style="max-width:6rem"></div>
+              <div><label for="d-growth" style="font-weight:400">Yearly price growth (%)</label><input id="d-growth" data-dalp="growth" inputmode="decimal" type="text" value="${esc(d.growth)}" style="max-width:6rem"></div>
+            </div>
+          </fieldset>
+          <p class="small muted">Nothing you type here is saved or sent anywhere.</p>
+        </form>
+        <div class="panel" id="dalp-result" aria-live="polite">${dalpResult()}</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>How a DALP round works</h2>
+      <ol class="path">
+        <li><h3>Get ready before the round opens</h3><p>Finish homebuyer education (good for one year) and get a pre-approval letter from a <a href="${LINKS.lenders}">MOHCD-approved lender</a> dated within 120 days. It must show a market-rate price, your maximum first loan and the DALP amount.</p></li>
+        <li><h3>Apply once during the window</h3><p>Windows open at least 90 days before the lottery. There’s one application; it asks whether you’re an educator. Applying again as the general public can get all your applications thrown out.</p></li>
+        <li><h3>Lottery</h3><p>Every application gets a random rank. Educators are reviewed first, then first responders, then everyone else. Educators not funded in their pool move to the general pool if they qualify.</p></li>
+        <li><h3>Send your full application within 5 business days</h3><p>MOHCD contacts people in rank order. Have three years of tax returns and W-2s, three recent pay stubs, three months of bank statements, ID and your lease ready before the lottery.</p></li>
+        <li><h3>Find a home within 90 days</h3><p>Once funds are reserved, you have 90 calendar days to get into contract. Your lender then has 21 days to send the loan package, and MOHCD reviews it in 15 business days.</p></li>
+        <li><h3>Close</h3><p>MOHCD’s commitment letter is good for 30 days. Everyone on the loan meets with MOHCD before closing.</p></li>
+      </ol>
+    </section>
+
+    <section class="section split">
+      <div class="prose">
+        <h2>Rules that catch people</h2>
+        <ul>
+          <li><strong>First-time buyer:</strong> no one in the household can have owned any home, anywhere, in the last 3 years. For Educators-DALP and Teacher Next Door, only San Francisco ownership counts.</li>
+          <li><strong>Savings cap after closing:</strong> liquid assets can’t be over $80,000 once you buy. Extra cash goes into the down payment. 401(k), 403(b), IRA, HSA and 529 balances don’t count.</li>
+          <li><strong>Reserves:</strong> you need at least 2 months of housing costs left after closing. Retirement funds you can withdraw from can count.</li>
+          <li><strong>Housing costs between 28% and 43% of income.</strong> MOHCD can allow 45% with two of: a 12-month rent history at that level, 6 months of reserves, 20% down, a credit score over 700, or costs rising less than 5%.</li>
+          <li><strong>Home size:</strong> no more than one bedroom over your household size. This doesn’t apply to Educators-DALP or Teacher Next Door.</li>
+          <li><strong>No sizing tricks:</strong> you can’t lower your first mortgage, gifts or credits to get a bigger DALP loan.</li>
+        </ul>
+      </div>
+      <div class="prose">
+        <h2>After you buy</h2>
+        <ul>
+          <li>The home must stay your main residence. Renting it out, even a parking space, makes the loan due.</li>
+          <li>You can repay early, but only in full, with an appraisal to set the City’s share.</li>
+          <li>You can refinance your first mortgage after 12 months to lower your rate, term or payment, with MOHCD’s approval. No cash-out until DALP is repaid.</li>
+          <li>Home equity loans and lines of credit aren’t allowed.</li>
+          <li>If the home doesn’t gain value, you repay only what you borrowed.</li>
+        </ul>
+        <h2>2026 income limits</h2>
+        <table class="small"><thead><tr><th>Household</th><th class="r">120% AMI</th><th class="r">200% AMI</th></tr></thead><tbody>${limRows}</tbody></table>
+        <p class="small muted">The 120% and 200% pools are funded separately. Everyone is ranked on one list.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>For SFUSD staff</h2>
+      <div class="split">
+        <div class="prose">
+          <h3>Educators-DALP</h3>
+          <ul>
+            <li>For SFUSD employees, including Early Education. Part-time staff need at least 30% of their income from SFUSD.</li>
+            <li>Same loan terms as General DALP, but educators are reviewed first in the lottery.</li>
+            <li>Bring a pay stub or SFUSD letter with your job title, dated within 45 days.</li>
+            <li>Its fund is empty as of ${BALANCES ? fmtDate(BALANCES.asOf) : 'November 2026'}. Educators can still be funded from the General pools.</li>
+          </ul>
+        </div>
+        <div class="prose">
+          <h3>Teacher Next Door</h3>
+          <ul>
+            <li>$20,000 for a BMR home or $40,000 for a market-rate one; one per household. No interest and no share of appreciation.</li>
+            <li>Forgiven 20% a year after year 5, fully after year 10, as long as you stay at SFUSD and in the home.</li>
+            <li>Leave SFUSD in the first 10 years and the unforgiven balance is due. If the job ended through disability, layoff or position elimination, you can repay monthly over 5 years instead.</li>
+            <li>First come, first served. No separate application when added to a BMR or DALP purchase; ask your lender.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section prose">
+      <h2>Be ready for the next round</h2>
+      <ul>
+        <li>Finish homebuyer education now; it stays valid for a year. <a href="${LINKS.education}">Sign up through HomeownershipSF</a>.</li>
+        <li>Gather three years of tax returns and W-2s and keep recent pay stubs and bank statements handy. The 5-day turnaround after the lottery is tight.</li>
+        <li>Talk to a <a href="${LINKS.lenders}">MOHCD-approved lender</a> about a DALP pre-approval.</li>
+        <li><a href="${LINKS.alerts}">Sign up for MOHCD’s email alerts</a> to hear when the next round opens.</li>
+      </ul>
+      <p class="small muted">Sources: <a href="${DALP_LINKS.manual}">DALP Manual, September 2025</a>, <a href="${DALP_LINKS.terms}">DALP loan terms</a>, <a href="${DALP_LINKS.educators}">Educators-DALP</a>, <a href="${DALP_LINKS.apply}">DALP application page</a>. The program manual and promissory note control if anything here differs.</p>
+    </section>
+  </div>`;
+}
+
+function dalpResult() {
+  const inp = dalpInputs();
+  const { h, price, cash, years, growth, rate } = inp;
+  if (!h.ready) return `<h2 style="font-size:var(--step-2)">Your estimate</h2><p class="muted">Choose a household size and enter your income to see an estimate.</p>`;
+  count('used-dalp-estimator');
+  const pct = amiPctOf(h.income, h.size);
+  const c = dalpCalc(price, cash, inp);
+  const notes = [];
+  let verdict = 'likely';
+  if (pct > 200) { verdict = 'unlikely'; notes.push(`Your income is about ${Math.round(pct)}% of AMI. DALP’s limit is 200% (${money(limitFor(200, h.size).value)} for ${h.size}).`); }
+  else if (pct > 120) notes.push(`At about ${Math.round(pct)}% of AMI you’d draw from the 200% pool, which is the smaller one.`);
+  else notes.push(`At about ${Math.round(pct)}% of AMI you’re eligible for both the 120% and 200% pools.`);
+  if (cash < price * 0.01 - 1) { verdict = 'unlikely'; notes.push(`You need at least 1% of the price in your own cash or gifts: ${money(price * 0.01)}.`); }
+  let headline;
+  if (c.maxFirst <= 0) { verdict = 'unlikely'; headline = 'Your income doesn’t support a first mortgage at this price, HOA and debt level.'; }
+  else if (c.dalp <= 0) headline = 'You likely wouldn’t need DALP for this price. Your income supports a first mortgage that covers it.';
+  else if (c.dalp > DALP_MAX) { verdict = 'unlikely'; headline = `This price needs ${money(c.dalp)} of help, over the $500,000 maximum. You’d need ${money(c.dalp - DALP_MAX)} more cash, or a lower price.`; }
+  else headline = `You’d likely need a DALP loan of about <strong>${money(c.dalp)}</strong>.`;
+  if (c.dalp > 0 && c.first < 0.5 * price) { verdict = 'unlikely'; notes.push('Your first mortgage must cover at least half the price.'); }
+  const maxP = dalpMaxPrice(inp);
+  const dalpAmt = Math.min(Math.max(c.dalp, 0), DALP_MAX);
+  const share = price ? dalpAmt / price : 0;
+  // resale
+  const resale = price * Math.pow(1 + growth / 100, years);
+  const gain = Math.max(0, resale - price);
+  const cityShare = share * gain;
+  const owed = dalpAmt + cityShare;
+  const r = rate / 100 / 12; const n = 360, k = Math.min(years * 12, n);
+  const firstBal = c.first * (Math.pow(1 + r, n) - Math.pow(1 + r, k)) / (Math.pow(1 + r, n) - 1);
+  const yours = resale - firstBal - owed;
+  return `<p class="small muted" style="margin:0 0 .3rem">Estimated DALP loan</p>
+    <p class="result-figure num">${money(dalpAmt)}</p>
+    <p style="margin-bottom:.6rem">${verdictChip(verdict)}</p>
+    <p>${headline}</p>
+    <table class="small"><tbody>
+      <tr><td>Price plus closing costs (about 2%)</td><td class="r num">${money(price + c.closing)}</td></tr>
+      <tr><td>Your cash</td><td class="r num">−${money(cash)}</td></tr>
+      <tr><td>First mortgage (the most you qualify for)</td><td class="r num">−${money(c.first)}</td></tr>
+      <tr><td><strong>DALP covers</strong></td><td class="r num"><strong>${money(dalpAmt)}</strong></td></tr>
+      ${c.dalp > DALP_MAX ? `<tr><td><strong>Still short</strong></td><td class="r num" style="color:var(--no)"><strong>${money(c.dalp - DALP_MAX)}</strong></td></tr>` : ''}
+      <tr><td>Monthly housing cost</td><td class="r num">${money(c.monthly)} (${Math.round(c.ratio)}% of income)</td></tr>
+    </tbody></table>
+    <ul class="reasons" style="margin-top:.75rem">${notes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+    ${maxP ? `<p style="margin-top:.75rem">With the full $500,000, the highest price your income likely supports is about <strong class="num">${money(maxP)}</strong>.</p>` : ''}
+    ${dalpAmt > 0 && c.dalp <= DALP_MAX && c.maxFirst > 0 && pct <= 200 ? `<h3 style="margin-top:1.25rem;font-size:var(--step-0)">If you sell in ${years} ${years === 1 ? 'year' : 'years'}</h3>
+    <table class="small"><tbody>
+      <tr><td>Sale price at ${growth}% a year</td><td class="r num">${money(resale)}</td></tr>
+      <tr><td>City’s share of the gain (${(share * 100).toFixed(1).replace(/\.0$/, '')}%, set when you buy)</td><td class="r num">${money(cityShare)}</td></tr>
+      <tr><td>Repay the City: loan plus share</td><td class="r num">${money(owed)}</td></tr>
+      <tr><td>Pay off first mortgage</td><td class="r num">${money(firstBal)}</td></tr>
+      <tr><td><strong>Left for you, before selling costs</strong></td><td class="r num"><strong>${money(yours)}</strong></td></tr>
+    </tbody></table>` : ''}
+    <p class="small muted" style="margin-top:1rem">Assumes a 30-year fixed loan, ${PROPERTY_TAX_RATE}% property tax and insurance of 0.2% of the price a year. MOHCD lends only what you need after the first mortgage you’re pre-approved for. This assumes the largest first mortgage within MOHCD’s limits (43% housing, 45% total debt), so it’s roughly the smallest DALP you’d get; your lender’s pre-approval sets the real split.</p>`;
+}
+
 /* ================================================================
    ROUTER + EVENTS
 ================================================================ */
-const ROUTES = { '': viewHome, check: viewCheck, homes: viewHomes, programs: viewPrograms, recent: viewRecent, verify: viewVerify, privacy: viewPrivacy };
+const ROUTES = { '': viewHome, check: viewCheck, homes: viewHomes, programs: viewPrograms, dalp: viewDalp, recent: viewRecent, verify: viewVerify, privacy: viewPrivacy };
 function route() {
   const raw = location.hash.replace(/^#\/?/, '');
   const [path, query] = raw.split('?');
@@ -798,7 +1073,7 @@ function route() {
     const on = (a.dataset.nav === 'home' && !ROUTES[path]) || (a.dataset.nav === 'home' && path === '') || a.dataset.nav === path;
     if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  const titles = { check: 'Check eligibility', homes: 'Homes for sale', programs: 'Find programs', recent: 'Recent and upcoming', verify: 'Get it confirmed', privacy: 'Privacy' };
+  const titles = { check: 'Check eligibility', homes: 'Homes for sale', programs: 'Find programs', dalp: 'Down payment loans (DALP)', recent: 'Recent and upcoming', verify: 'Get it confirmed', privacy: 'Privacy' };
   document.title = `${titles[path] ? `${titles[path]} | ` : ''}BMR Homes for SFUSD Staff`;
   countPage(`/${path}`);
 }
@@ -809,6 +1084,7 @@ function refreshPartial() {
   if (path === 'check') { swap('check-result', checkResult()); swap('check-chart', checkChart()); swap('ami-table', amiTable()); swap('cost-result', costResult()); }
   if (path === 'homes') { swap('homes-list', homesList()); swap('city-second', citySecondBlock()); }
   if (path === 'programs') swap('prog-result', programsResult());
+  if (path === 'dalp') swap('dalp-result', dalpResult());
 }
 document.addEventListener('input', (e) => {
   const t = e.target;
@@ -820,6 +1096,9 @@ document.addEventListener('input', (e) => {
   } else if (t.dataset.filter) {
     state.filters[t.dataset.filter] = t.type === 'checkbox' ? t.checked : t.value;
     const el = document.getElementById('homes-list'); if (el) el.innerHTML = homesList();
+  } else if (t.dataset.dalp) {
+    state.dalp[t.dataset.dalp] = t.value;
+    const el = document.getElementById('dalp-result'); if (el) el.innerHTML = dalpResult();
   } else if (t.dataset.cost) {
     state.cost[t.dataset.cost] = t.value;
     const el = document.getElementById('cost-result'); if (el) el.innerHTML = costResult();
@@ -862,13 +1141,14 @@ async function boot() {
     document.head.appendChild(s);
   }
   try {
-    const [ami, data, hist, checked] = await Promise.all([
+    const [ami, data, hist, checked, balances] = await Promise.all([
       fetch('data/ami.json').then((r) => r.json()),
       fetch('data/listings.json', { cache: 'no-cache' }).then((r) => r.json()),
       fetch('data/history.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({ listings: {} })),
       fetch('data/checked.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => null),
+      fetch('data/dalp-balances.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => null),
     ]);
-    AMI = ami; DATA = data; HISTORY = hist; CHECKED = checked;
+    AMI = ami; DATA = data; HISTORY = hist; CHECKED = checked; BALANCES = balances;
   } catch (e) {
     view.innerHTML = `<div class="wrap"><p class="notice">The listing data didn’t load. Check your connection and reload the page. You can always browse homes directly on <a href="${LINKS.dahlia}">DAHLIA</a>.</p></div>`;
     return;

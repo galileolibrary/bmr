@@ -39,6 +39,8 @@ Listing data comes from the JSON endpoints that power housing.sfgov.org (`/api/v
 
 - **Every June:** MOHCD publishes new income limits. Replace `data/ami.json` with the new chart (same shape: `limits["100"]` is the 100% AMI row, index 0 = 1 person), and update "2026" in the page text.
 - **When programs change:** edit `assets/programs.js`. The DALP round dates, Teacher Next Door amounts, City Second cap (148% AMI) and the MCC suspension all live there.
+- **DALP fund balances:** `data/dalp-balances.json` is copied by hand from MOHCD's [loan program balances](https://www.sf.gov/data--mohcd-loan-program-balances) page (a Power BI report the job can't read). Update the amounts and `asOf` date every few weeks, or when a new DALP round opens.
+- **DALP rules:** the Down payment loans page (`viewDalp` in `assets/app.js`) follows the DALP Manual, September 2025. Check it when MOHCD publishes a new manual.
 - **Mortgage rate default:** `assets/config.js`.
 - **Resale waivers:** MOHCD's temporary waivers run through June 30, 2027. Listings state them in their notes; `scripts/normalize.mjs` detects them by wording.
 

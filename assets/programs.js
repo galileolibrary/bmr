@@ -43,6 +43,11 @@ export function matchPrograms(a) {
   const noOwnAnywhere = a.owned === 'no';
   const noOwnSF = a.owned === 'no' || a.owned === 'outsideSF';
   const fmt = (n) => `${Math.round(n)}%`;
+  // Live-ish fund balances (data/dalp-balances.json), if loaded.
+  const bal = (a.balances && a.balances.programs) || {};
+  const asOf = a.balances && a.balances.asOf ? new Date(`${a.balances.asOf}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : null;
+  const usd = (n) => `$${Math.round(n).toLocaleString('en-US')}`;
+  const left = (k) => (bal[k] && asOf ? { amount: bal[k].balance, text: bal[k].balance === 0 ? `No funds left as of ${asOf}` : `${usd(bal[k].balance)} left as of ${asOf}` } : null);
 
   // BMR ownership
   {
@@ -84,10 +89,11 @@ export function matchPrograms(a) {
     if (!noOwnSF) { v = 'unlikely'; reasons.push('No adult in the household can have owned a home in San Francisco in the last 3 years.'); }
     if (v === 'likely') reasons.push('You appear to meet the role, income and first-time rules.');
     reasons.push('You must stay at SFUSD for the 10-year term. Leaving makes the loan due.');
+    if (pct > 120 && pct <= 200 && bal.tnd) reasons.push('MOHCD lists the remaining Teacher Next Door money in a 120% AMI pool. Above 120%, ask whether funds are available to you.');
     out.push({
       id: 'tnd', name: 'Teacher Next Door', who: 'SFUSD educators',
       what: 'A forgivable loan: $20,000 toward a BMR home or $40,000 toward a market-rate home. No interest; forgiven after 10 years if you meet the rules.',
-      status: { label: 'Ask your lender about funds', tone: 'neutral' },
+      status: left('tnd') ? { label: left('tnd').text, tone: left('tnd').amount ? 'open' : 'closed' } : { label: 'Ask your lender about funds', tone: 'neutral' },
       verdict: v, reasons, link: 'https://www.sf.gov/reports--august-2024--about-teacher-next-door-program', linkText: 'Teacher Next Door rules',
     });
   }
@@ -101,10 +107,11 @@ export function matchPrograms(a) {
     if (pct > 200) { v = 'unlikely'; reasons.push('Household income must be at or below 200% of AMI.'); }
     if (!noOwnSF) { v = 'unlikely'; reasons.push('No one can have owned a home in San Francisco in the last 3 years (owning elsewhere is OK).'); }
     reasons.push('For market-rate homes, not BMR units. Awarded by lottery during an application window.');
+    if (left('educators') && left('educators').amount === 0) reasons.push('The educator fund is empty right now, but educators are also considered for General DALP money.');
     out.push({
       id: 'edalp', name: 'Educators Downpayment Assistance Loan (Educators-DALP)', who: 'SFUSD employees',
       what: 'Up to $500,000 toward a market-rate home anywhere in San Francisco. No monthly payments; repaid with a share of appreciation when you sell.',
-      status: { label: 'Between rounds: last round closed June 2, 2025', tone: 'closed' },
+      status: left('educators') ? { label: left('educators').text, tone: left('educators').amount ? 'open' : 'closed' } : { label: 'Between rounds: last round closed June 2, 2025', tone: 'closed' },
       verdict: v, reasons, link: 'https://www.sf.gov/educators-downpayment-assistance-loan-program', linkText: 'Educators-DALP on sf.gov',
     });
   }
@@ -116,10 +123,11 @@ export function matchPrograms(a) {
     if (!noOwnAnywhere) reasons.push('No one in the household can have owned a home anywhere in the last 3 years.');
     if (pct > 200) reasons.push('Household income must be at or below 200% of AMI.');
     if (v === 'likely') reasons.push('Educators apply on the same application. If not picked for Educators-DALP, you are also considered here.');
+    if (pct > 120 && pct <= 200) reasons.push('Above 120% AMI you draw from the smaller 200% AMI pool.');
     out.push({
       id: 'dalp', name: 'Downpayment Assistance Loan Program (DALP)', who: 'First-time buyers up to 200% AMI',
       what: 'Up to $500,000 toward a market-rate home. Same application and lottery as Educators-DALP.',
-      status: { label: 'Between rounds: last round closed June 2, 2025', tone: 'closed' },
+      status: bal.general120 && asOf ? { label: `Round closed; ${usd((bal.general120.balance || 0) + ((bal.general200 && bal.general200.balance) || 0))} left as of ${asOf}`, tone: 'neutral' } : { label: 'Between rounds: last round closed June 2, 2025', tone: 'closed' },
       verdict: v, reasons, link: 'https://sf.gov/apply-downpayment-loan-buy-market-rate-home', linkText: 'DALP on sf.gov',
     });
   }
@@ -134,7 +142,7 @@ export function matchPrograms(a) {
     out.push({
       id: 'cslp', name: 'City Second Loan Program', who: 'Buyers up to 148% AMI',
       what: 'A no-interest down payment loan for specific homes sold at a fixed "offer price to match". Listings are posted on sf.gov.',
-      status: { label: 'Check current listings', tone: 'open' },
+      status: left('citySecond') ? { label: left('citySecond').text, tone: left('citySecond').amount ? 'open' : 'closed' } : { label: 'Check current listings', tone: 'open' },
       verdict: v, reasons, link: LINKS.citySecond, linkText: 'City Second listings',
     });
   }

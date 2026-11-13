@@ -1,0 +1,14 @@
+{
+ "asOf": "2026-11-13",
+ "source": "https://www.sf.gov/data--mohcd-loan-program-balances",
+ "note": "Copied by hand from MOHCD's Power BI balance report (updated weekdays). Update asOf and amounts when you refresh.",
+ "programs": {
+  "general120": { "label": "General DALP (up to 120% AMI)", "balance": 1964550, "households": 3 },
+  "general200": { "label": "General DALP (up to 200% AMI)", "balance": 537000, "households": 1 },
+  "educators": { "label": "SFUSD Educators DALP", "balance": 0, "households": 0 },
+  "firstResponders": { "label": "First Responders DALP", "balance": 0, "households": 0 },
+  "tnd": { "label": "Teacher Next Door (120% AMI funds)", "balance": 20000, "households": null },
+  "citySecond": { "label": "City Second Loan Program", "balance": 500000, "households": 1 },
+  "bmrDalp": { "label": "BMR DALP", "balance": 1978741, "households": null }
+ }
+}
