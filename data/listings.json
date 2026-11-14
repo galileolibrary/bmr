@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-13T21:25:53.983Z",
+ "updated": "2026-11-14T06:24:09.242Z",
  "source": "https://housing.sfgov.org/listings/for-sale",
- "count": 55,
+ "count": 54,
  "listings": [
   {
    "id": "a0W7y00000LDjZZEA1",
@@ -546,7 +546,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-12T23:03:15.000+0000"
+   "lastModified": "2026-11-14T00:32:08.000+0000"
   },
   {
    "id": "a0W7y00000KecHZEAZ",
@@ -657,7 +657,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-12T21:40:12.000+0000"
+   "lastModified": "2026-11-14T00:32:40.000+0000"
   },
   {
    "id": "a0W7y00000Kd9vxEAB",
@@ -1848,117 +1848,6 @@
    "lastModified": "2026-11-06T21:32:34.000+0000"
   },
   {
-   "id": "a0W7y00000Hew8LEAR",
-   "name": "1310 Fillmore Street Unit 610",
-   "building": "Fillmore Heritage",
-   "address": "1310 Fillmore Street",
-   "zip": "94115",
-   "neighborhood": "Western Addition",
-   "yearBuilt": 2007,
-   "method": "lottery",
-   "listingType": "Standard Lottery",
-   "tenure": "Resale",
-   "programType": "OCII-OWN",
-   "dueDate": "2026-07-28T00:00:00.000+0000",
-   "lotteryDate": "2026-07-31T22:00:00.000+0000",
-   "lotteryResultsDate": "2026-08-07",
-   "unitsAvailable": 1,
-   "image": "https://media-housing-prod.dev.sf.gov/images/listings/a0W7y00000Hew8LEAR-bd5f1fb6f338ae51bcf47ef45d52e30c.jpg",
-   "url": "https://housing.sfgov.org/listings/a0W7y00000Hew8LEAR",
-   "mlsUrl": null,
-   "parking": "One (1) Parking Space",
-   "buildingParkingCost": null,
-   "appliances": "Refrigerator, range, microwave, dishwasher, washer, dryer",
-   "amenities": "The building features a large outdoor space with dog run, BBQs and seating. Staffed front desk and secure parking space included.",
-   "petPolicy": "Normal and customary household pets may be maintained within the Development under the following conditions:\r\n(i) there shall be no more than (a) one dog; (b) two cats; or (c) one dog and one cat maintained by the occupants of anyone Condominium unless otherwise authorized in writing by the Board;\r\n(ii) Owners shall clean up immediately after their pets;\r\n(iii) dogs shall be on a leash at all times held by a person capable of controlling the dog while within the Common Area, including elevators;\r\n(iv) no animal shall be maintained for any commercial purposes;\r\n(v) the use of the Common Area by pets shall be subject to such Rules as may be adopted by the Board;\r\n(vi) after making a reasonable attempt to notify the Owner, the Association or any Owner may cause any unleashed animal found within the Common Area to be removed to a pound or animal shelter by calling the appropriate authorities. The Owner shall be responsible for all payments required to repossess the animal;\r\n(vii) each Owner authorizing, bringing or keeping a pet within the Development shall be liable to other Owners, their family members, guests, invitees, tenants and contract purchasers, and their respective family members, guests and invitees, for any damage to persons or property proximately caused by any pet brought upon or kept within the Development by that Owner or by members of his or her family, guests or invitees;\r\n(viii) Owners are required to inform the Association of the type of breed of pet upon commencement of occupancy and provide the Association with proof of rabies vaccination; and\r\n(ix) In no event shall any Owner authorize, bring or keep within the Development (a) any pit bull, rottweiler, doberman pinscher, mastif, canaria presa, or any other breed known as a \"fighting breed\" or any dog being a mix thereof; or (b) any snakes, pigs, large lizards, spiders, rats or vermin.\r\nThe Board, after notice and a hearing, may require the permanent removal from the Development of any animal that the Board, in its discretion, determines is a nuisance, a danger to the health or safety of any occupant, or otherwise interferes with the quiet use and enjoyment of occupants of any Condominium. The Board may find that an animal is a nuisance if the animal or its Owner continue to violate the Rules regulating pets after receipt of a demand from the Board to comply with the Rules. Please see Page 10, Section 3.6 of the CC&R’s for complete Pet Policy.",
-   "notes": "Applicants applying for this BMR unit are eligible for one or more of the following one-time waivers*:\n\nTemporary qualifying AMI of 125%, as shown on the listing reflects the one-time 20% increase.\nCan have income from assets excluded from total household income.\nCan complete the homebuyer education after applying.\nCan make a down payment more than 50% of the sales price.\n\n*Temporary adjustments to the eligibility requirements will expire on 06/30/2027 unless further extended by MOHCD. For details on the temporary adjustments, view the June 15, 2026 program announcement.",
-   "waivers": {
-    "raisedAmi": true,
-    "assetsExcluded": true,
-    "educationAfterApplying": true,
-    "largeDownPayment": true,
-    "expires": "06/30/2027"
-   },
-   "agent": {
-    "name": "Matt Hendry",
-    "title": "Seller's Real Estate Agent",
-    "phone": "(415) 415-7897",
-    "email": "matthendry@kw.com"
-   },
-   "openHouses": [
-    {
-     "date": "2026-07-11",
-     "start": "2:00 PM",
-     "end": "4:00 PM",
-     "note": ""
-    },
-    {
-     "date": "2026-07-12",
-     "start": "2:00 PM",
-     "end": "4:00 PM",
-     "note": ""
-    },
-    {
-     "date": "2026-07-14",
-     "start": "5:00 PM",
-     "end": "7:00 PM",
-     "note": ""
-    }
-   ],
-   "prefs": [
-    {
-     "name": "Veteran with Certificate of Preference",
-     "description": "For households in which at least one member is a veteran and at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s or are descendants of someone who was displaced.",
-     "url": "http://sfmohcd.org/certificate-preference"
-    },
-    {
-     "name": "Certificate of Preference (COP)",
-     "description": "For households in which at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s or are descendants of someone who was displaced.",
-     "url": "http://sfmohcd.org/certificate-preference"
-    },
-    {
-     "name": "Veteran with Displaced Tenant Housing Preference",
-     "description": "For households in which at least one member is a veteran and at least one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, have been displaced by a fire, or who will experience an unaffordable rent increase due to affordability restrictions expiring. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current residence or work location.",
-     "url": "http://sfmohcd.org/displaced-tenant-housing-preference"
-    },
-    {
-     "name": "Displaced Tenant Housing Preference (DTHP)",
-     "description": "For households in which at least one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, have been displaced by a fire, or who will experience an unaffordable rent increase due to affordability restrictions expiring. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current residence or work location.",
-     "url": "http://sfmohcd.org/displaced-tenant-housing-preference"
-    },
-    {
-     "name": "Veteran with Live or Work in San Francisco Preference",
-     "description": "For households in which at least one member is a veteran and at least one member lives or works in San Francisco. Requires submission of proof. Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.",
-     "url": "http://sfmohcd.org/housing-preference-programs"
-    },
-    {
-     "name": "Live or Work in San Francisco Preference",
-     "description": "For households in which at least one member lives or works in San Francisco.  Requires submission of proof.  Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.",
-     "url": "http://sfmohcd.org/housing-preference-programs"
-    }
-   ],
-   "units": [
-    {
-     "type": "1 BR",
-     "number": "610",
-     "floor": "6",
-     "baths": 1,
-     "sqft": 730,
-     "price": 435397,
-     "priceWithParking": 435397,
-     "hoa": 986,
-     "hoaWithParking": 986,
-     "maxAmi": 105,
-     "minOccupancy": 1,
-     "maxOccupancy": null,
-     "status": "Available",
-     "availability": 1,
-     "reserved": false
-    }
-   ],
-   "lastModified": "2026-11-01T19:05:32.000+0000"
-  },
-  {
    "id": "a0W7y00000L2NqrEAF",
    "name": "285 Main Street Unit 404",
    "building": "MIRA",
@@ -2091,7 +1980,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-05T00:31:10.000+0000"
+   "lastModified": "2026-11-14T01:11:14.000+0000"
   },
   {
    "id": "a0W7y00000KwBsPEAV",
