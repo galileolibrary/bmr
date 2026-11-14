@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-14T06:24:09.242Z",
+ "updated": "2026-11-14T15:48:53.539Z",
  "source": "https://housing.sfgov.org/listings/for-sale",
  "count": 54,
  "listings": [
@@ -1750,12 +1750,12 @@
      "number": "223",
      "floor": "2",
      "baths": 1,
-     "sqft": 666,
+     "sqft": 659,
      "price": 393695,
      "priceWithParking": null,
      "hoa": 597,
      "hoaWithParking": null,
-     "maxAmi": 120,
+     "maxAmi": 100,
      "minOccupancy": 1,
      "maxOccupancy": null,
      "status": "Available",
@@ -3143,7 +3143,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-13T15:04:08.000+0000"
+   "lastModified": "2026-11-13T17:23:24.000+0000"
   },
   {
    "id": "a0W7y00000G7fI9EAJ",
@@ -3459,7 +3459,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-01T18:57:34.000+0000"
+   "lastModified": "2026-11-14T10:44:23.000+0000"
   },
   {
    "id": "a0W7y00000Fx1STEAZ",
