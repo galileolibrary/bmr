@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T06:30:44.528Z",
+ "updated": "2026-11-16T19:37:03.970Z",
  "source": "https://housing.sfgov.org/listings/for-sale",
  "count": 54,
  "listings": [
@@ -546,7 +546,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-14T00:32:08.000+0000"
+   "lastModified": "2026-11-16T16:14:35.000+0000"
   },
   {
    "id": "a0W7y00000KecHZEAZ",
@@ -3459,7 +3459,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-14T10:44:23.000+0000"
+   "lastModified": "2026-11-16T16:27:33.000+0000"
   },
   {
    "id": "a0W7y00000Fx1STEAZ",
@@ -4546,6 +4546,7 @@
     "status": "closed",
     "url": null
    }
-  ]
+  ],
+  "stale": true
  }
 }
