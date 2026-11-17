@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-16T19:37:03.970Z",
+ "updated": "2026-11-17T03:54:25.108Z",
  "source": "https://housing.sfgov.org/listings/for-sale",
- "count": 54,
+ "count": 55,
  "listings": [
   {
    "id": "a0W7y00000LDjZZEA1",
@@ -334,7 +334,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-06T23:04:21.000+0000"
+   "lastModified": "2026-11-16T17:34:59.000+0000"
   },
   {
    "id": "a0W7y00000L6ntBEAR",
@@ -435,7 +435,118 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-15T00:09:04.000+0000"
+   "lastModified": "2026-11-16T17:33:04.000+0000"
+  },
+  {
+   "id": "a0W7y00000LI5TNEA1",
+   "name": "855 Folsom Street Unit 941",
+   "building": "Yerba Buena Lofts",
+   "address": "855 Folsom Street",
+   "zip": "94107",
+   "neighborhood": "South of Market",
+   "yearBuilt": 2001,
+   "method": "lottery",
+   "listingType": "Standard Lottery",
+   "tenure": "Resale",
+   "programType": "IH-OWN",
+   "dueDate": "2026-12-08T01:00:00.000+0000",
+   "lotteryDate": "2026-12-14T23:00:00.000+0000",
+   "lotteryResultsDate": "2026-12-21",
+   "unitsAvailable": 1,
+   "image": "https://media-housing-prod.dev.sf.gov/images/listings/a0W7y00000LI5TNEA1-33c08512aa3560082f294f7ff2df6ec9.jpg",
+   "url": "https://housing.sfgov.org/listings/a0W7y00000LI5TNEA1",
+   "mlsUrl": "https://sfarnet.rapmls.com/Reports/ReportViewer.aspx?hidMLS=SFAR&emailReportRid=104956486&hidEntryPoint=ME",
+   "parking": "No parking space",
+   "buildingParkingCost": null,
+   "appliances": "Refrigerator, Stove/oven, dishwasher, microwave, washer/dryer",
+   "amenities": "Door person, bike room",
+   "petPolicy": "No more than 2 usual, small & ordinary household pets such as dogs, cats, birds, etc. Animals may not be kept, bred or maintained for commercial purposes. Please see the CC&R's for the complete pet policy. See page 32 Section 7.4 of CC&Rs for complete Pet Policy.",
+   "notes": "The affordable price is $375,102 for this BMR unit. The affordable price is based on what a household earning at 100% of Area Median Income can afford according to certain pricing assumptions.\n\nApplicants can make an offer between the maximum sales price and the affordable price. The seller is free to accept or reject the price offered by the buyer. Some sellers may not negotiate at all. We recommend that the buyer work with their own separate real estate agent for the price negotiations. \n\nIf you pay more than the affordable price, you will not be eligible for the BMR DALP program. If you pay more than the affordable price now, you might not be able to sell for more than the affordable price as calculated when you sell.",
+   "waivers": {
+    "raisedAmi": false,
+    "assetsExcluded": false,
+    "educationAfterApplying": false,
+    "largeDownPayment": false,
+    "expires": null
+   },
+   "agent": {
+    "name": "Stephanie Okabe Mates",
+    "title": "Seller's Real Estate Agent",
+    "phone": "(650) 278-2092",
+    "email": "stephanie@sequoia-re.com"
+   },
+   "openHouses": [
+    {
+     "date": "2026-11-21",
+     "start": "1:00 PM",
+     "end": "3:00 PM",
+     "note": ""
+    },
+    {
+     "date": "2026-11-19",
+     "start": "5:00 PM",
+     "end": "7:00 PM",
+     "note": ""
+    },
+    {
+     "date": "2026-11-22",
+     "start": "1:00 PM",
+     "end": "3:00 PM",
+     "note": ""
+    }
+   ],
+   "prefs": [
+    {
+     "name": "Veteran with Certificate of Preference",
+     "description": "For households in which at least one member is a veteran and at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s. Descendants of someone who was displaced are not eligible to receive COP priority for this listing.",
+     "url": "http://sfmohcd.org/certificate-preference"
+    },
+    {
+     "name": "Certificate of Preference (COP)",
+     "description": "For households in which at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s. Descendants of someone who was displaced are not eligible to receive COP priority for this listing.",
+     "url": "http://sfmohcd.org/certificate-preference"
+    },
+    {
+     "name": "Veteran with Displaced Tenant Housing Preference",
+     "description": "For households in which at least one member is a veteran and at least one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, have been displaced by a fire, or who will experience an unaffordable rent increase due to affordability restrictions expiring. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current residence or work location.",
+     "url": "http://sfmohcd.org/displaced-tenant-housing-preference"
+    },
+    {
+     "name": "Displaced Tenant Housing Preference (DTHP)",
+     "description": "For households in which at least one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, have been displaced by a fire, or who will experience an unaffordable rent increase due to affordability restrictions expiring. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current residence or work location.",
+     "url": "http://sfmohcd.org/displaced-tenant-housing-preference"
+    },
+    {
+     "name": "Veteran with Live or Work in San Francisco Preference",
+     "description": "For households in which at least one member is a veteran and at least one member lives or works in San Francisco. Requires submission of proof. Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.",
+     "url": "http://sfmohcd.org/housing-preference-programs"
+    },
+    {
+     "name": "Live or Work in San Francisco Preference",
+     "description": "For households in which at least one member lives or works in San Francisco.  Requires submission of proof.  Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.",
+     "url": "http://sfmohcd.org/housing-preference-programs"
+    }
+   ],
+   "units": [
+    {
+     "type": "Studio",
+     "number": "941",
+     "floor": "9",
+     "baths": 1,
+     "sqft": 503,
+     "price": 380000,
+     "priceWithParking": null,
+     "hoa": 830,
+     "hoaWithParking": null,
+     "maxAmi": 100,
+     "minOccupancy": 1,
+     "maxOccupancy": null,
+     "status": "Available",
+     "availability": 1,
+     "reserved": false
+    }
+   ],
+   "lastModified": "2026-11-16T22:05:34.000+0000"
   },
   {
    "id": "a0W7y00000Klqu5EAB",
@@ -1941,10 +2052,10 @@
     "expires": "06/30/2027"
    },
    "agent": {
-    "name": "Chanh Ngo",
-    "title": "Seller's Real Estate Agent",
-    "phone": "(415) 999-0133",
-    "email": "chanhrealty@gmail.com"
+    "name": "Angela Ho",
+    "title": "Real Estate Agent",
+    "phone": "(415) 283-7271",
+    "email": "angelarealty@hotmail.com"
    },
    "openHouses": [
     {
@@ -1980,7 +2091,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-14T01:11:14.000+0000"
+   "lastModified": "2026-11-16T22:51:28.000+0000"
   },
   {
    "id": "a0W7y00000KwBsPEAV",
@@ -4546,7 +4657,6 @@
     "status": "closed",
     "url": null
    }
-  ],
-  "stale": true
+  ]
  }
 }
