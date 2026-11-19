@@ -242,6 +242,10 @@ function viewHome() {
   const open = openListings();
   const prices = open.flatMap((l) => l.units.filter(isAvailable).map((u) => u.price)).filter(Boolean);
   const lotteries = open.filter((l) => l.method === 'lottery').length;
+  // Monthly rents of rental units taking applications now.
+  const openRentals = RENTALS ? RENTALS.listings.filter(rentalOpen) : [];
+  const rents = openRentals.flatMap((l) => l.units.filter((g) => g.available > 0 || !l.units.some((x) => x.available > 0)).map((g) => g.rent)).filter(Boolean);
+  const usd0 = (n) => `$${Math.round(n).toLocaleString('en-US')}`;
   const ex1 = limitFor(100, 1).value;
   const teacherPct = Math.round(amiPctOf(95000, 1));
   return `
@@ -258,7 +262,10 @@ function viewHome() {
 
     <section class="facts" aria-label="Right now">
       <div><p class="figure num">${open.length}</p><p>BMR homes taking applications right now${lotteries ? `, ${lotteries} of them by lottery` : ''}.</p></div>
-      <div><p class="figure num">${prices.length ? `${kmoney(Math.min(...prices))}–${kmoney(Math.max(...prices))}` : '—'}</p><p>Price range of those homes, before parking.</p></div>
+      <div>
+        <p class="figure num">${prices.length ? `${kmoney(Math.min(...prices))}–${kmoney(Math.max(...prices))}` : '—'}</p><p>Price range of those homes, before parking.</p>
+        ${rents.length ? `<p class="figure num" style="margin-top:1.1rem">${usd0(Math.min(...rents))}–${usd0(Math.max(...rents))}</p><p>Monthly rents at the ${openRentals.length} rental ${openRentals.length === 1 ? 'listing' : 'listings'} taking applications. <a href="#/rentals">See rentals</a></p>` : `<p style="margin-top:1rem">No rentals are taking applications right now. <a href="#/rentals">See rentals</a></p>`}
+      </div>
       <div><p class="figure num">${teacherPct}%</p><p>Where a single teacher earning $95,000 sits on the 2026 income scale. Most listings allow 100–120%.</p></div>
     </section>
 
