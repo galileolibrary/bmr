@@ -131,6 +131,48 @@ function monthlyCost(price, hoa, down, rate) {
   return { pi, tax, ins: INSURANCE_MONTHLY, hoa: hoa || 0, total: pi + tax + INSURANCE_MONTHLY + (hoa || 0) };
 }
 
+
+/* ---------------- official links ---------------- */
+const ICONS = {
+  home: '<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/>',
+  key: '<circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.2-8.2M16 7l2 2M14 9l2 2"/>',
+  bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  book: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>',
+  people: '<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/>',
+  bank: '<path d="M3 10 12 4l9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/>',
+  phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  doc: '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>',
+  coins: '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>',
+};
+const EXT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>';
+const OFFICIAL = {
+  dahliaSale: { t: 'BMR homes for sale', d: 'Browse and apply on DAHLIA, the City’s housing portal', url: 'https://housing.sfgov.org/listings/for-sale', ico: 'home' },
+  dahliaRent: { t: 'BMR rentals', d: 'Affordable apartments and waitlists on DAHLIA', url: 'https://housing.sfgov.org/listings/for-rent', ico: 'key' },
+  alerts: { t: 'Get new-listing emails', d: 'MOHCD emails you when homes or rentals post', url: 'https://confirmsubscription.com/h/y/C3BAFCD742D47910', ico: 'bell' },
+  education: { t: 'Sign up for homebuyer classes', d: 'The required 10 hours: orientation, workshop, counseling', url: 'https://www.homeownershipsf.org/homebuyer-education/', ico: 'book' },
+  agencies: { t: 'Housing counseling agencies', d: 'Free one-on-one help; addresses and phone numbers', url: '#/verify', ico: 'people', internal: true },
+  lenders: { t: 'MOHCD-approved lenders', d: 'Required for your pre-approval letter', url: 'https://www.sf.gov/reports--december-2024--find-lender-downpayment-and-mortgage-assistance-programs/', ico: 'bank' },
+  dalp: { t: 'Down payment loan programs', d: 'DALP, Teacher Next Door and current fund levels', url: '#/dalp', ico: 'coins', internal: true },
+  mohcd: { t: 'Ask MOHCD', d: 'sfhousinginfo@sfgov.org, (415) 701-5622', url: 'mailto:sfhousinginfo@sfgov.org', ico: 'phone' },
+  limits: { t: '2026 income limits', d: 'MOHCD’s official chart (PDF)', url: 'https://media.api.sf.gov/documents/2026_AMI-IncomeLimits-HMFA.pdf', ico: 'doc' },
+};
+function hostOf(url) {
+  if (url.startsWith('#')) return 'On this site';
+  if (url.startsWith('mailto:')) return 'Email';
+  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
+}
+function linkCard(key, opts = {}) {
+  const l = OFFICIAL[key];
+  return `<li><a class="linkcard${opts.key ? ' key' : ''}" href="${esc(l.url)}">
+    <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[l.ico]}</svg></span>
+    <span><span class="t">${esc(l.t)}</span><span class="d">${esc(l.d)}</span></span>
+    <span class="host">${esc(hostOf(l.url))}${l.internal || l.url.startsWith('mailto:') ? '' : EXT}</span>
+  </a></li>`;
+}
+function nextSteps(title, keys) {
+  return `<div class="nextsteps"><h3>${esc(title)}</h3><ul class="linkcards">${keys.map((k, i) => linkCard(k, { key: i === 0 })).join('')}</ul></div>`;
+}
+
 /* ---------------- shared bits ---------------- */
 function verdictChip(v) {
   if (!v) return '';
@@ -213,6 +255,15 @@ function viewHome() {
       <div><p class="figure num">${open.length}</p><p>BMR homes taking applications right now${lotteries ? `, ${lotteries} of them by lottery` : ''}.</p></div>
       <div><p class="figure num">${prices.length ? `${kmoney(Math.min(...prices))}–${kmoney(Math.max(...prices))}` : '—'}</p><p>Price range of those homes, before parking.</p></div>
       <div><p class="figure num">${teacherPct}%</p><p>Where a single teacher earning $95,000 sits on the 2026 income scale. Most listings allow 100–120%.</p></div>
+    </section>
+
+    <section class="section" aria-labelledby="where-to-go">
+      <h2 id="where-to-go">Where to go</h2>
+      <p class="muted prose">The official sites you’ll use. This guide helps you understand them; these are where you actually apply.</p>
+      <div class="linkgroups">
+        <div class="linkgroup"><h3>Find a home</h3><ul class="linkcards">${linkCard('dahliaSale', { key: true })}${linkCard('alerts')}${linkCard('dahliaRent')}</ul></div>
+        <div class="linkgroup"><h3>Get ready to apply</h3><ul class="linkcards">${linkCard('education', { key: true })}${linkCard('agencies')}${linkCard('lenders')}</ul></div>
+      </div>
     </section>
 
     <section class="section split">
@@ -314,6 +365,7 @@ function checkResult() {
     ${assetsMax > 0 ? `<p class="small" style="margin-top:1rem">Your savings add up to ${money(assetsMax)} to counted income on listings without the asset waiver. ${open.filter((l) => l.waivers && l.waivers.assetsExcluded).length} open listings waive it.</p>` : ''}
     ${h.owned === 'unsure' ? `<p class="small notice" style="margin-top:1rem">Not sure about past ownership? A housing counselor can tell you. Any ownership interest in a home in the last 3 years counts.</p>` : ''}
     <p style="margin-top:1rem"><a class="button" href="#/homes?fit=1">See homes that fit</a></p>
+    ${nextSteps('Your next steps', ['education', 'lenders', 'dahliaSale'])}
     ${DISCLAIMER}
   </div>`;
 }
@@ -662,6 +714,7 @@ function programsResult() {
         <ul class="reasons">${r.reasons.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
         <p style="margin:.6rem 0 0"><a href="${esc(r.link)}">${esc(r.linkText)}</a>${['edalp', 'dalp', 'tnd', 'dkdalp'].includes(r.id) ? '. <a href="#/dalp">More on how DALP works</a>' : ''}</p>
       </div></li>`).join('')}</ul>
+  ${nextSteps('Your next steps', ['education', 'agencies', 'lenders'])}
   ${DISCLAIMER}`;
 }
 
@@ -726,6 +779,9 @@ function viewVerify() {
       <h1>Get it confirmed</h1>
       <p class="lede">This guide gives you a sense of where you stand. These are the people who actually decide, and they’re free to talk to.</p>
     </section>
+    <section aria-label="Key links" style="margin-bottom:2.5rem">
+      <ul class="linkcards" style="max-width:760px">${linkCard('education', { key: true })}${linkCard('lenders')}${linkCard('mohcd')}</ul>
+    </section>
     <section class="prose">
       <h2>Who confirms what</h2>
       <ul>
@@ -739,13 +795,24 @@ function viewVerify() {
     <section class="section">
       <h2>Housing counseling agencies</h2>
       <p class="prose muted">All are HUD-approved and members of HomeownershipSF. You must do your workshop and counseling session at the same agency.</p>
-      <ul class="agencies">
-        <li><h3>HomeownershipSF</h3><p>The hub for orientations and workshop sign-ups.</p><p>275 5th St, Suite 314, San Francisco, CA 94103</p><p>(415) 202-5464</p><p><a href="https://www.homeownershipsf.org/homebuyers/">homeownershipsf.org</a></p></li>
-        <li><h3>Asian, Inc.</h3><p>1167 Mission St, 4th Floor, San Francisco, CA 94103</p><p>(415) 928-5910</p><p>English, Cantonese, Mandarin</p><p><a href="https://www.asianinc.org/housing/">asianinc.org</a></p></li>
-        <li><h3>BALANCE</h3><p>3543 18th St, San Francisco, CA 94110</p><p>(800) 777-7526</p><p>English, Spanish, Tagalog, Russian</p><p><a href="https://www.balancepro.org/housing-workshops">balancepro.org</a></p></li>
-        <li><h3>Mission Economic Development Agency (MEDA)</h3><p>2301 Mission St, Suite 301, San Francisco, CA 94110</p><p>(415) 282-3334 ext. 115</p><p>English, Spanish</p><p><a href="https://medasf.org/programs/housing-opportunities/">medasf.org</a></p></li>
-        <li><h3>San Francisco LGBT Community Center</h3><p>1800 Market St, San Francisco, CA 94102</p><p>(415) 865-5555</p><p><a href="https://www.sfcenter.org/program/housing-financial/">sfcenter.org</a></p></li>
-        <li><h3>San Francisco Housing Development Corporation</h3><p>A HomeownershipSF member agency.</p><p><a href="https://www.sfhdc.org/">sfhdc.org</a></p></li>
+      <ul class="agency-cards">
+        ${[
+          { n: 'HomeownershipSF', hub: true, note: 'Start here. Book the free 2-hour orientation, then pick an agency below for your workshop and counseling.', addr: '275 5th St, Suite 314, San Francisco, CA 94103', tel: '(415) 202-5464', web: 'https://www.homeownershipsf.org/homebuyer-education/', webLabel: 'Sign up for classes' },
+          { n: 'Asian, Inc.', note: 'English, Cantonese, Mandarin', addr: '1167 Mission St, 4th Floor, San Francisco, CA 94103', tel: '(415) 928-5910', web: 'https://www.asianinc.org/housing/' },
+          { n: 'BALANCE', note: 'English, Spanish, Tagalog, Russian', addr: '3543 18th St, San Francisco, CA 94110', tel: '(800) 777-7526', web: 'https://www.balancepro.org/housing-workshops' },
+          { n: 'Mission Economic Development Agency (MEDA)', note: 'English, Spanish', addr: '2301 Mission St, Suite 301, San Francisco, CA 94110', tel: '(415) 282-3334', ext: '115', web: 'https://medasf.org/programs/housing-opportunities/' },
+          { n: 'San Francisco LGBT Community Center', note: '', addr: '1800 Market St, San Francisco, CA 94102', tel: '(415) 865-5555', web: 'https://www.sfcenter.org/program/housing-financial/' },
+          { n: 'San Francisco Housing Development Corporation', note: 'A HomeownershipSF member agency.', addr: '', tel: '', web: 'https://www.sfhdc.org/' },
+        ].map((g) => `<li class="agency-card${g.hub ? ' hub' : ''}">
+            <h3>${esc(g.n)}</h3>
+            ${g.note ? `<p>${esc(g.note)}</p>` : ''}
+            ${g.addr ? `<p>${esc(g.addr)}</p>` : ''}
+            ${g.tel ? `<p class="num">${esc(g.tel)}${g.ext ? ` ext. ${g.ext}` : ''}</p>` : ''}
+            <div class="actions">
+              <a class="button${g.hub ? '' : ' quiet'}" href="${g.web}">${esc(g.webLabel || 'Website')}</a>
+              ${g.tel ? `<a class="button quiet" href="tel:+1${g.tel.replace(/\D/g, '')}${g.ext ? `,${g.ext}` : ''}">Call</a>` : ''}
+            </div>
+          </li>`).join('')}
       </ul>
       <p class="small muted" style="margin-top:1rem">Agency details from <a href="${LINKS.agencies}">sf.gov</a>, November 2026. Call ahead; hours and locations change.</p>
     </section>
