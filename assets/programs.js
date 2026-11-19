@@ -187,3 +187,49 @@ export function matchPrograms(a) {
 
   return out;
 }
+
+/**
+ * Rental matches. a = { sfusd, amiPct, rentals: { openListings, fitsOpen,
+ *   fitsAny, eduOpen, eduFits } }
+ */
+export function matchRentalPrograms(a) {
+  const out = [];
+  const r = a.rentals || {};
+  const pct = a.amiPct;
+  const sfusdOk = a.sfusd === 'full' || a.sfusd === 'part30' || a.sfusd === 'partUnder';
+
+  {
+    const reasons = [];
+    let v;
+    if (r.fitsOpen > 0) { v = 'likely'; reasons.push(`You likely qualify for ${r.fitsOpen} of the ${r.openListings} rental listings taking applications now.`); }
+    else if (r.fitsAny > 0) { v = 'maybe'; reasons.push(`None of the ${r.openListings} open listings fit right now, but ${r.fitsAny} recent listings would have. New ones post every week or two.`); }
+    else { v = 'unlikely'; reasons.push(pct > 150 ? `At about ${Math.round(pct)}% of AMI you’re above the income cap on current rentals.` : 'No current or recent rental fits your household size and income. Check the minimum income on each listing.'); }
+    reasons.push('Most units require income of at least 2× the rent, and every unit has a maximum.');
+    out.push({
+      id: 'bmrrent', name: 'Below Market Rate rentals', who: 'Anyone who qualifies',
+      what: 'Apartments with rents set by City income limits, offered by lottery or waitlist on DAHLIA. No classes or past-ownership rules.',
+      status: { label: `${r.openListings ?? 0} taking applications now`, tone: r.openListings ? 'open' : 'closed' },
+      verdict: v, reasons, link: '#/rentals', linkText: 'Browse rentals on this site',
+    });
+  }
+
+  {
+    const reasons = [];
+    let v;
+    if (!sfusdOk) { v = 'unlikely'; reasons.push('These buildings rank SFUSD employees first. The general public can apply to Brightwell West but is ranked after district and City College staff.'); }
+    else {
+      v = pct >= 30 && pct <= 120 ? 'likely' : 'maybe';
+      reasons.push('You’d be in the top priority group as an SFUSD employee.');
+      if (pct > 120) reasons.push(`At about ${Math.round(pct)}% of AMI you may be above these buildings’ income limits (roughly 30% to 120%).`);
+      if (pct < 30) reasons.push('Some units need a minimum income; check each opening.');
+      if (!r.eduOpen) reasons.push('Neither building is taking applications right now. Openings are announced on DAHLIA and in SFUSD staff announcements.');
+    }
+    out.push({
+      id: 'eduhousing', name: 'SFUSD employee housing', who: 'SFUSD employees (Brightwell West also City College)',
+      what: 'Shirley Chisholm Village and Brightwell West are affordable rental buildings that put SFUSD staff at the front of the line.',
+      status: r.eduOpen ? { label: 'Taking applications now', tone: 'open' } : { label: 'Waitlists closed right now', tone: 'closed' },
+      verdict: v, reasons, link: '#/rentals', linkText: 'See both buildings',
+    });
+  }
+  return out;
+}

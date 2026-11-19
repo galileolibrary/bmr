@@ -1,5 +1,5 @@
 import { GOATCOUNTER_CODE, DEFAULT_RATE, RATE_SOURCE, PROPERTY_TAX_RATE, INSURANCE_MONTHLY } from './config.js';
-import { LINKS, ROLES, matchPrograms } from './programs.js';
+import { LINKS, ROLES, matchPrograms, matchRentalPrograms } from './programs.js';
 
 /* ------------------------------------------------------------------
    Everything typed into this page lives only in the `state` object
@@ -8,9 +8,11 @@ import { LINKS, ROLES, matchPrograms } from './programs.js';
 ------------------------------------------------------------------- */
 const state = {
   hh: { size: '', income: '', assets: '', downPayment: '', owned: 'no' },
-  prog: { sfusd: '', role: '', owned: '', firstGen: '' },
+  prog: { tenure: '', sfusd: '', role: '', owned: '', firstGen: '' },
   filters: { q: '', show: 'open', method: 'any', beds: 'any', maxPrice: '', hood: 'any', sort: 'deadline', fitOnly: false },
   cost: { price: '', hoa: '', down: '', rate: String(DEFAULT_RATE) },
+  rent: { voucher: false },
+  rentFilters: { show: 'open', method: 'any', beds: 'any', maxRent: '', hood: 'any', eduOnly: false, fitOnly: false },
   dalp: { price: '', cash: '', hoa: '', debts: '', rate: String(DEFAULT_RATE), years: '7', growth: '3' },
   counted: {},
 };
@@ -20,6 +22,7 @@ let DATA = null;
 let HISTORY = null;
 let CHECKED = null;
 let BALANCES = null;
+let RENTALS = null;
 const view = document.getElementById('view');
 
 /* ---------------- small helpers ---------------- */
@@ -148,6 +151,7 @@ const EXT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4
 const OFFICIAL = {
   dahliaSale: { t: 'BMR homes for sale', d: 'Browse and apply on DAHLIA, the City’s housing portal', url: 'https://housing.sfgov.org/listings/for-sale', ico: 'home' },
   dahliaRent: { t: 'BMR rentals', d: 'Affordable apartments and waitlists on DAHLIA', url: 'https://housing.sfgov.org/listings/for-rent', ico: 'key' },
+  rentals: { t: 'Affordable rentals', d: 'Rentals, waitlists and housing for SFUSD staff', url: '#/rentals', ico: 'key', internal: true },
   alerts: { t: 'Get new-listing emails', d: 'MOHCD emails you when homes or rentals post', url: 'https://confirmsubscription.com/h/y/C3BAFCD742D47910', ico: 'bell' },
   education: { t: 'Sign up for homebuyer classes', d: 'The required 10 hours: orientation, workshop, counseling', url: 'https://www.homeownershipsf.org/homebuyer-education/', ico: 'book' },
   agencies: { t: 'Housing counseling agencies', d: 'Free one-on-one help; addresses and phone numbers', url: '#/verify', ico: 'people', internal: true },
@@ -261,7 +265,7 @@ function viewHome() {
       <h2 id="where-to-go">Where to go</h2>
       <p class="muted prose">The official sites you’ll use. This guide helps you understand them; these are where you actually apply.</p>
       <div class="linkgroups">
-        <div class="linkgroup"><h3>Find a home</h3><ul class="linkcards">${linkCard('dahliaSale', { key: true })}${linkCard('alerts')}${linkCard('dahliaRent')}</ul></div>
+        <div class="linkgroup"><h3>Find a home</h3><ul class="linkcards">${linkCard('dahliaSale', { key: true })}${linkCard('rentals')}${linkCard('alerts')}</ul></div>
         <div class="linkgroup"><h3>Get ready to apply</h3><ul class="linkcards">${linkCard('education', { key: true })}${linkCard('agencies')}${linkCard('lenders')}</ul></div>
       </div>
     </section>
@@ -661,23 +665,26 @@ function viewPrograms() {
   <div class="wrap">
     <section class="view-head prose">
       <h1>Find programs that fit you</h1>
-      <p class="lede">Answer a few questions to see which City and state programs you might qualify for, including the ones only for SFUSD staff.</p>
+      <p class="lede">Answer a few questions to see which City and state programs you might qualify for, for renting or buying, including the ones only for SFUSD staff.</p>
     </section>
     <div class="split">
       <form class="form" id="prog-form" autocomplete="off" onsubmit="return false">
+        <fieldset class="field"><legend>Are you looking to rent or buy?</legend>
+          ${radio('tenure', [['buy', 'Buy'], ['rent', 'Rent'], ['unsure', 'I don’t know yet']])}
+        </fieldset>
         <fieldset class="field"><legend>Do you work for SFUSD?</legend>
           ${radio('sfusd', [['full', 'Yes, full time'], ['part30', 'Part time, and SFUSD is at least 30% of my income'], ['partUnder', 'Part time, under 30%'], ['no', 'No']])}
         </fieldset>
         ${p.sfusd && p.sfusd !== 'no' ? `<div class="field"><label for="p-role">What’s your role?</label><select id="p-role" data-prog="role"><option value="">Choose…</option>${ROLES.map((r) => `<option value="${r.id}"${p.role === r.id ? ' selected' : ''}>${esc(r.label)}</option>`).join('')}</select></div>` : ''}
         <div class="field"><label for="p-size">How many people will live in the home?</label><select id="p-size" data-hh="size">${sizeOptions(s.size)}</select></div>
         <div class="field"><label for="p-income">Total yearly household income, before taxes</label><div class="money"><input id="p-income" data-hh="income" inputmode="decimal" type="text" value="${esc(s.income)}" placeholder="95,000"></div></div>
-        <fieldset class="field"><legend>Has anyone in the household owned a home in the last 3 years?</legend>
+        ${p.tenure === 'rent' ? '' : `<fieldset class="field"><legend>Has anyone in the household owned a home in the last 3 years?</legend>
           ${radio('owned', [['no', 'No'], ['outsideSF', 'Yes, but only outside San Francisco'], ['inSF', 'Yes, in San Francisco']])}
         </fieldset>
         <div class="field"><label for="p-sav">Savings and investments (optional)</label><div class="money"><input id="p-sav" data-hh="assets" inputmode="decimal" type="text" value="${esc(s.assets)}" placeholder="0"></div></div>
         <fieldset class="field"><legend>Did your parents ever own a home?</legend><span class="hint">Only used for CalHFA’s first-generation program.</span>
           ${radio('firstGen', [['no', 'Yes, they did'], ['yes', 'No, never'], ['unsure', 'Not sure']])}
-        </fieldset>
+        </fieldset>`}
         <p class="small muted">Nothing you type here is saved or sent anywhere.</p>
       </form>
       <div id="prog-result" aria-live="polite">${programsResult()}</div>
@@ -687,25 +694,19 @@ function viewPrograms() {
 
 function programsResult() {
   const p = state.prog; const h = hh();
+  const buying = p.tenure !== 'rent';
   const missing = [];
+  if (!p.tenure) missing.push('whether you want to rent or buy');
   if (!p.sfusd) missing.push('whether you work for SFUSD');
   if (p.sfusd && p.sfusd !== 'no' && !p.role) missing.push('your role');
   if (!h.size) missing.push('household size');
   if (!h.income) missing.push('income');
-  if (!p.owned) missing.push('past home ownership');
+  if (buying && p.tenure && !p.owned) missing.push('past home ownership');
   if (missing.length) return `<div class="panel"><h2 style="font-size:var(--step-2)">Your programs</h2><p class="muted">Still needed: ${missing.join(', ')}.</p></div>`;
   count('used-programs');
-  const caps = openListings().flatMap((l) => l.units.filter(isAvailable).map((u) => u.maxAmi)).filter(Boolean);
-  const res = matchPrograms({
-    sfusd: p.sfusd, role: p.role, size: h.size, income: h.income, amiPct: amiPctOf(h.income, h.size),
-    owned: p.owned, firstGen: p.firstGen || 'unsure', savings: h.assets, bmrMaxCap: caps.length ? Math.max(...caps) : 120, balances: BALANCES,
-  });
+  const pct = amiPctOf(h.income, h.size);
   const order = { likely: 0, maybe: 1, unlikely: 2 };
-  res.sort((a, b) => order[a.verdict] - order[b.verdict]);
-  // keep the household's first-time answer in sync for the listings page
-  state.hh.owned = p.owned === 'no' ? 'no' : p.owned === 'inSF' ? 'yes' : 'yes';
-  return `<p class="small muted" style="margin-top:0">At about ${Math.round(amiPctOf(h.income, h.size))}% of AMI for a household of ${h.size}:</p>
-  <ul class="programs">${res.map((r) => `<li class="program${r.verdict === 'unlikely' ? ' dim' : ''}">
+  const render = (res) => `<ul class="programs">${res.sort((a, b) => order[a.verdict] - order[b.verdict]).map((r) => `<li class="program${r.verdict === 'unlikely' ? ' dim' : ''}">
       <div>${verdictChip(r.verdict)}</div>
       <div>
         <h3>${esc(r.name)}</h3>
@@ -713,9 +714,34 @@ function programsResult() {
         <p>${esc(r.what)}</p>
         <ul class="reasons">${r.reasons.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
         <p style="margin:.6rem 0 0"><a href="${esc(r.link)}">${esc(r.linkText)}</a>${['edalp', 'dalp', 'tnd', 'dkdalp'].includes(r.id) ? '. <a href="#/dalp">More on how DALP works</a>' : ''}</p>
-      </div></li>`).join('')}</ul>
-  ${nextSteps('Your next steps', ['education', 'agencies', 'lenders'])}
-  ${DISCLAIMER}`;
+      </div></li>`).join('')}</ul>`;
+
+  let rentHtml = '';
+  if (p.tenure !== 'buy') {
+    const rh = { ...h, voucher: false };
+    const all = RENTALS ? RENTALS.listings : [];
+    const open = all.filter(rentalOpen);
+    const fitsOpen = open.filter((l) => { const f = rentalFit(l, rh); return f && f.f.verdict === 'likely'; }).length;
+    const fitsAny = all.filter((l) => { const f = rentalFit(l, rh); return f && f.f.verdict === 'likely'; }).length;
+    const eduOpen = all.some((l) => l.educator && rentalOpen(l));
+    rentHtml = render(matchRentalPrograms({ sfusd: p.sfusd, amiPct: pct, rentals: { openListings: open.length, fitsOpen, fitsAny, eduOpen } }));
+  }
+  let buyHtml = '';
+  if (buying) {
+    state.hh.owned = p.owned === 'no' ? 'no' : 'yes';
+    const caps = openListings().flatMap((l) => l.units.filter(isAvailable).map((u) => u.maxAmi)).filter(Boolean);
+    buyHtml = render(matchPrograms({
+      sfusd: p.sfusd, role: p.role, size: h.size, income: h.income, amiPct: pct,
+      owned: p.owned, firstGen: p.firstGen || 'unsure', savings: h.assets, bmrMaxCap: caps.length ? Math.max(...caps) : 120, balances: BALANCES,
+    }));
+  }
+  const head = `<p class="small muted" style="margin-top:0">At about ${Math.round(pct)}% of AMI for a household of ${h.size}:</p>`;
+  let body;
+  if (p.tenure === 'rent') body = `${rentHtml}<p class="small muted" style="margin-top:1rem">Thinking about buying someday? Choose “Buy” or “I don’t know yet” above to see homeownership programs too.</p>`;
+  else if (p.tenure === 'buy') body = buyHtml;
+  else body = `<h3 style="margin:.5rem 0">If you rent</h3>${rentHtml}<h3 style="margin:2rem 0 .5rem">If you buy</h3>${buyHtml}`;
+  const steps = p.tenure === 'rent' ? nextSteps('Your next steps', ['rentals', 'alerts', 'dahliaRent']) : nextSteps('Your next steps', ['education', 'agencies', 'lenders']);
+  return `${head}${body}${steps}${DISCLAIMER}`;
 }
 
 /* ---------- Recent & upcoming ---------- */
@@ -1127,10 +1153,281 @@ function dalpResult() {
     <p class="small muted" style="margin-top:1rem">Assumes a 30-year fixed loan, ${PROPERTY_TAX_RATE}% property tax and insurance of 0.2% of the price a year. MOHCD lends only what you need after the first mortgage you’re pre-approved for. This assumes the largest first mortgage within MOHCD’s limits (43% housing, 45% total debt), so it’s roughly the smallest DALP you’d get; your lender’s pre-approval sets the real split.</p>`;
 }
 
+/* ---------- Rentals ---------- */
+// SFUSD-priority buildings. Status details here are from the buildings'
+// own pages (Nov 2026); live status comes from DAHLIA when a listing is up.
+const EDU_BUILDINGS = [
+  {
+    key: 'chisholm', name: 'Shirley Chisholm Village', where: '1360 43rd Ave, Outer Sunset',
+    size: '135 apartments, studios to 3 bedrooms', who: 'SFUSD educators first, then other SFUSD employees',
+    incomes: 'Roughly 30% to 120% of AMI, depending on the unit',
+    last: 'The last waitlist opening was January 20 to February 3, 2026, for SFUSD employees only.',
+    links: [['SFUSD employee housing page', 'https://www.sfusd.edu/employees/human-resources/affordable-housing/district-employee-housing'], ['Building site (MidPen Housing)', 'https://www.midpen-housing.org/?p=14537']],
+  },
+  {
+    key: 'brightwell', name: 'Brightwell West', where: '750 Golden Gate Ave',
+    size: '74 apartments', who: 'SFUSD and City College employees first; you’ll need your employee ID from your pay stub',
+    incomes: 'Low- and moderate-income units',
+    last: 'The first lottery took applications April 22 to May 13, 2026.',
+    links: [['How the Brightwell West lottery works', 'https://www.sf.gov/learn-how-lottery-works-brightwell-west'], ['Building site (MidPen Housing)', 'https://www.midpen-housing.org/property/brightwell-west/']],
+  },
+];
+
+function rentalOpen(l) {
+  const d = toDate(l.dueDate);
+  if (d && d > new Date()) return true;
+  if (l.method === 'fcfs') return l.listingStatus === 'Active' && l.units.some((g) => g.available > 0);
+  return false;
+}
+function rentalStage(l) {
+  if (rentalOpen(l)) return { label: l.method === 'waitlist' ? `Waitlist open: apply by ${fmtDate(l.dueDate, true)}` : l.method === 'fcfs' ? 'First come, first served' : `Lottery: apply by ${fmtDate(l.dueDate, true)}`, tone: 'open' };
+  if (l.listingStatus === 'Lease Up') return { label: `Closed ${l.dueDate ? fmtDate(l.dueDate) : ''}; leasing from the lottery list`, tone: 'closed' };
+  return { label: l.dueDate ? `Closed ${fmtDate(l.dueDate)}; results pending` : 'Closed', tone: 'closed' };
+}
+
+function rentHH() {
+  const h = hh();
+  return { ...h, voucher: !!state.rent.voucher };
+}
+function groupFit(l, g, h) {
+  if (!h.ready) return null;
+  const reasons = []; let ok = true; let unsure = false;
+  const minOcc = g.minOccupancy ?? 1;
+  if (h.size < minOcc) { ok = false; reasons.push(`Needs at least ${minOcc} ${minOcc === 1 ? 'person' : 'people'}.`); }
+  if (g.maxOccupancy && h.size > g.maxOccupancy) { ok = false; reasons.push(`Allows at most ${g.maxOccupancy} people.`); }
+  const max = g.maxIncome && g.maxIncome[h.size - 1];
+  if (max) {
+    if (h.income > max) { ok = false; reasons.push(`Income over the ${money(max)} limit for ${h.size} at ${g.maxAmi}% AMI.`); }
+    else reasons.push(`Under the ${money(max)} limit for ${h.size} at ${g.maxAmi}% AMI.`);
+  } else { unsure = true; reasons.push('The income limit for this unit’s chart isn’t published here; check the listing.'); }
+  if (g.rentPercentIncome) reasons.push(`Rent is ${g.rentPercentIncome}% of your income, so there’s no minimum income.`);
+  else if (g.minIncomeMonthly) {
+    const minYear = g.minIncomeMonthly * 12;
+    if (h.voucher) reasons.push('Minimum income doesn’t apply with a Section 8 voucher.');
+    else if (h.income < minYear) { ok = false; reasons.push(`Under the minimum income of ${money(g.minIncomeMonthly)} a month (${money(minYear)} a year), which is 2× the rent.`); }
+    else reasons.push(`Meets the minimum income of ${money(g.minIncomeMonthly)} a month.`);
+  }
+  return { verdict: !ok ? 'unlikely' : unsure ? 'maybe' : 'likely', reasons };
+}
+function rentalFit(l, h) {
+  const pool = l.units.some((g) => g.available > 0) ? l.units.filter((g) => g.available > 0) : l.units;
+  const fits = pool.map((g) => ({ g, f: groupFit(l, g, h) })).filter((x) => x.f);
+  if (!fits.length) return null;
+  return fits.find((x) => x.f.verdict === 'likely') || fits.find((x) => x.f.verdict === 'maybe') || fits[0];
+}
+
+function eduCard(b) {
+  const live = RENTALS ? RENTALS.listings.filter((l) => l.educator && l.educator.key === b.key) : [];
+  const open = live.find(rentalOpen);
+  const any = live[0];
+  let status;
+  if (open) status = `<span class="badge open">${esc(rentalStage(open).label)}</span>`;
+  else if (any && any.listingStatus === 'Lease Up') status = `<span class="badge closed">Leasing from its lottery list</span>`;
+  else status = '<span class="badge closed">Not taking applications right now</span>';
+  return `<li class="agency-card${open ? ' hub' : ''}">
+    <h3>${esc(b.name)}</h3>
+    <p>${status}</p>
+    <p>${esc(b.where)}. ${esc(b.size)}.</p>
+    <p><strong>Who gets priority:</strong> ${esc(b.who)}.</p>
+    <p><strong>Incomes:</strong> ${esc(b.incomes)}.</p>
+    <p>${esc(b.last)}${any && any.waitlist && any.waitlist.max ? ` Its DAHLIA listing shows a waitlist of up to ${any.waitlist.max.toLocaleString()}.` : ''}</p>
+    <div class="actions">
+      ${open || any ? `<a class="button${open ? '' : ' quiet'}" href="${esc((open || any).url)}">${open ? 'Apply on DAHLIA' : 'DAHLIA listing'}</a>` : ''}
+      ${b.links.map(([t, u]) => `<a class="button quiet" href="${u}">${esc(t)}</a>`).join('')}
+    </div>
+  </li>`;
+}
+
+function viewRentals() {
+  const f = state.rentFilters; const s = state.hh;
+  const all = RENTALS ? RENTALS.listings : [];
+  const open = all.filter(rentalOpen);
+  const leaseUp = all.filter((l) => !rentalOpen(l) && l.listingStatus === 'Lease Up').length;
+  const hoods = [...new Set(all.map((l) => l.neighborhood).filter(Boolean))].sort();
+  return `
+  <div class="wrap">
+    <section class="view-head prose">
+      <h1>Affordable rentals</h1>
+      <p class="lede">The City’s below market rate rentals are apartments with rents set by income limits. Unlike buying, there’s no class to take or loan to get, but you need to earn enough as well as not too much.</p>
+    </section>
+
+    <section aria-labelledby="edu-h">
+      <h2 id="edu-h">Housing for SFUSD staff</h2>
+      <p class="prose muted">Two affordable buildings put SFUSD employees at the front of the line. Openings are short and announced on DAHLIA, so <a href="${LINKS.alerts}">sign up for MOHCD’s alerts</a> and watch SFUSD staff announcements.</p>
+      <ul class="agency-cards" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">${EDU_BUILDINGS.map(eduCard).join('')}</ul>
+      <p class="small muted" style="margin-top:1rem">SFUSD has also set aside sites at 1620 7th Ave and 95 Gough St for future employee housing. <a href="https://www.sfusd.edu/employees/human-resources/affordable-housing/district-employee-housing">SFUSD’s housing page</a> has the latest.</p>
+    </section>
+
+    <section class="section">
+      <h2>Renting vs. buying</h2>
+      <div class="table-scroll"><table>
+        <thead><tr><th></th><th>BMR rental</th><th>BMR home to buy</th></tr></thead>
+        <tbody>
+          <tr><td>Income</td><td>A <strong>minimum</strong> (usually 2× the rent) and a maximum</td><td>A maximum only</td></tr>
+          <tr><td>Typical income caps</td><td>About 25% to 150% of AMI, mostly 50% to 80%</td><td>About 80% to 140% of AMI</td></tr>
+          <tr><td>Household size</td><td>A minimum and a maximum for each unit</td><td>At least one person per bedroom</td></tr>
+          <tr><td>Before you apply</td><td>Nothing required</td><td>10 hours of classes and a lender pre-approval</td></tr>
+          <tr><td>Past home ownership</td><td>Doesn’t matter</td><td>No ownership in the last 3 years</td></tr>
+          <tr><td>Screening</td><td>Credit, rental history and background, set by each building</td><td>Lender’s credit review</td></tr>
+          <tr><td>After you move in</td><td>Re-qualify every year; you can stay as income rises, up to a limit (often 200% of AMI)</td><td>Yours to keep; resale price is restricted</td></tr>
+          <tr><td>How you apply</td><td colspan="2">On DAHLIA: by lottery, waitlist, or first come, first served. Lottery preferences such as Live or Work in San Francisco apply to both.</td></tr>
+        </tbody></table></div>
+    </section>
+
+    <section class="section">
+      <h2>Rentals on DAHLIA</h2>
+      <p class="prose muted">${all.length} rental listings are on DAHLIA right now, but only ${open.length} are taking applications. ${leaseUp} have already held their lottery and are leasing apartments to people from the ranked list, which can take months, so they stay posted.</p>
+      <form class="household-bar" autocomplete="off" onsubmit="return false" aria-label="Your household">
+        <div class="field"><label for="r-size">People in household</label><select id="r-size" data-hh="size">${sizeOptions(s.size)}</select></div>
+        <div class="field"><label for="r-income">Yearly household income</label><div class="money"><input id="r-income" data-hh="income" inputmode="decimal" type="text" value="${esc(s.income)}" placeholder="70,000"></div></div>
+        <div class="field"><label class="choices" style="margin:0"><span style="display:inline-flex;gap:.45rem;align-items:center;font-weight:700"><input type="checkbox" data-rent="voucher"${state.rent.voucher ? ' checked' : ''}> I have a Section 8 voucher</span></label></div>
+        <div class="field"><label class="choices" style="margin:0"><span style="display:inline-flex;gap:.45rem;align-items:center;font-weight:700"><input type="checkbox" data-rfilter="fitOnly"${f.fitOnly ? ' checked' : ''}> Only ones I likely qualify for</span></label></div>
+      </form>
+      <form class="toolbar" autocomplete="off" onsubmit="return false" aria-label="Filter rentals">
+        <div class="field"><label for="rf-show">Show</label><select id="rf-show" data-rfilter="show">
+          <option value="open"${f.show === 'open' ? ' selected' : ''}>Taking applications</option>
+          <option value="all"${f.show === 'all' ? ' selected' : ''}>Everything on DAHLIA</option></select></div>
+        <div class="field"><label for="rf-method">How to apply</label><select id="rf-method" data-rfilter="method">
+          <option value="any">Any</option>
+          <option value="lottery"${f.method === 'lottery' ? ' selected' : ''}>Lottery</option>
+          <option value="waitlist"${f.method === 'waitlist' ? ' selected' : ''}>Waitlist</option></select></div>
+        <div class="field"><label for="rf-beds">Bedrooms</label><select id="rf-beds" data-rfilter="beds">
+          ${['any', '0', '1', '2', '3'].map((x) => `<option value="${x}"${f.beds === x ? ' selected' : ''}>${x === 'any' ? 'Any' : x === '0' ? 'Studio' : x === '3' ? '3+' : x}</option>`).join('')}</select></div>
+        <div class="field"><label for="rf-max">Max rent</label><div class="money"><input id="rf-max" data-rfilter="maxRent" inputmode="decimal" type="text" value="${esc(f.maxRent)}" placeholder="Any"></div></div>
+        <div class="field"><label for="rf-hood">Neighborhood</label><select id="rf-hood" data-rfilter="hood"><option value="any">Any</option>${hoods.map((x) => `<option${f.hood === x ? ' selected' : ''}>${esc(x)}</option>`).join('')}</select></div>
+        <div class="field"><label for="rf-edu" style="display:flex;gap:.45rem;align-items:center;margin-top:1.6rem"><input id="rf-edu" type="checkbox" data-rfilter="eduOnly"${f.eduOnly ? ' checked' : ''}> SFUSD priority only</label></div>
+      </form>
+      <div id="rentals-list" aria-live="polite">${rentalsList()}</div>
+    </section>
+
+    <section class="section split">
+      <div class="prose">
+        <h2>How it works</h2>
+        <ul>
+          <li><strong>Rent is set by formula:</strong> 30% of the income limit for the unit, so it stays below market. It goes up a little each year with the AMI.</li>
+          <li><strong>Minimum income:</strong> usually 2× the monthly rent. People with Section 8 vouchers are exempt; some 100% affordable buildings set rent at 30% of your actual income instead.</li>
+          <li><strong>Lottery preferences:</strong> applicants with a Certificate of Preference, a Displaced Tenant certificate, or who live in the neighborhood are ranked first, then those who live or work in San Francisco. Most SFUSD staff qualify for Live or Work.</li>
+          <li><strong>After the lottery:</strong> the leasing office contacts people in rank order, checks income and documents, and runs its screening.</li>
+          <li><strong>Every year:</strong> you re-certify your income. Your income can grow while you live there, up to the program limit.</li>
+        </ul>
+      </div>
+      <div class="prose">
+        <h2>Before you apply</h2>
+        <ul>
+          <li>Apply to each listing separately on DAHLIA. Applying is free; a few buildings charge a screening fee after you’re selected.</li>
+          <li>Read each building’s resident selection criteria. Credit, eviction and rental history rules differ by building.</li>
+          <li>Have recent pay stubs, tax returns and bank statements ready for everyone 18 or older.</li>
+          <li>Free help is available from <a href="https://housing.sfgov.org/housing-counselors">rental housing counselors</a>.</li>
+        </ul>
+        ${DISCLAIMER}
+      </div>
+    </section>
+  </div>`;
+}
+
+function filteredRentals() {
+  const f = state.rentFilters; const h = rentHH();
+  const maxRent = parseMoney(f.maxRent);
+  let list = (RENTALS ? RENTALS.listings : []).map((l) => ({ l, open: rentalOpen(l), fit: rentalFit(l, h) }));
+  list = list.filter(({ l, open, fit }) => {
+    if (f.show === 'open' && !open) return false;
+    if (f.method !== 'any' && l.method !== f.method) return false;
+    if (f.hood !== 'any' && l.neighborhood !== f.hood) return false;
+    if (f.eduOnly && !l.educator) return false;
+    const groups = l.units.some((g) => g.available > 0) ? l.units.filter((g) => g.available > 0) : l.units;
+    if (f.beds !== 'any') { const b = Number(f.beds); if (!groups.some((g) => (b === 3 ? bedsOf(g.type) >= 3 : bedsOf(g.type) === b))) return false; }
+    if (maxRent && !groups.some((g) => (g.rent && g.rent <= maxRent) || g.rentPercentIncome)) return false;
+    if (f.fitOnly && h.ready && !(fit && fit.f.verdict !== 'unlikely')) return false;
+    return true;
+  });
+  list.sort((a, b) => {
+    const ra = a.open ? 0 : 1, rb = b.open ? 0 : 1;
+    if (ra !== rb) return ra - rb;
+    if (a.l.educator && !b.l.educator) return -1;
+    if (b.l.educator && !a.l.educator) return 1;
+    return (toDate(b.l.dueDate) || 0) - (toDate(a.l.dueDate) || 0);
+  });
+  if (list.length && list.every((x) => x.open)) list.sort((a, b) => (toDate(a.l.dueDate) || Infinity) - (toDate(b.l.dueDate) || Infinity));
+  return list;
+}
+
+function rentalsList() {
+  const h = rentHH();
+  const list = filteredRentals();
+  if (!list.length) return `<p class="count-line">No rentals match these filters.</p><div class="empty-state"><p>Try “Everything on DAHLIA” or fewer filters. New rentals post every week or two. <a href="${LINKS.alerts}">Get MOHCD’s email alerts</a>.</p></div>`;
+  const nFit = h.ready ? list.filter((x) => x.fit && x.fit.f.verdict === 'likely').length : null;
+  return `<p class="count-line">${list.length} ${list.length === 1 ? 'listing' : 'listings'}${h.ready ? `, ${nFit} likely a fit for your household` : '. Add your household above to see which fit'}.</p>
+  <ul class="listings">${list.map(rentalRow).join('')}</ul>`;
+}
+
+function rentalRow({ l, open, fit }) {
+  const h = rentHH();
+  const groups = l.units.some((g) => g.available > 0) ? l.units.filter((g) => g.available > 0) : l.units;
+  const rents = groups.map((g) => g.rent).filter(Boolean);
+  const pctRent = groups.some((g) => g.rentPercentIncome);
+  const caps = [...new Set(groups.map((g) => g.maxAmi).filter(Boolean))].sort((a, b) => a - b);
+  const types = [...new Set(groups.map((g) => typeLabel(g.type)))];
+  const availUnits = l.units.reduce((a, g) => a + g.available, 0);
+  const stage = rentalStage(l);
+  const rentTxt = rents.length ? (Math.min(...rents) === Math.max(...rents) ? money(rents[0]) : `${money(Math.min(...rents))}–${money(Math.max(...rents))}`) : pctRent ? '30% of income' : 'See listing';
+  let incomeLine = '';
+  if (h.ready) {
+    const mins = groups.map((g) => (g.rentPercentIncome || h.voucher ? 0 : (g.minIncomeMonthly || 0) * 12));
+    const maxs = groups.map((g) => g.maxIncome && g.maxIncome[h.size - 1]).filter(Boolean);
+    if (maxs.length) incomeLine = `Income for ${h.size}: ${money(Math.min(...mins))} to ${money(Math.max(...maxs))} a year`;
+  }
+  const img = l.image ? `<img class="thumb" src="${esc(l.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'thumb empty',innerHTML:window.__houseIcon}))">` : `<div class="thumb empty">${houseIcon}</div>`;
+  return `<li class="listing"><details data-listing="${esc(l.id)}">
+    <summary>
+      ${img}
+      <div>
+        <p class="l-title">${esc(l.name)}</p>
+        <p class="l-meta">${esc([l.neighborhood, types.join(', '), l.reservedFor.length ? l.reservedFor.map((r) => (/housing/i.test(r) ? r : `${r} housing`)).join(', ') : '', l.tenure].filter(Boolean).join(', '))}</p>
+        <div class="l-tags"><span class="badge ${stage.tone}">${esc(stage.label)}</span>${l.educator ? ' <span class="badge open">SFUSD priority</span>' : ''} ${caps.length ? `<span class="badge">Income cap ${caps.join('/')}% AMI</span>` : ''} ${fit ? verdictChip(fit.f.verdict) : ''}</div>
+      </div>
+      <div class="l-side">
+        <div class="l-price num">${rentTxt}</div>
+        <p class="l-price-note">a month${open && availUnits ? `<br>${availUnits} ${availUnits === 1 ? 'unit' : 'units'} available` : ''}${incomeLine ? `<br>${incomeLine}` : ''}</p>
+        <span class="l-more"><span class="when-closed">Details</span><span class="when-open">Hide details</span></span>
+      </div>
+    </summary>
+    <div class="l-body">${rentalBody(l, fit)}</div>
+  </details></li>`;
+}
+
+function rentalBody(l, fit) {
+  const h = rentHH();
+  const rows = l.units.map((g) => {
+    const gf = groupFit(l, g, h);
+    const max = g.maxIncome && h.size ? g.maxIncome[h.size - 1] : null;
+    return `<tr>
+      <td>${esc(typeLabel(g.type))}</td>
+      <td class="r">${g.rentPercentIncome ? `${g.rentPercentIncome}% of income` : money(g.rent)}</td>
+      <td class="r">${g.rentPercentIncome ? 'None' : g.minIncomeMonthly ? `${money(g.minIncomeMonthly)}/mo` : ''}</td>
+      <td>${g.maxAmi ? `${g.maxAmi}% AMI${max ? `<br><span class="small muted">${money(max)} for ${h.size}</span>` : ''}` : ''}</td>
+      <td class="r">${g.minOccupancy ?? ''}${g.maxOccupancy ? `–${g.maxOccupancy}` : ''}</td>
+      <td class="r">${g.available}${g.count > g.available ? ` of ${g.count}` : ''}</td>
+      ${h.ready ? `<td>${gf ? verdictChip(gf.verdict) : ''}</td>` : ''}
+    </tr>`;
+  }).join('');
+  const how = l.method === 'waitlist' ? 'Joining the waitlist: applications are ranked by lottery, and you’re offered a unit when your number comes up.' : l.method === 'fcfs' ? 'First come, first served.' : `Lottery${l.lotteryDate ? ` on ${fmtDate(l.lotteryDate, true)}` : ''}${l.lotteryResultsDate ? `; results ${fmtDate(l.lotteryResultsDate)}` : ''}.`;
+  const prefNames = [...new Set(l.prefs.map((p) => p.name))];
+  return `
+    ${fit ? `<div><h4>Your fit for the best-matching unit ${verdictChip(fit.f.verdict)}</h4><ul class="reasons">${fit.f.reasons.map((r) => `<li>${esc(r)}</li>`).join('')}</ul></div>` : ''}
+    <div><h4>How to apply</h4><p>${l.dueDate ? `Applications ${rentalOpen(l) ? 'due' : 'closed'} ${fmtDate(l.dueDate, true)}. ` : ''}${esc(how)}</p>${l.waitlist && l.waitlist.has && l.waitlist.max ? `<p class="small muted">Waitlist: ${l.waitlist.current ?? 0} of up to ${l.waitlist.max.toLocaleString()} spots filled.</p>` : ''}</div>
+    <div class="table-scroll"><h4>Apartments</h4><table class="small"><thead><tr><th>Type</th><th class="r">Rent</th><th class="r">Min. income</th><th>Max. income</th><th class="r">People</th><th class="r">Available</th>${h.ready ? '<th>You</th>' : ''}</tr></thead><tbody>${rows}</tbody></table></div>
+    ${l.educator ? `<div class="callout"><p><strong>SFUSD priority.</strong> ${l.prefs.some((p) => /tier 1/i.test(p.name)) ? 'The “Tier 1” preferences on this listing are for school district employees, who are ranked ahead of everyone else.' : 'School district employees are ranked ahead of other applicants.'}</p></div>` : ''}
+    ${prefNames.length ? `<div><h4>Lottery preferences</h4><ul>${prefNames.map((n) => `<li>${esc(n)}</li>`).join('')}</ul></div>` : ''}
+    ${l.accessible.length ? `<div><h4>Accessible units</h4><p>${l.accessible.map((a) => `${a.units} for ${esc(a.name.toLowerCase())}`).join(', ')}</p></div>` : ''}
+    ${l.credit || l.eviction ? `<div><h4>Screening</h4>${l.credit ? `<p style="white-space:pre-line">${esc(l.credit)}</p>` : ''}${l.eviction ? `<p style="white-space:pre-line">${esc(l.eviction)}</p>` : ''}</div>` : ''}
+    ${l.depositMin || l.fee ? `<div><h4>Costs</h4><p>${l.depositMin ? `Deposit ${money(l.depositMin)}${l.depositMax && l.depositMax !== l.depositMin ? `–${money(l.depositMax)}` : ''}. ` : ''}${l.fee ? `Application fee ${money(l.fee)}.` : ''}</p>${l.utilities ? `<p class="small muted">${esc(l.utilities)}</p>` : ''}</div>` : ''}
+    <div class="l-links"><a class="button" href="${esc(l.url)}">${rentalOpen(l) ? 'Apply on DAHLIA' : 'See the listing on DAHLIA'}</a>${l.criteriaUrl ? `<a class="button quiet" href="${esc(l.criteriaUrl)}">Resident selection criteria</a>` : ''}</div>`;
+}
+
 /* ================================================================
    ROUTER + EVENTS
 ================================================================ */
-const ROUTES = { '': viewHome, check: viewCheck, homes: viewHomes, programs: viewPrograms, dalp: viewDalp, recent: viewRecent, verify: viewVerify, privacy: viewPrivacy };
+const ROUTES = { '': viewHome, check: viewCheck, homes: viewHomes, programs: viewPrograms, dalp: viewDalp, rentals: viewRentals, recent: viewRecent, verify: viewVerify, privacy: viewPrivacy };
 function route() {
   const raw = location.hash.replace(/^#\/?/, '');
   const [path, query] = raw.split('?');
@@ -1140,7 +1437,7 @@ function route() {
     const on = (a.dataset.nav === 'home' && !ROUTES[path]) || (a.dataset.nav === 'home' && path === '') || a.dataset.nav === path;
     if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  const titles = { check: 'Check eligibility', homes: 'Homes for sale', programs: 'Find programs', dalp: 'Down payment loans (DALP)', recent: 'Recent and upcoming', verify: 'Get it confirmed', privacy: 'Privacy' };
+  const titles = { check: 'Check eligibility', homes: 'Homes for sale', programs: 'Find programs', dalp: 'Down payment loans (DALP)', rentals: 'Affordable rentals', recent: 'Recent and upcoming', verify: 'Get it confirmed', privacy: 'Privacy' };
   document.title = `${titles[path] ? `${titles[path]} | ` : ''}BMR Homes for SFUSD Staff`;
   countPage(`/${path}`);
 }
@@ -1152,6 +1449,7 @@ function refreshPartial() {
   if (path === 'homes') { swap('homes-list', homesList()); swap('city-second', citySecondBlock()); }
   if (path === 'programs') swap('prog-result', programsResult());
   if (path === 'dalp') swap('dalp-result', dalpResult());
+  if (path === 'rentals') swap('rentals-list', rentalsList());
 }
 document.addEventListener('input', (e) => {
   const t = e.target;
@@ -1163,6 +1461,12 @@ document.addEventListener('input', (e) => {
   } else if (t.dataset.filter) {
     state.filters[t.dataset.filter] = t.type === 'checkbox' ? t.checked : t.value;
     const el = document.getElementById('homes-list'); if (el) el.innerHTML = homesList();
+  } else if (t.dataset.rent) {
+    state.rent[t.dataset.rent] = t.type === 'checkbox' ? t.checked : t.value;
+    const el = document.getElementById('rentals-list'); if (el) el.innerHTML = rentalsList();
+  } else if (t.dataset.rfilter) {
+    state.rentFilters[t.dataset.rfilter] = t.type === 'checkbox' ? t.checked : t.value;
+    const el = document.getElementById('rentals-list'); if (el) el.innerHTML = rentalsList();
   } else if (t.dataset.dalp) {
     state.dalp[t.dataset.dalp] = t.value;
     const el = document.getElementById('dalp-result'); if (el) el.innerHTML = dalpResult();
@@ -1171,11 +1475,11 @@ document.addEventListener('input', (e) => {
     const el = document.getElementById('cost-result'); if (el) el.innerHTML = costResult();
   } else if (t.dataset.prog) {
     state.prog[t.dataset.prog] = t.value;
-    if (t.dataset.prog === 'sfusd') {
+    if (t.dataset.prog === 'sfusd' || t.dataset.prog === 'tenure') {
       // show or hide the role question
       const keep = document.activeElement && document.activeElement.value;
       view.innerHTML = viewPrograms();
-      const el = view.querySelector(`input[name="sfusd"][value="${keep}"]`); if (el) el.focus();
+      const el = view.querySelector(`input[name="${t.dataset.prog}"][value="${keep}"]`); if (el) el.focus();
     } else refreshPartial();
   }
 });
@@ -1184,7 +1488,7 @@ document.addEventListener('change', (e) => {
   if (e.target.matches('select, input[type="radio"], input[type="checkbox"]')) e.target.dispatchEvent(new Event('input', { bubbles: true }));
 });
 document.addEventListener('toggle', (e) => {
-  if (e.target.matches && e.target.matches('details[data-listing]') && e.target.open) count('opened-listing');
+  if (e.target.matches && e.target.matches('details[data-listing]') && e.target.open) count(location.hash.startsWith('#/rentals') ? 'opened-rental' : 'opened-listing');
 }, true);
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a[data-open]');
@@ -1208,14 +1512,15 @@ async function boot() {
     document.head.appendChild(s);
   }
   try {
-    const [ami, data, hist, checked, balances] = await Promise.all([
+    const [ami, data, hist, checked, balances, rentals] = await Promise.all([
       fetch('data/ami.json').then((r) => r.json()),
       fetch('data/listings.json', { cache: 'no-cache' }).then((r) => r.json()),
       fetch('data/history.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({ listings: {} })),
       fetch('data/checked.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => null),
       fetch('data/dalp-balances.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => null),
+      fetch('data/rentals.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => null),
     ]);
-    AMI = ami; DATA = data; HISTORY = hist; CHECKED = checked; BALANCES = balances;
+    AMI = ami; DATA = data; HISTORY = hist; CHECKED = checked; BALANCES = balances; RENTALS = rentals;
   } catch (e) {
     view.innerHTML = `<div class="wrap"><p class="notice">The listing data didn’t load. Check your connection and reload the page. You can always browse homes directly on <a href="${LINKS.dahlia}">DAHLIA</a>.</p></div>`;
     return;

@@ -1,12 +1,14 @@
 #!/usr/bin/env node
-// Pulls BMR ownership listings from DAHLIA (housing.sfgov.org) and City Second
-// listings from sf.gov, then writes:
-//   data/listings.json  - everything currently in the DAHLIA feed + City Second
-//   data/history.json   - every listing ever seen, so closed ones stay visible
+// Pulls BMR ownership and rental listings from DAHLIA (housing.sfgov.org) and
+// City Second listings from sf.gov, then writes:
+//   data/listings.json        - ownership listings in the DAHLIA feed + City Second
+//   data/history.json         - every ownership listing ever seen
+//   data/rentals.json         - rental listings in the DAHLIA feed
+//   data/rental-history.json  - every rental listing ever seen
 // Run by .github/workflows/refresh-data.yml. Node 20+, no dependencies.
 
 import { readFile, writeFile } from 'node:fs/promises';
-import { normalizeListing } from './normalize.mjs';
+import { normalizeListing, normalizeRental, chartsNeeded, attachLimits } from './normalize.mjs';
 import { CITY_SECOND_URL, htmlToText, extractLinks, parseCitySecond } from './citysecond.mjs';
 
 const BASE = 'https://housing.sfgov.org/api/v1/listings';
@@ -95,11 +97,56 @@ async function main() {
     await writeFile(new URL('history.json', DATA), JSON.stringify(history, null, 1));
   }
 
+  // Rentals. A failure here shouldn't stop the ownership data from saving.
+  let rentalCount = null;
+  try {
+    const rfeed = await getJson(`${BASE}.json?type=rental`);
+    const rbrowse = rfeed.listings || [];
+    if (!rbrowse.length) throw new Error('DAHLIA returned no rental listings');
+    const rentals = await mapLimit(rbrowse, 4, async (b) => {
+      const id = b.listingID || b.Id;
+      const [detail, units, prefs] = await Promise.all([
+        getJson(`${BASE}/${id}.json`).catch(() => null),
+        getJson(`${BASE}/${id}/units.json`).catch(() => null),
+        getJson(`${BASE}/${id}/preferences.json`).catch(() => null),
+      ]);
+      return normalizeRental(b, detail, units, prefs);
+    });
+    // Exact income limits for every chart the rentals use (MOHCD, TCAC, HUD...).
+    const charts = chartsNeeded(rentals);
+    const amiAll = { ami: [] };
+    for (let i = 0; i < charts.length; i += 10) {
+      const q = charts.slice(i, i + 10).map((c) => `year[]=${c.year}&percent[]=${c.percent}&chartType[]=${encodeURIComponent(c.chartType)}`).join('&');
+      const res = await getJson(`${BASE}/ami.json?${q}`).catch(() => ({ ami: [] }));
+      amiAll.ami.push(...(res.ami || []));
+    }
+    attachLimits(rentals, amiAll);
+    rentalCount = rentals.length;
+    const prevR = await readJson('rentals.json', null);
+    if (!prevR || JSON.stringify(prevR.listings) !== JSON.stringify(rentals)) {
+      await writeFile(new URL('rentals.json', DATA), JSON.stringify({ updated: now, source: 'https://housing.sfgov.org/listings/for-rent', count: rentals.length, listings: rentals }, null, 1));
+    }
+    const rh = await readJson('rental-history.json', { listings: {} });
+    const rbefore = JSON.stringify(rh.listings);
+    for (const l of rentals) {
+      const h = rh.listings[l.id];
+      const { notes, amenities, credit, eviction, utilities, requiredDocs, prefs, units, ...slim } = l;
+      slim.units = units.map(({ maxIncome, ...g }) => g);
+      rh.listings[l.id] = { ...slim, firstSeen: h ? h.firstSeen : today, lastSeen: today };
+    }
+    if (JSON.stringify(rh.listings) !== rbefore) {
+      rh.updated = now;
+      await writeFile(new URL('rental-history.json', DATA), JSON.stringify(rh, null, 1));
+    }
+  } catch (e) {
+    console.warn('Rental refresh failed, keeping previous rental data:', e.message);
+  }
+
   // A once-a-day "last checked" stamp so the site can show the job is alive.
   const checked = await readJson('checked.json', {});
   if (checked.date !== today) await writeFile(new URL('checked.json', DATA), JSON.stringify({ date: today }));
 
-  console.log(`${same ? 'No change' : 'Updated'}: ${listings.length} DAHLIA listings, ${citySecond.items.length} City Second.`);
+  console.log(`${same ? 'No change' : 'Updated'}: ${listings.length} DAHLIA ownership listings, ${rentalCount ?? 'no'} rentals, ${citySecond.items.length} City Second.`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

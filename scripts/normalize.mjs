@@ -126,3 +126,162 @@ export function normalizeListing(browse, detailRaw, unitsRaw, prefsRaw) {
     lastModified: pick('LastModifiedDate') || null,
   };
 }
+
+// ---------------------------------------------------------------------------
+// Rentals. Same DAHLIA shape as ownership, plus rent, minimum income,
+// occupancy limits, waitlist details and resident selection criteria.
+
+// Buildings known to give priority to SFUSD (and sometimes City College)
+// employees. Matched on name or address; anything else mentioning SFUSD or
+// educators in its name, notes or preferences is flagged too.
+export const EDUCATOR_BUILDINGS = [
+  { key: 'chisholm', name: 'Shirley Chisholm Village', match: /chisholm|1360 43rd/i },
+  { key: 'brightwell', name: 'Brightwell West', match: /brightwell|750 golden gate/i },
+];
+const EDUCATOR_TEXT = /\bSFUSD\b|school district|educator|city college|\bCCSF\b/i;
+
+export function normalizeRental(browse, detailRaw, unitsRaw, prefsRaw) {
+  const b = browse || {};
+  const d = (detailRaw && (detailRaw.listing || detailRaw)) || {};
+  const pick = (k) => (d[k] !== undefined && d[k] !== null ? d[k] : b[k]);
+  const id = b.listingID || b.Id || d.listingID || d.Id;
+
+  const unitsArr = (unitsRaw && (unitsRaw.units || unitsRaw)) || [];
+  let units = (Array.isArray(unitsArr) ? unitsArr : []).map((u) => ({
+    type: u.Unit_Type || null,
+    number: u.Unit_Number || null,
+    floor: u.Unit_Floor || null,
+    baths: num(u.Number_of_Bathrooms),
+    sqft: num(u.Unit_Square_Footage),
+    rent: num(u.BMR_Rent_Monthly),
+    minIncomeMonthly: num(u.BMR_Rental_Minimum_Monthly_Income_Needed),
+    rentPercentIncome: num(u.Rent_percent_of_income),
+    maxAmi: num(u.Max_AMI_for_Qualifying_Unit),
+    amiChart: u.AMI_chart_type || null,
+    amiChartYear: num(u.AMI_chart_year),
+    minOccupancy: num(u.Min_Occupancy),
+    maxOccupancy: num(u.Max_Occupancy),
+    status: u.Status || null,
+    availability: num(u.Availability),
+    reserved: !!u.isReservedCommunity,
+  }));
+  if (!units.length) {
+    const sums = [...((b.unitSummaries && b.unitSummaries.general) || []), ...((b.unitSummaries && b.unitSummaries.reserved) || [])];
+    units = sums.map((s) => ({
+      type: s.unitType || null, number: null, floor: null, baths: null,
+      sqft: num(s.minSquareFt),
+      rent: num(s.minMonthlyRent),
+      minIncomeMonthly: num(s.minRentalMinIncome),
+      rentPercentIncome: num(s.minPercentIncome),
+      maxAmi: num(s.maxQualifyingAMI),
+      amiChart: null, amiChartYear: null,
+      minOccupancy: num(s.minOccupancy),
+      maxOccupancy: num(s.maxOccupancy),
+      status: null,
+      availability: num(s.availability ?? s.totalUnits),
+      reserved: false,
+    }));
+  }
+
+  // Big buildings list hundreds of identical units; group them so the data
+  // stays small. Each group keeps a total count and how many are available.
+  const groups = new Map();
+  for (const u of units) {
+    const key = [u.type, u.rent, u.minIncomeMonthly, u.rentPercentIncome, u.maxAmi, u.amiChart, u.amiChartYear, u.minOccupancy, u.maxOccupancy, u.reserved].join('|');
+    const g = groups.get(key) || { type: u.type, rent: u.rent, minIncomeMonthly: u.minIncomeMonthly, rentPercentIncome: u.rentPercentIncome, maxAmi: u.maxAmi, amiChart: u.amiChart, amiChartYear: u.amiChartYear, minOccupancy: u.minOccupancy, maxOccupancy: u.maxOccupancy, reserved: u.reserved, sqftMin: null, sqftMax: null, count: 0, available: 0 };
+    g.count += u.availability && !u.status ? u.availability : 1;
+    if (u.status === 'Available' || (!u.status && u.availability)) g.available += u.status ? 1 : u.availability;
+    if (u.sqft) { g.sqftMin = Math.min(g.sqftMin ?? u.sqft, u.sqft); g.sqftMax = Math.max(g.sqftMax ?? u.sqft, u.sqft); }
+    groups.set(key, g);
+  }
+  const unitGroups = [...groups.values()].sort((a, c) => (a.rent ?? 0) - (c.rent ?? 0));
+
+  const prefsArr = (prefsRaw && (prefsRaw.preferences || prefsRaw)) || [];
+  const prefs = (Array.isArray(prefsArr) ? prefsArr : [])
+    .sort((a, c) => (a.order || 0) - (c.order || 0))
+    .map((p) => ({ name: (p.preferenceName || p.name || '').replace(/\s+/g, ' ').trim(), description: stripHtml(p.description || p.customPreferenceDescription || '') }))
+    .filter((p) => p.name);
+
+  const notes = stripHtml(d.Listing_Other_Notes || '');
+  const listingType = pick('Listing_Type') || '';
+  const method = /waitlist/i.test(listingType) ? 'waitlist' : /first come/i.test(listingType) ? 'fcfs' : 'lottery';
+  const name = pick('Name') || '';
+  const address = pick('Building_Street_Address') || '';
+  const known = EDUCATOR_BUILDINGS.find((x) => x.match.test(`${name} ${address} ${pick('Building_Name') || ''}`));
+  const textHit = EDUCATOR_TEXT.test(`${name} ${notes} ${prefs.map((p) => `${p.name} ${p.description}`).join(' ')}`);
+  const accessible = (d.prioritiesDescriptor || b.prioritiesDescriptor || []).map((p) => ({ name: p.name, units: num(p.numberOfUnits) }));
+  const reservedFor = (d.reservedDescriptor || b.reservedDescriptor || []).map((r) => r.name).filter(Boolean);
+
+  return {
+    id,
+    name,
+    building: pick('Building_Name'),
+    address,
+    zip: pick('Building_Zip_Code'),
+    neighborhood: d.Neighborhood || null,
+    yearBuilt: num(d.Year_Built),
+    method,
+    listingType,
+    listingStatus: pick('Status') || null,          // "Active" or "Lease Up"
+    tenure: pick('Tenure') || null,                 // "New rental" or "Re-rental"
+    programType: d.Program_Type || null,            // e.g. IH-RENTAL, MF-RENTAL
+    dueDate: pick('Application_Due_Date') || null,
+    lotteryDate: d.Lottery_Date || null,
+    lotteryResultsDate: pick('Lottery_Results_Date') || null,
+    unitsAvailable: num(pick('Units_Available')),
+    waitlist: {
+      has: !!pick('hasWaitlist'),
+      current: num(d.Number_of_people_currently_on_waitlist),
+      max: num(d.Maximum_waitlist_size),
+      openings: num(d.Total_waitlist_openings),
+    },
+    educator: known ? { key: known.key, name: known.name } : textHit ? { key: 'other', name: null } : null,
+    reservedFor,
+    accessible,
+    image: b.imageURL || d.imageURL || null,
+    url: `https://housing.sfgov.org/listings/${id}`,
+    fee: num(d.Fee),
+    depositMin: num(d.Deposit_Min),
+    depositMax: num(d.Deposit_Max),
+    utilities: stripHtml(d.Utilities || ''),
+    parking: d.Parking_Information || null,
+    credit: stripHtml(d.Credit_Rating || ''),
+    eviction: stripHtml(d.Eviction_History || ''),
+    criteriaUrl: d.Building_Selection_Criteria || null,
+    requiredDocs: stripHtml(d.Required_Documents || ''),
+    amenities: d.Amenities || null,
+    notes,
+    prefs: prefs.map((p) => ({ name: p.name, description: /educat|sfusd|city college|\btier\b/i.test(`${p.name} ${p.description}`) ? p.description : '' })),
+    units: unitGroups,
+    lastModified: pick('LastModifiedDate') || null,
+  };
+}
+
+// The AMI charts a set of rentals uses, as {chartType, year, percent} triples.
+export function chartsNeeded(rentals) {
+  const seen = new Map();
+  for (const l of rentals) for (const g of l.units) {
+    if (!g.amiChart || !g.amiChartYear || !g.maxAmi) continue;
+    const k = `${g.amiChart}|${g.amiChartYear}|${g.maxAmi}`;
+    if (!seen.has(k)) seen.set(k, { chartType: g.amiChart, year: g.amiChartYear, percent: g.maxAmi });
+  }
+  return [...seen.values()];
+}
+
+// Attach maxIncome (array, index 0 = 1 person) to every unit group, given
+// DAHLIA's /listings/ami.json response values.
+export function attachLimits(rentals, amiResponse) {
+  const table = new Map();
+  for (const row of (amiResponse && amiResponse.ami) || []) {
+    for (const v of row.values || []) {
+      const k = `${v.chartType}|${v.year}|${v.percent}`;
+      const arr = table.get(k) || [];
+      arr[v.numOfHousehold - 1] = v.amount;
+      table.set(k, arr);
+    }
+  }
+  for (const l of rentals) for (const g of l.units) {
+    g.maxIncome = table.get(`${g.amiChart}|${g.amiChartYear}|${g.maxAmi}`) || null;
+  }
+  return rentals;
+}

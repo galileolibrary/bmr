@@ -24,6 +24,8 @@ It's a static site with no build step.
 | `data/ami.json` | MOHCD's 2026 "Maximum Income by Household Size" chart (1 to 11 people, 15% to 200% AMI). |
 | `data/listings.json` | Current ownership listings from DAHLIA, plus City Second listings from sf.gov. |
 | `data/history.json` | Every listing ever seen, so closed lotteries stay visible on the Recent page. |
+| `data/rentals.json` | Rental listings from DAHLIA, with units grouped and the exact income limit per household size from DAHLIA's own AMI charts (MOHCD, TCAC, HUD). |
+| `data/rental-history.json` | Every rental listing ever seen. |
 | `scripts/fetch-listings.mjs` | Refreshes the data. Node 20, no dependencies. |
 | `.github/workflows/refresh-data.yml` | Runs the refresh every 3 hours, commits any changes, and publishes to GitHub Pages. |
 
@@ -42,6 +44,7 @@ Listing data comes from the JSON endpoints that power housing.sfgov.org (`/api/v
 - **DALP fund balances:** `data/dalp-balances.json` is copied by hand from MOHCD's [loan program balances](https://www.sf.gov/data--mohcd-loan-program-balances) page (a Power BI report the job can't read). Update the amounts and `asOf` date every few weeks, or when a new DALP round opens.
 - **DALP rules:** the Down payment loans page (`viewDalp` in `assets/app.js`) follows the DALP Manual, September 2025. Check it when MOHCD publishes a new manual.
 - **Mortgage rate default:** `assets/config.js`.
+- **SFUSD housing:** the Shirley Chisholm Village and Brightwell West cards on the Rentals page are written by hand (`EDU_BUILDINGS` in `assets/app.js`); live status comes from DAHLIA. Add new SFUSD-priority buildings there and to `EDUCATOR_BUILDINGS` in `scripts/normalize.mjs`.
 - **Resale waivers:** MOHCD's temporary waivers run through June 30, 2027. Listings state them in their notes; `scripts/normalize.mjs` detects them by wording.
 
 ## Run locally
