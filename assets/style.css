@@ -318,3 +318,6 @@ a.linkcard:focus-visible { outline-offset: 3px; }
 /* Footer official links */
 .foot-links { list-style: none; margin: 0 0 1.5rem; padding: 0 0 1.25rem; display: flex; flex-wrap: wrap; gap: .4rem 1.5rem; border-bottom: 1px solid var(--mist-strong); }
 .foot-links a { font-weight: 700; }
+
+/* Home page intro spans the same width as the headline. */
+.lede.hero-lede { max-width: 60rem; text-wrap: pretty; }

@@ -248,7 +248,7 @@ function viewHome() {
   <div class="wrap">
     <section class="view-head">
       <h1 class="hero-q">Can you secure a housing future in San Francisco on an educator’s salary?</h1>
-      <p class="lede">Through the City’s Below Market Rate (BMR) program, some condos sell for a fraction of market price to households under set income limits. A lot of SFUSD households land right in that range.</p>
+      <p class="lede hero-lede">Through the City’s Below Market Rate (BMR) program, some condos sell for a fraction of market price to households under set income limits. A lot of SFUSD households land right in that range.</p>
       <p style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem">
         <a class="button" href="#/check">Check my eligibility</a>
         <a class="button quiet" href="#/homes">Browse homes for sale</a>
