@@ -77,32 +77,33 @@ p { margin: 0 0 1em; }
   color: var(--paper);
   overflow: hidden;
 }
-.sky-art { position: absolute; right: max(0px, calc((100vw - 1120px) / 2 - 40px)); bottom: 0; height: 205px; width: auto; opacity: .95; }
+/* The drawing sits above the menu row so the menu never runs into it. */
+.sky-art { position: absolute; right: max(0px, calc((100vw - 1120px) / 2)); bottom: 3.3rem; height: 112px; width: auto; opacity: .95; }
 .sky-art .field circle { fill: #CFC8EA; opacity: .55; }
 .sky-art .leo polyline, .sky-art .leo line { fill: none; stroke: #8E7FD0; stroke-width: 1; opacity: .7; }
 .sky-art .leo circle { fill: #F1EEFB; }
 .sky-art .leo circle.bright { fill: var(--star); }
 .sky-art .dome path { fill: none; stroke: #8E7FD0; stroke-width: 1.4; stroke-linecap: round; }
-.sky-inner { position: relative; max-width: 1120px; margin: 0 auto; padding: 1.6rem var(--space) 0; min-height: 205px; display: flex; flex-direction: column; }
+.sky-inner { position: relative; max-width: 1120px; margin: 0 auto; padding: 1.3rem var(--space) 0; min-height: 0; display: flex; flex-direction: column; }
 .sky-inner nav { margin-top: auto; }
 
 .brand { font-family: var(--display); font-weight: 700; font-size: var(--step-1); color: var(--paper); text-decoration: none; letter-spacing: -0.01em; }
 .brand:hover { color: var(--white); }
-.brand-sub { margin: .1rem 0 1.6rem; color: #B9B1DD; font-size: var(--step--1); }
+.brand-sub { margin: .1rem 0 1.9rem; color: #B9B1DD; font-size: var(--step--1); }
 .sky nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
 .sky nav a { display: inline-block; padding: .55rem 0 .7rem; color: #DCD6F2; text-decoration: none; border-bottom: 3px solid transparent; }
 .sky nav a:hover { color: var(--white); }
 .sky nav a[aria-current="page"] { color: var(--white); border-bottom-color: var(--star); }
 
 /* ---------- Layout ---------- */
-main { display: block; padding: 2.75rem 0 4rem; outline: none; }
+main { display: block; padding: 2rem 0 4rem; outline: none; }
 .view-head { margin-bottom: 2rem; }
 .section { margin-top: 3.25rem; }
 .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.5rem; align-items: start; }
 @media (max-width: 860px) { .split { grid-template-columns: 1fr; } h1 { font-size: var(--step-3); } h2 { font-size: var(--step-2); } }
 
 /* ---------- Home ---------- */
-.hero-q { font-size: clamp(2.2rem, 5vw, 3.6rem); max-width: 17ch; margin-bottom: .4em; }
+.hero-q { font-size: clamp(2.1rem, 4.4vw, 3.5rem); max-width: none; margin-bottom: .35em; text-wrap: balance; }
 .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--mist-strong); }
 .facts > div { padding: 1.25rem 1.5rem 0 0; }
 .facts > div + div { padding-left: 1.5rem; border-left: 1px solid var(--mist-strong); }
@@ -273,7 +274,7 @@ details[open] .l-more .when-closed, details:not([open]) .l-more .when-open { dis
 
 /* Mobile header: keep it last so it overrides the base header rules. */
 @media (max-width: 760px) {
-  .sky-art { height: 150px; opacity: .55; right: -40px; }
+  .sky-art { height: 100px; opacity: .3; right: -40px; bottom: 3.1rem; }
   .sky-inner { min-height: 0; }
   .sky nav { margin: 0 calc(-1 * var(--space)); padding: 0 var(--space); overflow-x: auto; scrollbar-width: none; }
   .sky nav ul { flex-wrap: nowrap; white-space: nowrap; }
