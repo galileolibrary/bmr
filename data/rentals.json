@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20T11:40:57.639Z",
+ "updated": "2026-11-20T20:21:25.643Z",
  "source": "https://housing.sfgov.org/listings/for-rent",
  "count": 59,
  "listings": [
@@ -271,7 +271,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-20T11:09:10.000+0000"
+   "lastModified": "2026-11-20T19:46:53.000+0000"
   },
   {
    "id": "a0W7y00000JaZE1EAN",
@@ -469,7 +469,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-20T10:36:13.000+0000"
+   "lastModified": "2026-11-20T20:07:33.000+0000"
   },
   {
    "id": "a0W7y00000IbxrZEAR",
@@ -761,7 +761,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-20T11:06:42.000+0000"
+   "lastModified": "2026-11-20T20:09:37.000+0000"
   },
   {
    "id": "a0W7y00000L0PAPEA3",
@@ -2337,7 +2337,7 @@
    "yearBuilt": 2027,
    "method": "lottery",
    "listingType": "Standard Lottery",
-   "listingStatus": "Active",
+   "listingStatus": "Lease Up",
    "tenure": "New rental",
    "programType": "MF-RENTAL",
    "dueDate": "2026-10-23T00:00:00.000+0000",
@@ -2493,7 +2493,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-19T22:37:04.000+0000"
+   "lastModified": "2026-11-20T18:19:46.000+0000"
   },
   {
    "id": "a0W7y00000JVJGLEA5",
@@ -4437,7 +4437,7 @@
      ]
     }
    ],
-   "lastModified": "2026-10-09T19:15:10.000+0000"
+   "lastModified": "2026-11-20T06:20:55.000+0000"
   },
   {
    "id": "a0W7y00000HqRAPEA3",
@@ -6259,7 +6259,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-19T18:50:40.000+0000"
+   "lastModified": "2026-11-19T18:58:50.000+0000"
   },
   {
    "id": "a0W7y00000GQIT7EAP",
@@ -7875,7 +7875,7 @@
      "sqftMin": 400,
      "sqftMax": 489,
      "count": 15,
-     "available": 2,
+     "available": 1,
      "maxIncome": [
       65450,
       74800,
@@ -8042,7 +8042,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-19T17:34:40.000+0000"
+   "lastModified": "2026-11-20T01:15:21.000+0000"
   },
   {
    "id": "a0W7y00000Fc04oEAB",
@@ -8570,7 +8570,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-17T18:55:19.000+0000"
+   "lastModified": "2026-11-19T22:41:28.000+0000"
   },
   {
    "id": "a0W7y00000FUN6bEAH",
@@ -8721,7 +8721,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-19T19:51:31.000+0000"
+   "lastModified": "2026-11-19T19:52:16.000+0000"
   },
   {
    "id": "a0W7y00000FO9EPEA1",
@@ -8918,7 +8918,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-19T21:24:05.000+0000"
+   "lastModified": "2026-11-20T17:27:37.000+0000"
   },
   {
    "id": "a0W7y000007fyNZEAY",
@@ -9946,7 +9946,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-16T21:02:45.000+0000"
+   "lastModified": "2026-11-20T20:10:22.000+0000"
   },
   {
    "id": "a0W7y000008CI6eEAG",
@@ -11781,7 +11781,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-17T02:15:32.000+0000"
+   "lastModified": "2026-11-19T19:00:02.000+0000"
   },
   {
    "id": "a0W7y000003m1BNEAY",
