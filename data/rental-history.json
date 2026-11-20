@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-19T20:38:19.317Z",
+ "updated": "2026-11-20T02:20:02.310Z",
  "listings": {
   "a0W7y00000L5DdFEAV": {
    "id": "a0W7y00000L5DdFEAV",
@@ -43,7 +43,7 @@
    "depositMax": 2453,
    "parking": "Cielo contains 14 parking spaces reserved for DAHLIA units that will be available for free to residents. Spaces are limited to one per household, and parking is offered to households in lottery rank order. Assignments will be reassigned by lottery annually after the first year to allow all residents an opportunity to have an assigned parking space for a year at a time. Cielo also has one bike room with space for 92 resident bikes.",
    "criteriaUrl": "https://media.api.sf.gov/documents/Cielo_Resident_Selection_Criteria_final_.pdf",
-   "lastModified": "2026-11-19T20:18:05.000+0000",
+   "lastModified": "2026-11-20T01:37:18.000+0000",
    "units": [
     {
      "type": "1 BR",
@@ -187,7 +187,7 @@
    "depositMax": 3041,
    "parking": "Total 105 residential parking spaces. Waitlist only. All the spaces are currently occupied. There is an additional monthly fee of $250 for parking spaces.",
    "criteriaUrl": "https://api.sf.gov/documents/65539/Normandy_-_RSC_AFHMP_FINAL_2026-11-05.pdf",
-   "lastModified": "2026-11-19T20:10:37.000+0000",
+   "lastModified": "2026-11-20T01:30:11.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -299,7 +299,7 @@
    "depositMax": 2174,
    "parking": "Parking is free. There are 29 residential parking spaces that are all currently reserved. The on-site management maintains a parking waitlist that residents may put their names on. No parking spaces are currently available and Waitlist only.",
    "criteriaUrl": "https://api.sf.gov/documents/65637/Resident_Selction_Plan_1101_Conneticut_FINAL_2026-10-29.pdf",
-   "lastModified": "2026-11-19T20:18:16.000+0000",
+   "lastModified": "2026-11-20T01:38:35.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -465,7 +465,7 @@
    "depositMax": 1000,
    "parking": "There is no onsite vehicle parking available. Secure bike parking is offered to residents.",
    "criteriaUrl": "https://media.api.sf.gov/documents/160_Freelon_-_Resident_Selection_Plan_2026-10-20_final_.pdf",
-   "lastModified": "2026-11-19T20:21:37.000+0000",
+   "lastModified": "2026-11-20T01:07:55.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -728,7 +728,7 @@
    "depositMax": 4053,
    "parking": "One BMR Space available.  Parking will be offered to tenants in lottery rank order. Total 33 BMR parking spaces. \r\n\r\n$100 per month for 65% AMI units, $175 per month for 90% AMI units, and 130% AMI units.",
    "criteriaUrl": "https://api.sf.gov/documents/65145/1830_Alemany_Mission_RSC_FINAL_2026-10-29.pdf",
-   "lastModified": "2026-11-19T00:50:51.000+0000",
+   "lastModified": "2026-11-19T18:33:52.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -1307,7 +1307,7 @@
    "depositMax": 2426,
    "parking": "Luca contains 17 parking spaces reserved for DAHLIA units that will be available for free to residents. Spaces are limited to one per household, and parking is offered to households in lottery rank order. Assignments will be reassigned by lottery annually after the first year to allow all residents an opportunity to have an assigned parking space for a year at a time. Luca also has one bike room with space for 96 resident bikes.",
    "criteriaUrl": "https://media.api.sf.gov/documents/Luca_Resident_Selection_Criteria_9.25.26_final.pdf",
-   "lastModified": "2026-11-19T16:29:34.000+0000",
+   "lastModified": "2026-11-19T22:37:04.000+0000",
    "units": [
     {
      "type": "1 BR",
@@ -3971,7 +3971,7 @@
    "depositMax": null,
    "parking": "No parking",
    "criteriaUrl": "https://api.sf.gov/documents/53187/TL_Residences_-_RESIDENT_SELECTION_PLAN_-_FAIR_CHANCE_ORDINANCE_FINAL_2026-03-31.pdf",
-   "lastModified": "2026-11-13T08:25:02.000+0000",
+   "lastModified": "2026-11-19T08:02:04.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -4026,7 +4026,7 @@
    "depositMax": 1755.25,
    "parking": "BMR parking waitlist only. BMR parking fee $100/Month.",
    "criteriaUrl": "https://api.sf.gov/documents/53098/Potrero_1010_Rental_Criteria__FINAL_2026-03-25.pdf",
-   "lastModified": "2026-11-19T00:47:09.000+0000",
+   "lastModified": "2026-11-19T21:18:32.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -4868,7 +4868,7 @@
    "depositMax": 3400,
    "parking": "2 spaces are available for BMR renters. Limit one parking space per household. Parking is offered to households in lottery rank order.",
    "criteriaUrl": "https://media.api.sf.gov/documents/3945_Judah_-_Resident_Selection_Criteria_1.5.25.pdf",
-   "lastModified": "2026-11-19T20:13:37.000+0000",
+   "lastModified": "2026-11-19T21:24:05.000+0000",
    "units": [
     {
      "type": "1 BR",
