@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20T02:20:02.310Z",
+ "updated": "2026-11-20T11:40:57.639Z",
  "source": "https://housing.sfgov.org/listings/for-sale",
  "count": 55,
  "listings": [
@@ -4657,6 +4657,7 @@
     "status": "closed",
     "url": null
    }
-  ]
+  ],
+  "stale": true
  }
 }
