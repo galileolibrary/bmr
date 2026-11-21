@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-20T20:21:25.643Z",
+ "updated": "2026-11-21T02:15:49.499Z",
  "source": "https://housing.sfgov.org/listings/for-rent",
- "count": 59,
+ "count": 57,
  "listings": [
   {
    "id": "a0W7y00000L5DdFEAV",
@@ -271,7 +271,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-20T19:46:53.000+0000"
+   "lastModified": "2026-11-21T02:08:11.000+0000"
   },
   {
    "id": "a0W7y00000JaZE1EAN",
@@ -469,7 +469,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-20T20:07:33.000+0000"
+   "lastModified": "2026-11-21T02:06:16.000+0000"
   },
   {
    "id": "a0W7y00000IbxrZEAR",
@@ -761,7 +761,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-20T20:09:37.000+0000"
+   "lastModified": "2026-11-21T01:33:13.000+0000"
   },
   {
    "id": "a0W7y00000L0PAPEA3",
@@ -1273,7 +1273,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-20T01:07:55.000+0000"
+   "lastModified": "2026-11-21T00:11:39.000+0000"
   },
   {
    "id": "a0W7y00000JXbPFEA1",
@@ -2044,290 +2044,6 @@
    "lastModified": "2026-11-18T00:28:49.000+0000"
   },
   {
-   "id": "a0W7y00000JdZFtEAN",
-   "name": "Candlestick Heights Waitlist",
-   "building": "Candlestick Heights (Multifamily)",
-   "address": "859 Jamestown Ave",
-   "zip": "94124",
-   "neighborhood": "Bayview Hunters Point",
-   "yearBuilt": 2013,
-   "method": "waitlist",
-   "listingType": "Waitlist Listing",
-   "listingStatus": "Active",
-   "tenure": "Re-rental",
-   "programType": "MF-RENTAL",
-   "dueDate": "2026-10-30T00:00:00.000+0000",
-   "lotteryDate": "2026-11-13T19:00:00.000+0000",
-   "lotteryResultsDate": "2026-11-19",
-   "unitsAvailable": 2,
-   "waitlist": {
-    "has": true,
-    "current": 0,
-    "max": 500,
-    "openings": 500
-   },
-   "educator": null,
-   "reservedFor": [],
-   "accessible": [
-    {
-     "name": "Mobility impairments",
-     "units": 6
-    }
-   ],
-   "image": "https://media-housing-prod.dev.sf.gov/images/listings/a0W7y00000JdZFtEAN-b786705676ab45edcc5495280271cd47.jpg",
-   "url": "https://housing.sfgov.org/listings/a0W7y00000JdZFtEAN",
-   "fee": 0,
-   "depositMin": 1507,
-   "depositMax": 2275,
-   "utilities": "Tenant pays: Gas, Electric, Internet, Telephone & Cable",
-   "parking": "Total 161 residential parking spaces. No parking is currently available, and Waitlist only. Limit one assigned parking space per household.",
-   "credit": "A credit reference and background check will be required for all household members age 18 or older.  A poor credit history may be grounds to deem an applicant ineligible for housing.   Applicants will have the option to explain mitigating circumstances and/or include supplemental information with their application to explain any issues such as foreclosure, bankruptcy and negative credit. \r\n\r\nAny of the following circumstances may be defined as Poor Credit History or grounds for disqualification:\r\n\r\n1)\tTotal unmet credit problems (including governmental tax liens) in excess of $7,500 Excluding medical debt, student loan debt, voluntary repossession.\r\n2)\tAn open bankruptcy  within the last 2 years.\r\n3)\tA total of five (5) unmet credit obligations of any value.  Any unpaid utility bill (electric, gas, water, sewer, etc.) within the last 2 years.",
-   "eviction": "The applicants’ landlord references must verify a history of responsible occupancy, behavior, and conduct.  Current landlord references will be requested along with a third-party unlawful detainer search.  All previous landlords during the past two years will also be contacted.  Landlord references will help to determine whether or not the applicant has a good rent paying history, whether or not there have been any disturbing behavior patterns including repeated lease violations, destruction of property, etc.  Any documented behavior which would constitute a material violation of the standard lease to be used at this location may be considered grounds for ineligibility. \r\n\r\nThe following lists the reasons why we might deny your application:\r\n(a)\tAn Unlawful Detainer against an applicant obtained by the current or previous landlord in the past 2 years. “No fault” evictions, such as Ellis Act or Owner Move In evictions will not be held against a household.\r\n(b)\t More than three late rent payments in a twelve-month period. \r\n(c)\tNegative landlord history with documented lease violations within the last 2 years.\r\n(d)\tAmounts that exceeds $2500 owed to current or prior landlords or Housing Agencies.",
-   "criteriaUrl": "https://api.sf.gov/documents/64510/MF_Candlestick_Heights_RSC_FINAL_2026-10-14.pdf",
-   "requiredDocs": "Post-lottery building application, income and asset information.",
-   "amenities": "Some units have in-unit washer and dryer hook up for an additional $12 a month. Shared laundry facilities are located on-site. Limited garage parking available. Secure building access. After school program. Courtyard space.",
-   "notes": "",
-   "prefs": [
-    {
-     "name": "Veteran with Certificate of Preference",
-     "description": ""
-    },
-    {
-     "name": "Certificate of Preference (COP)",
-     "description": ""
-    },
-    {
-     "name": "Veteran with Displaced Tenant Housing Preference",
-     "description": ""
-    },
-    {
-     "name": "Displaced Tenant Housing Preference (DTHP)",
-     "description": ""
-    },
-    {
-     "name": "Veteran with Live or Work in San Francisco Preference",
-     "description": ""
-    },
-    {
-     "name": "Live or Work in San Francisco Preference",
-     "description": ""
-    }
-   ],
-   "units": [
-    {
-     "type": "1 BR",
-     "rent": 1507,
-     "minIncomeMonthly": 3014,
-     "rentPercentIncome": null,
-     "maxAmi": 50,
-     "amiChart": "MOHCD",
-     "amiChartYear": 2026,
-     "minOccupancy": 1,
-     "maxOccupancy": 3,
-     "reserved": false,
-     "sqftMin": 1209,
-     "sqftMax": 1209,
-     "count": 2,
-     "available": 0,
-     "maxIncome": [
-      56750,
-      64850,
-      72950,
-      81050,
-      87550,
-      94050,
-      100500,
-      107000,
-      113500,
-      119950,
-      126450,
-      132950
-     ]
-    },
-    {
-     "type": "2 BR",
-     "rent": 1692,
-     "minIncomeMonthly": 3384,
-     "rentPercentIncome": null,
-     "maxAmi": 50,
-     "amiChart": "MOHCD",
-     "amiChartYear": 2026,
-     "minOccupancy": 2,
-     "maxOccupancy": 5,
-     "reserved": false,
-     "sqftMin": 1165,
-     "sqftMax": 1329,
-     "count": 12,
-     "available": 0,
-     "maxIncome": [
-      56750,
-      64850,
-      72950,
-      81050,
-      87550,
-      94050,
-      100500,
-      107000,
-      113500,
-      119950,
-      126450,
-      132950
-     ]
-    },
-    {
-     "type": "1 BR",
-     "rent": 1831,
-     "minIncomeMonthly": 3662,
-     "rentPercentIncome": null,
-     "maxAmi": 60,
-     "amiChart": "MOHCD",
-     "amiChartYear": 2026,
-     "minOccupancy": 1,
-     "maxOccupancy": 3,
-     "reserved": false,
-     "sqftMin": 878,
-     "sqftMax": 1209,
-     "count": 18,
-     "available": 0,
-     "maxIncome": [
-      68050,
-      77800,
-      87550,
-      97250,
-      105050,
-      112850,
-      120600,
-      128350,
-      136150,
-      143950,
-      151750,
-      159500
-     ]
-    },
-    {
-     "type": "3 BR",
-     "rent": 1870,
-     "minIncomeMonthly": 3740,
-     "rentPercentIncome": null,
-     "maxAmi": 50,
-     "amiChart": "MOHCD",
-     "amiChartYear": 2026,
-     "minOccupancy": 3,
-     "maxOccupancy": 7,
-     "reserved": false,
-     "sqftMin": 1330,
-     "sqftMax": 1390,
-     "count": 3,
-     "available": 0,
-     "maxIncome": [
-      56750,
-      64850,
-      72950,
-      81050,
-      87550,
-      94050,
-      100500,
-      107000,
-      113500,
-      119950,
-      126450,
-      132950
-     ]
-    },
-    {
-     "type": "4 BR",
-     "rent": 2008,
-     "minIncomeMonthly": 4016,
-     "rentPercentIncome": null,
-     "maxAmi": 50,
-     "amiChart": "MOHCD",
-     "amiChartYear": 2026,
-     "minOccupancy": 4,
-     "maxOccupancy": 9,
-     "reserved": false,
-     "sqftMin": 1457,
-     "sqftMax": 1457,
-     "count": 7,
-     "available": 0,
-     "maxIncome": [
-      56750,
-      64850,
-      72950,
-      81050,
-      87550,
-      94050,
-      100500,
-      107000,
-      113500,
-      119950,
-      126450,
-      132950
-     ]
-    },
-    {
-     "type": "2 BR",
-     "rent": 2057,
-     "minIncomeMonthly": 4114,
-     "rentPercentIncome": null,
-     "maxAmi": 60,
-     "amiChart": "MOHCD",
-     "amiChartYear": 2026,
-     "minOccupancy": 2,
-     "maxOccupancy": 5,
-     "reserved": false,
-     "sqftMin": 1085,
-     "sqftMax": 1329,
-     "count": 118,
-     "available": 2,
-     "maxIncome": [
-      68050,
-      77800,
-      87550,
-      97250,
-      105050,
-      112850,
-      120600,
-      128350,
-      136150,
-      143950,
-      151750,
-      159500
-     ]
-    },
-    {
-     "type": "3 BR",
-     "rent": 2275,
-     "minIncomeMonthly": 4550,
-     "rentPercentIncome": null,
-     "maxAmi": 60,
-     "amiChart": "MOHCD",
-     "amiChartYear": 2026,
-     "minOccupancy": 3,
-     "maxOccupancy": 7,
-     "reserved": false,
-     "sqftMin": 1160,
-     "sqftMax": 1390,
-     "count": 15,
-     "available": 0,
-     "maxIncome": [
-      68050,
-      77800,
-      87550,
-      97250,
-      105050,
-      112850,
-      120600,
-      128350,
-      136150,
-      143950,
-      151750,
-      159500
-     ]
-    }
-   ],
-   "lastModified": "2026-11-16T22:35:41.000+0000"
-  },
-  {
    "id": "a0W7y00000KAajREAT",
    "name": "Luca",
    "building": "1652 Sunnydale (Sunnydale Block 9)",
@@ -2337,7 +2053,7 @@
    "yearBuilt": 2027,
    "method": "lottery",
    "listingType": "Standard Lottery",
-   "listingStatus": "Lease Up",
+   "listingStatus": "Active",
    "tenure": "New rental",
    "programType": "MF-RENTAL",
    "dueDate": "2026-10-23T00:00:00.000+0000",
@@ -2493,119 +2209,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-20T18:19:46.000+0000"
-  },
-  {
-   "id": "a0W7y00000JVJGLEA5",
-   "name": "O’Farrell Towers",
-   "building": "O'Farrell Towers",
-   "address": "477 O'Farrell St",
-   "zip": "94102",
-   "neighborhood": "Tenderloin",
-   "yearBuilt": 2000,
-   "method": "waitlist",
-   "listingType": "Waitlist Listing",
-   "listingStatus": "Active",
-   "tenure": "Re-rental",
-   "programType": "MF-RENTAL",
-   "dueDate": "2026-10-16T00:00:00.000+0000",
-   "lotteryDate": "2026-10-29T18:00:00.000+0000",
-   "lotteryResultsDate": "2026-11-05",
-   "unitsAvailable": 1,
-   "waitlist": {
-    "has": true,
-    "current": 6,
-    "max": 500,
-    "openings": 494
-   },
-   "educator": null,
-   "reservedFor": [],
-   "accessible": [
-    {
-     "name": "Hearing impairments",
-     "units": 5
-    },
-    {
-     "name": "Vision impairments",
-     "units": 5
-    },
-    {
-     "name": "Mobility impairments",
-     "units": 6
-    }
-   ],
-   "image": "https://media-housing-prod.dev.sf.gov/images/listings/a0W7y00000JVJGLEA5-70c20bdb479178ecc42b654fa2cec6cf.jpg",
-   "url": "https://housing.sfgov.org/listings/a0W7y00000JVJGLEA5",
-   "fee": 35,
-   "depositMin": 25,
-   "depositMax": 3075,
-   "utilities": "Renter pays: Cable, Internet, Telephone, PG&E",
-   "parking": "No parking",
-   "credit": "The building management does not review credit history.",
-   "eviction": "• Disqualification may result from one (1) eviction in the past three (3) years.  \r\n• Applicants who have past evictions strictly for non-payment of rent, but now have a verified payee to assist with timely rent payment, will not be automatically declined under the eviction history criterion.  \r\n• Applicants that have no-fault evictions (Ellis Act, Owner Move-In etc.) will not be declined under the eviction history criterion.\r\n• Current and previous landlords will be contacted for information going back 2 years concerning the applicant’s history of fulfilling essential tenancy obligations as defined here:  payment of rent, compliance with lease requirements, destruction of property, interference with the rights of others to enjoy the property, or other activity that would adversely affect the health or safety of other tenants or damage property.  \r\n• Applicants may be declined for a negative landlord reference (documented lease violations) that indicates the tenant will not meet the essential tenancy obligations.  \r\n• In cases where applicants do not have any previous landlord, or if no previous landlord is available, staff will request personal references from someone not related to the applicant, such as a counselor or caseworker.  However, lack of such references will not be basis for automatic denial.",
-   "criteriaUrl": "https://api.sf.gov/documents/63190/OFarrelll_Towers_-_RSC_AFHMP.pdf",
-   "requiredDocs": "Post-Lottery Application and immigration status",
-   "amenities": "•\tCourtyard\r\n•\tCommunity room\r\n•\tOn-site laundry\r\n•\t24h Maintenance service",
-   "notes": "",
-   "prefs": [
-    {
-     "name": "Veteran with Certificate of Preference",
-     "description": ""
-    },
-    {
-     "name": "Certificate of Preference (COP)",
-     "description": ""
-    },
-    {
-     "name": "Veteran with Displaced Tenant Housing Preference",
-     "description": ""
-    },
-    {
-     "name": "Displaced Tenant Housing Preference (DTHP)",
-     "description": ""
-    },
-    {
-     "name": "Veteran with Live or Work in San Francisco Preference",
-     "description": ""
-    },
-    {
-     "name": "Live or Work in San Francisco Preference",
-     "description": ""
-    }
-   ],
-   "units": [
-    {
-     "type": "1 BR",
-     "rent": null,
-     "minIncomeMonthly": 0,
-     "rentPercentIncome": 30,
-     "maxAmi": 60,
-     "amiChart": "MOHCD",
-     "amiChartYear": 2026,
-     "minOccupancy": 1,
-     "maxOccupancy": 3,
-     "reserved": true,
-     "sqftMin": 491,
-     "sqftMax": 546,
-     "count": 100,
-     "available": 1,
-     "maxIncome": [
-      68050,
-      77800,
-      87550,
-      97250,
-      105050,
-      112850,
-      120600,
-      128350,
-      136150,
-      143950,
-      151750,
-      159500
-     ]
-    }
-   ],
-   "lastModified": "2026-10-30T23:58:34.000+0000"
+   "lastModified": "2026-11-20T22:14:17.000+0000"
   },
   {
    "id": "a0W7y00000JdZxREAV",
@@ -5573,7 +5177,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-18T08:01:41.000+0000"
+   "lastModified": "2026-11-20T22:36:32.000+0000"
   },
   {
    "id": "a0W7y00000GOQUnEAP",
@@ -6259,7 +5863,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-19T18:58:50.000+0000"
+   "lastModified": "2026-11-20T23:47:20.000+0000"
   },
   {
    "id": "a0W7y00000GQIT7EAP",
@@ -8570,7 +8174,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-19T22:41:28.000+0000"
+   "lastModified": "2026-11-21T01:33:47.000+0000"
   },
   {
    "id": "a0W7y00000FUN6bEAH",
@@ -9137,7 +8741,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-18T00:06:38.000+0000"
+   "lastModified": "2026-11-20T20:22:36.000+0000"
   },
   {
    "id": "a0W7y00000ElWZ3EAN",
@@ -9946,7 +9550,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-20T20:10:22.000+0000"
+   "lastModified": "2026-11-20T20:23:21.000+0000"
   },
   {
    "id": "a0W7y000008CI6eEAG",
@@ -11304,7 +10908,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-17T23:25:44.000+0000"
+   "lastModified": "2026-11-20T14:01:07.000+0000"
   },
   {
    "id": "a0W7y000004QBaDEAW",
