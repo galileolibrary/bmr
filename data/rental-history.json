@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21T02:15:49.499Z",
+ "updated": "2026-11-21T11:02:09.503Z",
  "listings": {
   "a0W7y00000L5DdFEAV": {
    "id": "a0W7y00000L5DdFEAV",
@@ -43,7 +43,7 @@
    "depositMax": 2453,
    "parking": "Cielo contains 14 parking spaces reserved for DAHLIA units that will be available for free to residents. Spaces are limited to one per household, and parking is offered to households in lottery rank order. Assignments will be reassigned by lottery annually after the first year to allow all residents an opportunity to have an assigned parking space for a year at a time. Cielo also has one bike room with space for 92 resident bikes.",
    "criteriaUrl": "https://media.api.sf.gov/documents/Cielo_Resident_Selection_Criteria_final_.pdf",
-   "lastModified": "2026-11-21T02:08:11.000+0000",
+   "lastModified": "2026-11-21T10:38:48.000+0000",
    "units": [
     {
      "type": "1 BR",
@@ -143,7 +143,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000JaZE1EAN": {
    "id": "a0W7y00000JaZE1EAN",
@@ -187,7 +187,7 @@
    "depositMax": 3041,
    "parking": "Total 105 residential parking spaces. Waitlist only. All the spaces are currently occupied. There is an additional monthly fee of $250 for parking spaces.",
    "criteriaUrl": "https://api.sf.gov/documents/65539/Normandy_-_RSC_AFHMP_FINAL_2026-11-05.pdf",
-   "lastModified": "2026-11-21T02:06:16.000+0000",
+   "lastModified": "2026-11-21T10:23:04.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -255,7 +255,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000IbxrZEAR": {
    "id": "a0W7y00000IbxrZEAR",
@@ -299,7 +299,7 @@
    "depositMax": 2174,
    "parking": "Parking is free. There are 29 residential parking spaces that are all currently reserved. The on-site management maintains a parking waitlist that residents may put their names on. No parking spaces are currently available and Waitlist only.",
    "criteriaUrl": "https://api.sf.gov/documents/65637/Resident_Selction_Plan_1101_Conneticut_FINAL_2026-10-29.pdf",
-   "lastModified": "2026-11-21T01:33:13.000+0000",
+   "lastModified": "2026-11-21T10:36:41.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -415,7 +415,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000L0PAPEA3": {
    "id": "a0W7y00000L0PAPEA3",
@@ -693,7 +693,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000JXbPFEA1": {
    "id": "a0W7y00000JXbPFEA1",
@@ -908,7 +908,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000L0DM9EAN": {
    "id": "a0W7y00000L0DM9EAN",
@@ -1107,7 +1107,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000JdZFtEAN": {
    "id": "a0W7y00000JdZFtEAN",
@@ -1359,7 +1359,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000JVJGLEA5": {
    "id": "a0W7y00000JVJGLEA5",
@@ -1719,7 +1719,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000IqYJNEA3": {
    "id": "a0W7y00000IqYJNEA3",
@@ -1819,7 +1819,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000JRv5hEAD": {
    "id": "a0W7y00000JRv5hEAD",
@@ -1874,7 +1874,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000JBEBBEA5": {
    "id": "a0W7y00000JBEBBEA5",
@@ -1961,7 +1961,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000IuXwbEAF": {
    "id": "a0W7y00000IuXwbEAF",
@@ -2064,7 +2064,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000J0jztEAB": {
    "id": "a0W7y00000J0jztEAB",
@@ -2121,7 +2121,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000IsX4fEAF": {
    "id": "a0W7y00000IsX4fEAF",
@@ -2208,7 +2208,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000ImkxREAR": {
    "id": "a0W7y00000ImkxREAR",
@@ -2279,7 +2279,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000IfLqvEAF": {
    "id": "a0W7y00000IfLqvEAF",
@@ -2382,7 +2382,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000HvGO1EAN": {
    "id": "a0W7y00000HvGO1EAN",
@@ -2469,7 +2469,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000HqRAPEA3": {
    "id": "a0W7y00000HqRAPEA3",
@@ -2524,7 +2524,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GsldREAR": {
    "id": "a0W7y00000GsldREAR",
@@ -2755,7 +2755,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GzbSrEAJ": {
    "id": "a0W7y00000GzbSrEAJ",
@@ -2858,7 +2858,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000H4wrdEAB": {
    "id": "a0W7y00000H4wrdEAB",
@@ -2945,7 +2945,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GwdxREAR": {
    "id": "a0W7y00000GwdxREAR",
@@ -3000,7 +3000,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GpWXhEAN": {
    "id": "a0W7y00000GpWXhEAN",
@@ -3103,7 +3103,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GOQUnEAP": {
    "id": "a0W7y00000GOQUnEAP",
@@ -3138,7 +3138,7 @@
    "depositMax": 1766,
    "parking": "BMR Waitlist only. BMR parking fee $100 per month.",
    "criteriaUrl": "https://api.sf.gov/documents/55866/OM-_RESIDENT_SELECTION_PLAN_-_FAIR_CHANCE_ORDINANCE_FINAL_5-11-2026_Ogmu0SY.pdf",
-   "lastModified": "2026-11-20T08:44:35.000+0000",
+   "lastModified": "2026-11-21T08:01:42.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -3190,7 +3190,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GYsG5EAL": {
    "id": "a0W7y00000GYsG5EAL",
@@ -3485,7 +3485,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GQIT7EAP": {
    "id": "a0W7y00000GQIT7EAP",
@@ -3540,7 +3540,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GcxqfEAB": {
    "id": "a0W7y00000GcxqfEAB",
@@ -3643,7 +3643,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GW1PZEA1": {
    "id": "a0W7y00000GW1PZEA1",
@@ -3714,7 +3714,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GQZlhEAH": {
    "id": "a0W7y00000GQZlhEAH",
@@ -3833,7 +3833,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GKJDNEA5": {
    "id": "a0W7y00000GKJDNEA5",
@@ -3936,7 +3936,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GOLRtEAP": {
    "id": "a0W7y00000GOLRtEAP",
@@ -3991,7 +3991,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GN9pNEAT": {
    "id": "a0W7y00000GN9pNEAT",
@@ -4026,7 +4026,7 @@
    "depositMax": 1755.25,
    "parking": "BMR parking waitlist only. BMR parking fee $100/Month.",
    "criteriaUrl": "https://api.sf.gov/documents/53098/Potrero_1010_Rental_Criteria__FINAL_2026-03-25.pdf",
-   "lastModified": "2026-11-19T21:18:32.000+0000",
+   "lastModified": "2026-11-21T06:24:45.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -4078,7 +4078,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000GFQgvEAH": {
    "id": "a0W7y00000GFQgvEAH",
@@ -4165,7 +4165,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000G2JIHEA3": {
    "id": "a0W7y00000G2JIHEA3",
@@ -4252,7 +4252,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000FjnITEAZ": {
    "id": "a0W7y00000FjnITEAZ",
@@ -4460,7 +4460,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000Fc04oEAB": {
    "id": "a0W7y00000Fc04oEAB",
@@ -4611,7 +4611,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000FeWWnEAN": {
    "id": "a0W7y00000FeWWnEAN",
@@ -4646,7 +4646,7 @@
    "depositMax": 4475,
    "parking": "No Parking On Site",
    "criteriaUrl": "https://media.api.sf.gov/documents/RQA_-_Affordable_-_San_Francisco_FINAL_2026-01-27.pdf",
-   "lastModified": "2026-11-21T01:33:47.000+0000",
+   "lastModified": "2026-11-21T05:39:01.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -4746,7 +4746,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000FUN6bEAH": {
    "id": "a0W7y00000FUN6bEAH",
@@ -4833,7 +4833,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000FO9EPEA1": {
    "id": "a0W7y00000FO9EPEA1",
@@ -4936,7 +4936,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000007fyNZEAY": {
    "id": "a0W7y000007fyNZEAY",
@@ -5055,7 +5055,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000ElWZ3EAN": {
    "id": "a0W7y00000ElWZ3EAN",
@@ -5190,7 +5190,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y00000C3OgREAV": {
    "id": "a0W7y00000C3OgREAV",
@@ -5261,7 +5261,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000009QlKfEAK": {
    "id": "a0W7y000009QlKfEAK",
@@ -5348,7 +5348,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000008FIMbEAO": {
    "id": "a0W7y000008FIMbEAO",
@@ -5435,7 +5435,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000008Zni5EAC": {
    "id": "a0W7y000008Zni5EAC",
@@ -5506,7 +5506,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000008CI6eEAG": {
    "id": "a0W7y000008CI6eEAG",
@@ -5721,7 +5721,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000008EtsrEAC": {
    "id": "a0W7y000008EtsrEAC",
@@ -5756,7 +5756,7 @@
    "depositMax": 1766,
    "parking": "No BMR parking. Waitlist only.",
    "criteriaUrl": "https://api.sf.gov/documents/46004/ALCHEMY_RESIDENT_SELECTION_PLAN_-_FAIR_CHANCE_ORDINANCE_FINAL_2025-09-30.pdf",
-   "lastModified": "2026-11-18T23:33:09.000+0000",
+   "lastModified": "2026-11-21T08:01:58.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -5856,7 +5856,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000006byTBEAY": {
    "id": "a0W7y000006byTBEAY",
@@ -5943,7 +5943,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000005pTQ5EAM": {
    "id": "a0W7y000005pTQ5EAM",
@@ -6030,7 +6030,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000005RxNhEAK": {
    "id": "a0W7y000005RxNhEAK",
@@ -6117,7 +6117,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000004QByQEAW": {
    "id": "a0W7y000004QByQEAW",
@@ -6204,7 +6204,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000004o2FdEAI": {
    "id": "a0W7y000004o2FdEAI",
@@ -6275,7 +6275,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000004QBaDEAW": {
    "id": "a0W7y000004QBaDEAW",
@@ -6394,7 +6394,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000004QCb7EAG": {
    "id": "a0W7y000004QCb7EAG",
@@ -6429,7 +6429,7 @@
    "depositMax": 3050,
    "parking": "Parking is $240 per space per month. Limited to one parking space per household. Parking is offered to households in lottery rank order.",
    "criteriaUrl": "https://api.sf.gov/documents/41461/Resident_Selection_Criteria_-_Bayside_Village_MOH-FINAL_2025-06-10.pdf",
-   "lastModified": "2026-11-14T02:02:51.000+0000",
+   "lastModified": "2026-11-21T08:01:55.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -6481,7 +6481,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000004ZuxtEAC": {
    "id": "a0W7y000004ZuxtEAC",
@@ -6516,7 +6516,7 @@
    "depositMax": 2402,
    "parking": "Waitlist only. 33 BMR parking spaces.\r\n55% AMI units $100 per month. 80% AMI and 100% AMI units $175 per month.",
    "criteriaUrl": "https://api.sf.gov/documents/40582/1830_Alemany_-_RESIDENT_SELECTION_PLAN_-_FAIR_CHANCE_ORDINANCE_-_FINAL_05.15.2025.pdf",
-   "lastModified": "2026-11-19T19:00:02.000+0000",
+   "lastModified": "2026-11-21T08:02:08.000+0000",
    "units": [
     {
      "type": "1 BR",
@@ -6536,7 +6536,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W7y000003m1BNEAY": {
    "id": "a0W7y000003m1BNEAY",
@@ -6655,7 +6655,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   },
   "a0W4U00000SW6oJUAT": {
    "id": "a0W4U00000SW6oJUAT",
@@ -6758,7 +6758,7 @@
     }
    ],
    "firstSeen": "2026-11-19",
-   "lastSeen": "2026-11-20"
+   "lastSeen": "2026-11-21"
   }
  }
 }
