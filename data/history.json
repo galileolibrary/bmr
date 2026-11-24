@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T12:41:48.452Z",
+ "updated": "2026-11-24T02:12:48.185Z",
  "listings": {
   "a0W7y00000LDjZZEA1": {
    "id": "a0W7y00000LDjZZEA1",
@@ -890,7 +890,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-01T22:13:13.000+0000",
+   "lastModified": "2026-11-23T20:41:04.000+0000",
    "firstSeen": "2026-11-12",
    "lastSeen": "2026-11-23"
   },
@@ -1721,7 +1721,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-01T22:13:48.000+0000",
+   "lastModified": "2026-11-23T18:23:13.000+0000",
    "firstSeen": "2026-11-12",
    "lastSeen": "2026-11-23"
   },
@@ -2740,7 +2740,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-19T17:46:14.000+0000",
+   "lastModified": "2026-11-23T20:37:49.000+0000",
    "firstSeen": "2026-11-12",
    "lastSeen": "2026-11-23"
   },
@@ -3279,7 +3279,7 @@
    "dueDate": null,
    "lotteryDate": null,
    "lotteryResultsDate": null,
-   "unitsAvailable": 2,
+   "unitsAvailable": 1,
    "image": "https://media-housing-prod.dev.sf.gov/images/listings/a0W7y000002IYJpEAO-67832806e8d6fed141fa3a832219af15.jpg",
    "url": "https://housing.sfgov.org/listings/a0W7y000002IYJpEAO",
    "mlsUrl": null,
@@ -3341,8 +3341,8 @@
      "maxAmi": 110,
      "minOccupancy": 2,
      "maxOccupancy": null,
-     "status": "Available",
-     "availability": 1,
+     "status": "Pending Sale",
+     "availability": 0,
      "reserved": true
     },
     {
@@ -3397,7 +3397,7 @@
      "reserved": true
     }
    ],
-   "lastModified": "2026-11-21T01:39:17.000+0000",
+   "lastModified": "2026-11-23T17:50:01.000+0000",
    "firstSeen": "2026-11-12",
    "lastSeen": "2026-11-23"
   },
@@ -3759,6 +3759,58 @@
    ],
    "lastModified": "2026-11-16T22:05:34.000+0000",
    "firstSeen": "2026-11-16",
+   "lastSeen": "2026-11-23"
+  },
+  "a0W7y00000LTRlVEAX": {
+   "id": "a0W7y00000LTRlVEAX",
+   "name": "400 Grove Street Unit 101",
+   "building": "400 Grove",
+   "address": "400 Grove Street",
+   "zip": "94102",
+   "neighborhood": "Hayes Valley",
+   "yearBuilt": 2016,
+   "method": "fcfs",
+   "listingType": "First Come, First Served",
+   "tenure": "Resale",
+   "programType": "IH-OWN",
+   "dueDate": null,
+   "lotteryDate": null,
+   "lotteryResultsDate": null,
+   "unitsAvailable": 1,
+   "image": null,
+   "url": "https://housing.sfgov.org/listings/a0W7y00000LTRlVEAX",
+   "mlsUrl": "https://resanfrancisco.rapmls.com/scripts/mgrqispi.dll?APPNAME=REsanfrancisco&PRGNAME=MLSLogin&ARGUMENT=MhJQceZI4X4BMrAl7rXqwRIBS2wPRq8nH%2Bjz3jATDKOMQcQFYINa5JiHrJ7IieWc&KeyRid=1&Include_Search_Criteria=&CurrentSID=1480",
+   "parking": "One (1) parking space",
+   "buildingParkingCost": 125000,
+   "waivers": {
+    "raisedAmi": true,
+    "assetsExcluded": true,
+    "educationAfterApplying": true,
+    "largeDownPayment": true,
+    "expires": "06/30/2027"
+   },
+   "prefs": [],
+   "units": [
+    {
+     "type": "1 BR",
+     "number": "101",
+     "floor": "1",
+     "baths": 1,
+     "sqft": 485,
+     "price": 400830,
+     "priceWithParking": 400830,
+     "hoa": 1148,
+     "hoaWithParking": 1148,
+     "maxAmi": 120,
+     "minOccupancy": 1,
+     "maxOccupancy": null,
+     "status": "Available",
+     "availability": 1,
+     "reserved": false
+    }
+   ],
+   "lastModified": "2026-11-23T17:27:31.000+0000",
+   "firstSeen": "2026-11-23",
    "lastSeen": "2026-11-23"
   }
  }

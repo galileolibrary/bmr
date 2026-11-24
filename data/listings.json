@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-22T01:19:48.733Z",
+ "updated": "2026-11-24T02:12:48.185Z",
  "source": "https://housing.sfgov.org/listings/for-sale",
  "count": 55,
  "listings": [
@@ -882,107 +882,6 @@
    "lastModified": "2026-11-12T17:32:07.000+0000"
   },
   {
-   "id": "a0W7y00000Kd8BtEAJ",
-   "name": "400 Grove Street Unit 101",
-   "building": "400 Grove",
-   "address": "400 Grove Street",
-   "zip": "94102",
-   "neighborhood": "Hayes Valley",
-   "yearBuilt": 2016,
-   "method": "lottery",
-   "listingType": "Standard Lottery",
-   "tenure": "Resale",
-   "programType": "IH-OWN",
-   "dueDate": "2026-10-31T00:00:00.000+0000",
-   "lotteryDate": "2026-11-06T23:00:00.000+0000",
-   "lotteryResultsDate": "2026-11-13",
-   "unitsAvailable": 1,
-   "image": "https://media-housing-prod.dev.sf.gov/images/listings/a0W7y00000Kd8BtEAJ-3a280e331e09e872c1007c4a25b213cd.jpg",
-   "url": "https://housing.sfgov.org/listings/a0W7y00000Kd8BtEAJ",
-   "mlsUrl": "https://resanfrancisco.rapmls.com/scripts/mgrqispi.dll?APPNAME=REsanfrancisco&PRGNAME=MLSLogin&ARGUMENT=MhJQceZI4X4BMrAl7rXqwRIBS2wPRq8nH%2Bjz3jATDKOMQcQFYINa5JiHrJ7IieWc&KeyRid=1&Include_Search_Criteria=&CurrentSID=1480",
-   "parking": "One (1) parking space",
-   "buildingParkingCost": 125000,
-   "appliances": "Stove/oven, microwave, dishwasher, refrigerator, and washer/dryer.",
-   "amenities": "Secure entry/intercom system; bicycle storage room; landscaped bamboo courtyard; rooftop view deck with BBQ and firepit, perfect for entertaining.",
-   "petPolicy": "Pets are permitted subject to the CC&Rs. Up to two domestic dogs and/or cats per Unit are allowed. Certain dog breeds are prohibited, and dogs in Common Areas must be leashed (except on an Exclusive Use Common Area deck). See CC&Rs Section 7.6, Page 21 of the CC&R for the complete policy.",
-   "notes": "The affordable price is $400,830 for this BMR unit. The affordable price is based on what a household earning at 100% of Area Median Income can afford according to certain pricing assumptions.\n\nApplicants can make an offer between the maximum sales price and the affordable price. The seller is free to accept or reject the price offered by the buyer. Some sellers may not negotiate at all. We recommend that the buyer work with their own separate real estate agent for the price negotiations. \n\nIf you pay more than the affordable price, you will not be eligible for the BMR DALP program. If you pay more than the affordable price now, you might not be able to sell for more than the affordable price as calculated when you sell.",
-   "waivers": {
-    "raisedAmi": false,
-    "assetsExcluded": false,
-    "educationAfterApplying": false,
-    "largeDownPayment": false,
-    "expires": null
-   },
-   "agent": {
-    "name": "Marco Wan",
-    "title": "Seller's Real Estate Agent",
-    "phone": "(415) 699-4178",
-    "email": "marco.aileen@compass.com"
-   },
-   "openHouses": [
-    {
-     "date": "2026-10-18",
-     "start": "2:00 PM",
-     "end": "4:00 PM",
-     "note": ""
-    },
-    {
-     "date": "2026-10-15",
-     "start": "5:00 PM",
-     "end": "7:00 PM",
-     "note": ""
-    },
-    {
-     "date": "2026-10-25",
-     "start": "2:00 PM",
-     "end": "4:00 PM",
-     "note": ""
-    }
-   ],
-   "prefs": [
-    {
-     "name": "Veteran with Certificate of Preference",
-     "description": "For households in which at least one member is a veteran and at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s. Descendants of someone who was displaced are not eligible to receive COP priority for this listing.",
-     "url": "http://sfmohcd.org/certificate-preference"
-    },
-    {
-     "name": "Certificate of Preference (COP)",
-     "description": "For households in which at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s. Descendants of someone who was displaced are not eligible to receive COP priority for this listing.",
-     "url": "http://sfmohcd.org/certificate-preference"
-    },
-    {
-     "name": "Veteran with Live or Work in San Francisco Preference",
-     "description": "For households in which at least one member is a veteran and at least one member lives or works in San Francisco. Requires submission of proof. Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.",
-     "url": "http://sfmohcd.org/housing-preference-programs"
-    },
-    {
-     "name": "Live or Work in San Francisco Preference",
-     "description": "For households in which at least one member lives or works in San Francisco.  Requires submission of proof.  Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.",
-     "url": "http://sfmohcd.org/housing-preference-programs"
-    }
-   ],
-   "units": [
-    {
-     "type": "1 BR",
-     "number": "101",
-     "floor": "1",
-     "baths": 1,
-     "sqft": 485,
-     "price": 428000,
-     "priceWithParking": 428000,
-     "hoa": 1148,
-     "hoaWithParking": 1148,
-     "maxAmi": 100,
-     "minOccupancy": 1,
-     "maxOccupancy": null,
-     "status": "Available",
-     "availability": 1,
-     "reserved": false
-    }
-   ],
-   "lastModified": "2026-11-09T22:24:39.000+0000"
-  },
-  {
    "id": "a0W7y00000KWyVOEA1",
    "name": "60 Ora Way Unit H101",
    "building": "Goldmine Hill",
@@ -1319,7 +1218,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-01T22:13:13.000+0000"
+   "lastModified": "2026-11-23T20:41:04.000+0000"
   },
   {
    "id": "a0W7y00000J55grEAB",
@@ -1959,6 +1858,67 @@
    "lastModified": "2026-11-06T21:32:34.000+0000"
   },
   {
+   "id": "a0W7y00000LTRlVEAX",
+   "name": "400 Grove Street Unit 101",
+   "building": "400 Grove",
+   "address": "400 Grove Street",
+   "zip": "94102",
+   "neighborhood": "Hayes Valley",
+   "yearBuilt": 2016,
+   "method": "fcfs",
+   "listingType": "First Come, First Served",
+   "tenure": "Resale",
+   "programType": "IH-OWN",
+   "dueDate": null,
+   "lotteryDate": null,
+   "lotteryResultsDate": null,
+   "unitsAvailable": 1,
+   "image": null,
+   "url": "https://housing.sfgov.org/listings/a0W7y00000LTRlVEAX",
+   "mlsUrl": "https://resanfrancisco.rapmls.com/scripts/mgrqispi.dll?APPNAME=REsanfrancisco&PRGNAME=MLSLogin&ARGUMENT=MhJQceZI4X4BMrAl7rXqwRIBS2wPRq8nH%2Bjz3jATDKOMQcQFYINa5JiHrJ7IieWc&KeyRid=1&Include_Search_Criteria=&CurrentSID=1480",
+   "parking": "One (1) parking space",
+   "buildingParkingCost": 125000,
+   "appliances": "Stove/oven, microwave, dishwasher, refrigerator, and washer/dryer.",
+   "amenities": "Secure entry/intercom system; bicycle storage room; landscaped bamboo courtyard; rooftop view deck with BBQ and firepit, perfect for entertaining.",
+   "petPolicy": "Pets are permitted subject to the CC&Rs. Up to two domestic dogs and/or cats per Unit are allowed. Certain dog breeds are prohibited, and dogs in Common Areas must be leashed (except on an Exclusive Use Common Area deck). See CC&Rs Section 7.6, Page 21 of the CC&R for the complete policy.",
+   "notes": "Applicants applying for this BMR unit are eligible for one or more of the following one-time waivers*:\n\nTemporary qualifying AMI of 120%, as shown on the listing reflects the one-time 20% increase.\nCan have income from assets excluded from total household income.\nCan complete the homebuyer education after applying.\nCan make a down payment more than 50% of the sales price.\n\n*Temporary adjustments to the eligibility requirements will expire on 06/30/2027 unless further extended by MOHCD. For details on the temporary adjustments, view the June 15, 2026 program announcement.",
+   "waivers": {
+    "raisedAmi": true,
+    "assetsExcluded": true,
+    "educationAfterApplying": true,
+    "largeDownPayment": true,
+    "expires": "06/30/2027"
+   },
+   "agent": {
+    "name": "Marco Wan",
+    "title": "Seller's Real Estate Agent",
+    "phone": "(415) 699-4178",
+    "email": "marco.aileen@compass.com"
+   },
+   "openHouses": [],
+   "prefs": [],
+   "units": [
+    {
+     "type": "1 BR",
+     "number": "101",
+     "floor": "1",
+     "baths": 1,
+     "sqft": 485,
+     "price": 400830,
+     "priceWithParking": 400830,
+     "hoa": 1148,
+     "hoaWithParking": 1148,
+     "maxAmi": 120,
+     "minOccupancy": 1,
+     "maxOccupancy": null,
+     "status": "Available",
+     "availability": 1,
+     "reserved": false
+    }
+   ],
+   "lastModified": "2026-11-23T17:27:31.000+0000"
+  },
+  {
    "id": "a0W7y00000L2NqrEAF",
    "name": "285 Main Street Unit 404",
    "building": "MIRA",
@@ -2267,10 +2227,10 @@
     "expires": "06/30/2027"
    },
    "agent": {
-    "name": "Dulmaa Bor",
+    "name": "Karen Mai",
     "title": "Seller's Real Estate Agent",
-    "phone": "(415) 407-2263",
-    "email": "dulmaa@legacysfhomes.com"
+    "phone": "(415) 602-5288",
+    "email": "karen.mai@kw.com"
    },
    "openHouses": [],
    "prefs": [],
@@ -2293,7 +2253,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-01T22:13:48.000+0000"
+   "lastModified": "2026-11-23T18:23:13.000+0000"
   },
   {
    "id": "a0W7y00000Kb0vCEAR",
@@ -3280,7 +3240,7 @@
    "appliances": "GE gas range and dishwasher",
    "amenities": "Common roof deck with BBQ and seating, bike parking, Latch Smart system, attended lobby.",
    "petPolicy": "Two pets per unit. See section 6.1.6 (Animals) in the CC&R for the complete Pet Policy.",
-   "notes": "The applicant list generated from this first come, first served listing may be applied to any remaining BMR units in this project, should one or more new units become available in the future. Once all the BMR units are sold, the first-come, first-served applicant list will no longer be valid for this project.",
+   "notes": "New Holiday Incentive: 5.75% Interest Rate on Select Homes. This limited-time holiday incentive is available for offers submitted and accepted by December 31, 2026. Contact the Sales Team for more details.\n\nThe applicant list generated from this first come, first served listing may be applied to any remaining BMR units in this project, should one or more new units become available in the future. Once all the BMR units are sold, the first-come, first-served applicant list will no longer be valid for this project.",
    "waivers": {
     "raisedAmi": false,
     "assetsExcluded": false,
@@ -3509,7 +3469,7 @@
      "reserved": false
     }
    ],
-   "lastModified": "2026-11-19T17:46:14.000+0000"
+   "lastModified": "2026-11-23T20:37:49.000+0000"
   },
   {
    "id": "a0W7y00000G3iMfEAJ",
@@ -4162,7 +4122,7 @@
    "dueDate": null,
    "lotteryDate": null,
    "lotteryResultsDate": null,
-   "unitsAvailable": 2,
+   "unitsAvailable": 1,
    "image": "https://media-housing-prod.dev.sf.gov/images/listings/a0W7y000002IYJpEAO-67832806e8d6fed141fa3a832219af15.jpg",
    "url": "https://housing.sfgov.org/listings/a0W7y000002IYJpEAO",
    "mlsUrl": null,
@@ -4235,8 +4195,8 @@
      "maxAmi": 110,
      "minOccupancy": 2,
      "maxOccupancy": null,
-     "status": "Available",
-     "availability": 1,
+     "status": "Pending Sale",
+     "availability": 0,
      "reserved": true
     },
     {
@@ -4291,7 +4251,7 @@
      "reserved": true
     }
    ],
-   "lastModified": "2026-11-21T01:39:17.000+0000"
+   "lastModified": "2026-11-23T17:50:01.000+0000"
   },
   {
    "id": "a0W7y000002IYDNEA4",

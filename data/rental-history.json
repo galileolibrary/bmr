@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T12:41:48.452Z",
+ "updated": "2026-11-24T02:12:48.185Z",
  "listings": {
   "a0W7y00000L5DdFEAV": {
    "id": "a0W7y00000L5DdFEAV",
@@ -43,7 +43,7 @@
    "depositMax": 2453,
    "parking": "Cielo contains 14 parking spaces reserved for DAHLIA units that will be available for free to residents. Spaces are limited to one per household, and parking is offered to households in lottery rank order. Assignments will be reassigned by lottery annually after the first year to allow all residents an opportunity to have an assigned parking space for a year at a time. Cielo also has one bike room with space for 92 resident bikes.",
    "criteriaUrl": "https://media.api.sf.gov/documents/Cielo_Resident_Selection_Criteria_final_.pdf",
-   "lastModified": "2026-11-23T12:17:09.000+0000",
+   "lastModified": "2026-11-24T00:35:04.000+0000",
    "units": [
     {
      "type": "1 BR",
@@ -187,7 +187,7 @@
    "depositMax": 3041,
    "parking": "Total 105 residential parking spaces. Waitlist only. All the spaces are currently occupied. There is an additional monthly fee of $250 for parking spaces.",
    "criteriaUrl": "https://api.sf.gov/documents/65539/Normandy_-_RSC_AFHMP_FINAL_2026-11-05.pdf",
-   "lastModified": "2026-11-23T12:09:34.000+0000",
+   "lastModified": "2026-11-24T00:36:03.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -299,7 +299,7 @@
    "depositMax": 2174,
    "parking": "Parking is free. There are 29 residential parking spaces that are all currently reserved. The on-site management maintains a parking waitlist that residents may put their names on. No parking spaces are currently available and Waitlist only.",
    "criteriaUrl": "https://api.sf.gov/documents/65637/Resident_Selction_Plan_1101_Conneticut_FINAL_2026-10-29.pdf",
-   "lastModified": "2026-11-23T10:29:40.000+0000",
+   "lastModified": "2026-11-24T02:09:16.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -465,7 +465,7 @@
    "depositMax": 1000,
    "parking": "There is no onsite vehicle parking available. Secure bike parking is offered to residents.",
    "criteriaUrl": "https://media.api.sf.gov/documents/160_Freelon_-_Resident_Selection_Plan_2026-10-20_final_.pdf",
-   "lastModified": "2026-11-21T00:18:51.000+0000",
+   "lastModified": "2026-11-24T00:11:47.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -728,7 +728,7 @@
    "depositMax": 4053,
    "parking": "One BMR Space available.  Parking will be offered to tenants in lottery rank order. Total 33 BMR parking spaces. \r\n\r\n$100 per month for 65% AMI units, $175 per month for 90% AMI units, and 130% AMI units.",
    "criteriaUrl": "https://api.sf.gov/documents/65145/1830_Alemany_Mission_RSC_FINAL_2026-10-29.pdf",
-   "lastModified": "2026-11-19T18:33:52.000+0000",
+   "lastModified": "2026-11-23T20:48:22.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -943,7 +943,7 @@
    "depositMax": 3774,
    "parking": "No parking available",
    "criteriaUrl": "https://api.sf.gov/documents/65125/4742_Mission_RSC_FINAL_2026-10-29.pdf",
-   "lastModified": "2026-11-18T00:28:49.000+0000",
+   "lastModified": "2026-11-23T19:43:31.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -1475,7 +1475,7 @@
    "depositMax": 1000,
    "parking": "No parking available to residents",
    "criteriaUrl": "https://media.api.sf.gov/documents/850_Turk_Street_Resident_Selection_Criteria_9.10.26_final.pdf",
-   "lastModified": "2026-11-02T19:53:33.000+0000",
+   "lastModified": "2026-11-23T18:24:00.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -1767,7 +1767,7 @@
    "depositMax": 838,
    "parking": "No Parking",
    "criteriaUrl": "https://media.api.sf.gov/documents/3300_Mission_-_RSC_9.14.26_.pdf",
-   "lastModified": "2026-11-17T21:39:29.000+0000",
+   "lastModified": "2026-11-23T17:05:06.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -2156,7 +2156,7 @@
    "depositMax": null,
    "parking": "There are 3 parking spaces for BMR renters.  Limit one parking space per household. Parking is offered to households in lottery rank order. $300 a month.",
    "criteriaUrl": "https://api.sf.gov/documents/62377/Hawkins_BMR_Homes_Residency_Standards_FINAL_2026-08-20.pdf",
-   "lastModified": "2026-11-22T19:02:03.000+0000",
+   "lastModified": "2026-11-23T07:14:42.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -2204,7 +2204,7 @@
      "sqftMin": 982,
      "sqftMax": 1032,
      "count": 3,
-     "available": 1
+     "available": 0
     }
    ],
    "firstSeen": "2026-11-19",
@@ -2980,7 +2980,7 @@
    "depositMax": null,
    "parking": "No parking",
    "criteriaUrl": "https://api.sf.gov/documents/56390/Galvin_Resident_Selection_Criteria_FINAL_2026-05-15.pdf",
-   "lastModified": "2026-11-21T08:01:25.000+0000",
+   "lastModified": "2026-11-23T22:30:58.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -3138,7 +3138,7 @@
    "depositMax": 1766,
    "parking": "BMR Waitlist only. BMR parking fee $100 per month.",
    "criteriaUrl": "https://api.sf.gov/documents/55866/OM-_RESIDENT_SELECTION_PLAN_-_FAIR_CHANCE_ORDINANCE_FINAL_5-11-2026_Ogmu0SY.pdf",
-   "lastModified": "2026-11-21T08:01:42.000+0000",
+   "lastModified": "2026-11-23T22:25:58.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -3575,7 +3575,7 @@
    "depositMax": 3550,
    "parking": "No parking onsite",
    "criteriaUrl": "https://api.sf.gov/documents/54903/235_Valencia_-_RESIDENT_SELECTION_PLAN_-_FAIR_CHANCE_ORDINANCE_FINAL_2026-04-21.pdf",
-   "lastModified": "2026-11-19T15:49:49.000+0000",
+   "lastModified": "2026-11-23T20:18:13.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -4296,7 +4296,7 @@
    "depositMax": 2390,
    "parking": "No parking",
    "criteriaUrl": "https://media.api.sf.gov/documents/Lark_Landing_-_Resident_Selection_Criteria_2.3.26.pdf",
-   "lastModified": "2026-11-20T01:15:21.000+0000",
+   "lastModified": "2026-11-23T23:08:09.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -4392,7 +4392,7 @@
      "sqftMin": 501,
      "sqftMax": 660,
      "count": 39,
-     "available": 7
+     "available": 4
     },
     {
      "type": "2 BR",
@@ -4495,7 +4495,7 @@
    "depositMax": 4475,
    "parking": "No Parking Onsite",
    "criteriaUrl": "https://api.sf.gov/documents/49959/RQA_-_Affordable_-_San_Francisco_FINAL_2026-01-27_ls7VpdN.pdf",
-   "lastModified": "2026-11-18T21:36:51.000+0000",
+   "lastModified": "2026-11-23T17:59:40.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -4868,7 +4868,7 @@
    "depositMax": 3400,
    "parking": "2 spaces are available for BMR renters. Limit one parking space per household. Parking is offered to households in lottery rank order.",
    "criteriaUrl": "https://media.api.sf.gov/documents/3945_Judah_-_Resident_Selection_Criteria_1.5.25.pdf",
-   "lastModified": "2026-11-22T01:40:08.000+0000",
+   "lastModified": "2026-11-23T20:12:54.000+0000",
    "units": [
     {
      "type": "1 BR",
@@ -6065,7 +6065,7 @@
    "depositMax": 1766,
    "parking": "Limit one parking space per household. Parking is offered to households in lottery rank order. 1 BMR parking spaces available for $100 per month.",
    "criteriaUrl": "https://api.sf.gov/documents/43130/Gantry_Resident_Qualification_Guidelines_FINAL_2025-07-30.pdf",
-   "lastModified": "2026-11-19T19:21:12.000+0000",
+   "lastModified": "2026-11-23T20:28:21.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -6239,7 +6239,7 @@
    "depositMax": 2993,
    "parking": "BMR Parking $100 per month. Waitlist only.",
    "criteriaUrl": "https://api.sf.gov/documents/41327/NEW_ResidentSelectionCriteriaCA-Mission_Bay_BMR_-FINAL_06.03.2025.pdf",
-   "lastModified": "2026-11-20T14:01:07.000+0000",
+   "lastModified": "2026-11-23T23:44:13.000+0000",
    "units": [
     {
      "type": "1 BR",
@@ -6429,7 +6429,7 @@
    "depositMax": 3050,
    "parking": "Parking is $240 per space per month. Limited to one parking space per household. Parking is offered to households in lottery rank order.",
    "criteriaUrl": "https://api.sf.gov/documents/41461/Resident_Selection_Criteria_-_Bayside_Village_MOH-FINAL_2025-06-10.pdf",
-   "lastModified": "2026-11-21T08:01:55.000+0000",
+   "lastModified": "2026-11-23T18:06:46.000+0000",
    "units": [
     {
      "type": "Studio",
@@ -6461,7 +6461,7 @@
      "sqftMin": 617,
      "sqftMax": 739,
      "count": 22,
-     "available": 1
+     "available": 0
     },
     {
      "type": "2 BR",
