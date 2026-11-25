@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T23:53:56.745Z",
+ "updated": "2026-11-25T08:35:15.062Z",
  "source": "https://housing.sfgov.org/listings/for-rent",
  "count": 57,
  "listings": [
@@ -271,7 +271,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-24T23:51:12.000+0000"
+   "lastModified": "2026-11-25T08:08:53.000+0000"
   },
   {
    "id": "a0W7y00000JaZE1EAN",
@@ -469,7 +469,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-24T23:04:27.000+0000"
+   "lastModified": "2026-11-25T08:09:14.000+0000"
   },
   {
    "id": "a0W7y00000IbxrZEAR",
@@ -761,7 +761,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-24T23:48:22.000+0000"
+   "lastModified": "2026-11-25T08:10:17.000+0000"
   },
   {
    "id": "a0W7y00000L0PAPEA3",
@@ -2869,7 +2869,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-24T03:08:55.000+0000"
+   "lastModified": "2026-11-24T03:28:12.000+0000"
   },
   {
    "id": "a0W7y00000JRv5hEAD",
@@ -7479,7 +7479,7 @@
      "sqftMin": 400,
      "sqftMax": 489,
      "count": 15,
-     "available": 1,
+     "available": 0,
      "maxIncome": [
       65450,
       74800,
@@ -7646,7 +7646,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-24T20:28:27.000+0000"
+   "lastModified": "2026-11-25T00:27:14.000+0000"
   },
   {
    "id": "a0W7y00000Fc04oEAB",
@@ -7925,7 +7925,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-24T17:09:55.000+0000"
+   "lastModified": "2026-11-25T07:09:25.000+0000"
   },
   {
    "id": "a0W7y00000FeWWnEAN",
@@ -11604,7 +11604,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-18T14:25:00.000+0000"
+   "lastModified": "2026-11-25T02:50:26.000+0000"
   },
   {
    "id": "a0W4U00000SW6oJUAT",
