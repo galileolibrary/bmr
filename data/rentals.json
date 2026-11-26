@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T03:34:48.598Z",
+ "updated": "2026-11-26T16:54:42.439Z",
  "source": "https://housing.sfgov.org/listings/for-rent",
  "count": 57,
  "listings": [
@@ -271,7 +271,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-26T03:18:04.000+0000"
+   "lastModified": "2026-11-26T14:03:09.000+0000"
   },
   {
    "id": "a0W7y00000JaZE1EAN",
@@ -469,7 +469,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-26T03:13:05.000+0000"
+   "lastModified": "2026-11-26T16:23:34.000+0000"
   },
   {
    "id": "a0W7y00000IbxrZEAR",
@@ -761,7 +761,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-26T03:19:42.000+0000"
+   "lastModified": "2026-11-26T16:22:01.000+0000"
   },
   {
    "id": "a0W7y00000L0PAPEA3",
@@ -3316,7 +3316,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-26T03:14:05.000+0000"
+   "lastModified": "2026-11-26T10:18:54.000+0000"
   },
   {
    "id": "a0W7y00000J0jztEAB",
@@ -6499,7 +6499,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-19T08:03:53.000+0000"
+   "lastModified": "2026-11-25T23:16:47.000+0000"
   },
   {
    "id": "a0W7y00000GKJDNEA5",
@@ -7658,13 +7658,13 @@
    "yearBuilt": 2023,
    "method": "lottery",
    "listingType": "Standard Lottery",
-   "listingStatus": "Active",
+   "listingStatus": "Lease Up",
    "tenure": "Re-rental",
    "programType": "IH-RENTAL",
    "dueDate": "2026-02-07T01:00:00.000+0000",
    "lotteryDate": "2026-02-19T19:00:00.000+0000",
    "lotteryResultsDate": "2026-02-20",
-   "unitsAvailable": 9,
+   "unitsAvailable": 10,
    "waitlist": {
     "has": false,
     "current": null,
@@ -7878,7 +7878,7 @@
      "sqftMin": 716,
      "sqftMax": 1095,
      "count": 18,
-     "available": 1,
+     "available": 2,
      "maxIncome": [
       130900,
       149650,
@@ -7925,7 +7925,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-25T21:21:36.000+0000"
+   "lastModified": "2026-11-26T08:02:18.000+0000"
   },
   {
    "id": "a0W7y00000FeWWnEAN",
@@ -8741,7 +8741,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-26T00:39:03.000+0000"
+   "lastModified": "2026-11-26T08:39:40.000+0000"
   },
   {
    "id": "a0W7y00000ElWZ3EAN",
@@ -11805,7 +11805,7 @@
      ]
     }
    ],
-   "lastModified": "2026-11-18T19:09:29.000+0000"
+   "lastModified": "2026-11-26T08:02:41.000+0000"
   }
  ]
 }
